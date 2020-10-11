@@ -1,7 +1,12 @@
 {
   "expo": {
-    "name": "my-app",
-    "slug": "my-app",
+    "name": "github.com/callstack/react-native-paper:example",
+    "slug": "snack-0f4213de-c7f0-4f54-9651-26c3c152a229",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -19,8 +24,6 @@
     "ios": {
       "supportsTablet": true
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
+    "description": "callstack/react-native-paper @ Nov 8, 2018"
   }
 }
