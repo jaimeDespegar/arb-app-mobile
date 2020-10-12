@@ -6,6 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import AppbarExample from './Examples/AppbarExample';
 import LoginComponent from './Examples/LoginComponent';
+import RegisterComponent from './Examples/RegisterComponent';
 import BottomNavigationExample from './Examples/BottomNavigationExample';
 
 export const examples: Record<
@@ -15,6 +16,7 @@ export const examples: Record<
   appbar: AppbarExample,
   bottomNavigation: BottomNavigationExample,
   loginComponent: LoginComponent,
+  registerComponent: RegisterComponent,
 };
 
 type Props = {

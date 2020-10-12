@@ -4,7 +4,9 @@ import { TextInput, HelperText, useTheme, Button } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 
 const initialState = {
-  text: '',
+  name: '',
+  email: '',
+  emailConfirm: '',
   flatTextSecureEntry: true,
 };
 
@@ -14,10 +16,12 @@ const TextInputAvoidingView = ({ children }: AvoidingViewProps) => {
   return ( <>{children}</> );
 };
 
-const LoginComponent = () => {
+const RegisterComponent = () => {
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
   const {
-    text,
+    name,
+    email,
+    emailConfirm,
     flatTextSecureEntry,
     flatTextPassword,
   } = state;
@@ -37,14 +41,30 @@ const LoginComponent = () => {
         <View style={styles.inputs}>
           <View style={styles.inputContainerStyle}>
             <TextInput
-              label="Email"
-              placeholder="Ingrese su email"
-              value={text}
-              error={text && !_isEmailValid(text)}
-              onChangeText={text => inputActionHandler('text', text)}
+              label="Nombre"
+              placeholder="Ingrese su nombre"
+              value={name}
+              error={!name}
+              onChangeText={name => inputActionHandler('name', name)}
               right={
                 <TextInput.Icon
-                  name={!_isEmailValid(text) ? '' : 'check'}
+                  name={!_isEmailValid(name) ? '' : 'check'}
+                  onPress={() => {}}
+                  forceTextInputFocus={false}
+                />
+              }
+            />
+          </View>
+          <View style={styles.inputContainerStyle}>
+            <TextInput
+              label="Email"
+              placeholder="Ingrese su email"
+              value={email}
+              error={email && !_isEmailValid(email)}
+              onChangeText={email => inputActionHandler('email', email)}
+              right={
+                <TextInput.Icon
+                  name={!_isEmailValid(email) ? '' : 'check'}
                   onPress={() =>
                     console.log('clickeo el input')
                   }
@@ -52,7 +72,28 @@ const LoginComponent = () => {
                 />
               }
             />
-            <HelperText type="error" visible={text && !_isEmailValid(text)}>
+            <HelperText type="error" visible={email && !_isEmailValid(email)}>
+              Ingrese un Email valido
+            </HelperText>
+          </View>
+          <View style={styles.inputContainerStyle}>
+            <TextInput
+              label="Confirmar Email"
+              placeholder="Ingrese su email nuevamente"
+              value={emailConfirm}
+              error={emailConfirm && !_isEmailValid(emailConfirm)}
+              onChangeText={emailConfirm => inputActionHandler('emailConfirm', emailConfirm)}
+              right={
+                <TextInput.Icon
+                  name={!_isEmailValid(emailConfirm) ? '' : 'check'}
+                  onPress={() =>
+                    console.log('clickeo el input')
+                  }
+                  forceTextInputFocus={false}
+                />
+              }
+            />
+            <HelperText type="error" visible={emailConfirm && !_isEmailValid(emailConfirm)}>
               Ingrese un Email valido
             </HelperText>
           </View>
@@ -79,24 +120,16 @@ const LoginComponent = () => {
                 />
               }
             />
-            <TouchableOpacity>
-                <Text style={styles.forgotMyPasswordText}>
-                  ¿Olvidaste la contraseña?
-                </Text>
-            </TouchableOpacity>
           </View>
           <Button mode="contained" onPress={() => {}} style={styles.button}>
-            Ingresar
-          </Button>
-          <Button mode="outlined" onPress={() => {}} style={styles.button}>
-            Crear Cuenta
+            Registar
           </Button>
         </View>
     </TextInputAvoidingView>
   );
 };
 
-LoginComponent.title = 'Login';
+RegisterComponent.title = 'Register';
 
 const styles = StyleSheet.create({
   container: {
@@ -117,6 +150,7 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 4,
+    marginTop: 10,
     height: 50,
     justifyContent: 'center',
   },
@@ -128,4 +162,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LoginComponent;
+export default RegisterComponent;
