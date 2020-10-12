@@ -5,6 +5,7 @@ import { useSafeArea } from 'react-native-safe-area-context';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import AppbarExample from './Examples/AppbarExample';
+import LoginComponent from './Examples/LoginComponent';
 import BottomNavigationExample from './Examples/BottomNavigationExample';
 
 export const examples: Record<
@@ -13,6 +14,7 @@ export const examples: Record<
 > = {
   appbar: AppbarExample,
   bottomNavigation: BottomNavigationExample,
+  loginComponent: LoginComponent,
 };
 
 type Props = {

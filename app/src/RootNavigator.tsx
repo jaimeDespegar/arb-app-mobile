@@ -31,7 +31,7 @@ export default function Root() {
       <Stack.Screen
         name="Home"
         component={ExampleList}
-        options={{ title: 'Examples' }}
+        options={{ title: 'App' }}
       />
       {(Object.keys(examples) as Array<keyof typeof examples>).map(id => (
         <Stack.Screen
