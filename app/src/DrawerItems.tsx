@@ -18,10 +18,7 @@ type Props = {
 
 const DrawerItemsData = [
   { label: 'Inbox', icon: 'inbox', key: 0 },
-  { label: 'Starred', icon: 'star', key: 1 },
-  { label: 'Sent mail', icon: 'send', key: 2 },
-  { label: 'Colored label', icon: 'palette', key: 3 },
-  { label: 'A very long title that will be truncated', icon: 'delete', key: 4 },
+  { label: 'Sent mail', icon: 'send', key: 1 },
 ];
 
 const DrawerItems = ({ toggleTheme, toggleRTL, isRTL, isDarkTheme }: Props) => {
@@ -49,20 +46,12 @@ const DrawerItems = ({ toggleTheme, toggleRTL, isRTL, isDarkTheme }: Props) => {
         ))}
       </Drawer.Section>
 
-      <Drawer.Section title="Preferences">
+      <Drawer.Section title="Preferencias">
         <TouchableRipple onPress={toggleTheme}>
           <View style={styles.preference}>
             <Text>Dark Theme</Text>
             <View pointerEvents="none">
               <Switch value={isDarkTheme} />
-            </View>
-          </View>
-        </TouchableRipple>
-        <TouchableRipple onPress={toggleRTL}>
-          <View style={styles.preference}>
-            <Text>RTL</Text>
-            <View pointerEvents="none">
-              <Switch value={isRTL} />
             </View>
           </View>
         </TouchableRipple>
