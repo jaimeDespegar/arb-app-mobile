@@ -17,8 +17,10 @@ type Props = {
 };
 
 const DrawerItemsData = [
-  { label: 'Inbox', icon: 'inbox', key: 0 },
-  { label: 'Sent mail', icon: 'send', key: 1 },
+  { label: 'Inicio', icon: 'home', key: 0 },
+  { label: 'Estadia', icon: 'heart', key: 1 },
+  { label: 'Historial', icon: 'book', key: 2 },
+  { label: 'Mi Perfil', icon: 'send', key: 3 },
 ];
 
 const DrawerItems = ({ toggleTheme, toggleRTL, isRTL, isDarkTheme }: Props) => {
@@ -36,7 +38,7 @@ const DrawerItems = ({ toggleTheme, toggleRTL, isRTL, isDarkTheme }: Props) => {
             {...props}
             key={props.key}
             theme={
-              props.key === 3
+              props.key === 1 || props.key === 3
                 ? { colors: { primary: Colors.tealA200 } }
                 : undefined
             }
