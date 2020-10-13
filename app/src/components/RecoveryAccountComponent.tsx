@@ -4,7 +4,7 @@ import { TextInput, HelperText, useTheme, Button } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 
 const initialState = {
-  text: '',
+  email: '',
 };
 
 type AvoidingViewProps = { children: React.ReactNode; };
@@ -16,7 +16,7 @@ const TextInputAvoidingView = ({ children }: AvoidingViewProps) => {
 const RecoveryAccountComponent = () => {
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
   const {
-    text,
+    email,
   } = state;
 
   const formatEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -35,12 +35,12 @@ const RecoveryAccountComponent = () => {
             <TextInput
               label="Email"
               placeholder="Ingrese su email"
-              value={text}
-              error={text && !_isEmailValid(text)}
-              onChangeText={text => inputActionHandler('text', text)}
+              value={email}
+              error={email && !_isEmailValid(email)}
+              onChangeText={text => inputActionHandler('email', email)}
               right={
                 <TextInput.Icon
-                  name={!_isEmailValid(text) ? '' : 'check'}
+                  name={!_isEmailValid(email) ? '' : 'check'}
                   onPress={() =>
                     console.log('clickeo el input')
                   }
@@ -48,7 +48,7 @@ const RecoveryAccountComponent = () => {
                 />
               }
             />
-            <HelperText type="error" visible={text && !_isEmailValid(text)}>
+            <HelperText type="error" visible={email && !_isEmailValid(email)}>
               Ingrese un Email valido
             </HelperText>
           </View>
