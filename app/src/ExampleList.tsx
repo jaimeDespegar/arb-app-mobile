@@ -4,10 +4,11 @@ import { List, Divider, useTheme } from 'react-native-paper';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import AppbarExample from './Examples/AppbarExample';
-import LoginComponent from './Examples/LoginComponent';
-import RegisterComponent from './Examples/RegisterComponent';
-import BottomNavigationExample from './Examples/BottomNavigationExample';
+import AppbarExample from './components/AppbarExample';
+import BottomNavigationExample from './components/BottomNavigationExample';
+import LoginComponent from './components/LoginComponent';
+import RegisterComponent from './components/RegisterComponent';
+import RecoveryAccountComponent from './components/RecoveryAccountComponent';
 
 export const examples: Record<
   string,
@@ -17,6 +18,7 @@ export const examples: Record<
   bottomNavigation: BottomNavigationExample,
   loginComponent: LoginComponent,
   registerComponent: RegisterComponent,
+  recoveryAccountComponent: RecoveryAccountComponent,
 };
 
 type Props = {

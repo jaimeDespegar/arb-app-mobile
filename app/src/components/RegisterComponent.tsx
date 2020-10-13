@@ -2,9 +2,12 @@ import * as React from 'react';
 import {  StyleSheet, View, TouchableOpacity, Text  } from 'react-native';
 import { TextInput, HelperText, useTheme, Button } from 'react-native-paper';
 import { inputReducer } from '../../utils';
+import ImagePicker from 'react-native-image-picker';
 
 const initialState = {
-  text: '',
+  name: '',
+  email: '',
+  emailConfirm: '',
   flatTextSecureEntry: true,
 };
 
@@ -14,12 +17,11 @@ const TextInputAvoidingView = ({ children }: AvoidingViewProps) => {
   return ( <>{children}</> );
 };
 
-const LoginComponent = () => {
+
+const RegisterComponent = () => {
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
   const {
-    text,
-    flatTextSecureEntry,
-    flatTextPassword,
+    name, email, emailConfirm, flatTextSecureEntry, flatTextPassword,
   } = state;
 
   const formatEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -37,14 +39,30 @@ const LoginComponent = () => {
         <View style={styles.inputs}>
           <View style={styles.inputContainerStyle}>
             <TextInput
-              label="Email"
-              placeholder="Ingrese su email"
-              value={text}
-              error={text && !_isEmailValid(text)}
-              onChangeText={text => inputActionHandler('text', text)}
+              label="Nombre"
+              placeholder="Ingrese su nombre"
+              value={name}
+              error={!name}
+              onChangeText={name => inputActionHandler('name', name)}
               right={
                 <TextInput.Icon
-                  name={!_isEmailValid(text) ? '' : 'check'}
+                  name={!_isEmailValid(name) ? '' : 'check'}
+                  onPress={() => {}}
+                  forceTextInputFocus={false}
+                />
+              }
+            />
+          </View>
+          <View style={styles.inputContainerStyle}>
+            <TextInput
+              label="Email"
+              placeholder="Ingrese su email"
+              value={email}
+              error={email && !_isEmailValid(email)}
+              onChangeText={email => inputActionHandler('email', email)}
+              right={
+                <TextInput.Icon
+                  name={!_isEmailValid(email) ? '' : 'check'}
                   onPress={() =>
                     console.log('clickeo el input')
                   }
@@ -52,9 +70,32 @@ const LoginComponent = () => {
                 />
               }
             />
-            <HelperText type="error" visible={text && !_isEmailValid(text)}>
-              Ingrese un Email valido
-            </HelperText>
+            {(email && !_isEmailValid(email)) ?
+            <HelperText type="error" visible={email && !_isEmailValid(email)}>
+              Ingrese un email valido
+            </HelperText>:<></>}
+          </View>
+          <View style={styles.inputContainerStyle}>
+            <TextInput
+              label="Confirmar Email"
+              placeholder="Ingrese su email nuevamente"
+              value={emailConfirm}
+              error={emailConfirm && !_isEmailValid(emailConfirm)}
+              onChangeText={emailConfirm => inputActionHandler('emailConfirm', emailConfirm)}
+              right={
+                <TextInput.Icon
+                  name={!_isEmailValid(emailConfirm) ? '' : 'check'}
+                  onPress={() =>
+                    console.log('clickeo el input')
+                  }
+                  forceTextInputFocus={false}
+                />
+              }
+            />
+            {(emailConfirm && !_isEmailValid(emailConfirm)) ?
+            <HelperText type="error" visible={emailConfirm && !_isEmailValid(emailConfirm)}>
+              Ingrese un email valido
+            </HelperText>:<></>}
           </View>
 
           <View style={styles.inputContainerStyle}>
@@ -79,24 +120,16 @@ const LoginComponent = () => {
                 />
               }
             />
-            <TouchableOpacity>
-                <Text style={styles.forgotMyPasswordText}>
-                  ¿Olvidaste la contraseña?
-                </Text>
-            </TouchableOpacity>
           </View>
           <Button mode="contained" onPress={() => {}} style={styles.button}>
-            Ingresar
-          </Button>
-          <Button mode="outlined" onPress={() => {}} style={styles.button}>
-            Crear Cuenta
+            Registar
           </Button>
         </View>
     </TextInputAvoidingView>
   );
 };
 
-LoginComponent.title = 'Login';
+RegisterComponent.title = 'Register';
 
 const styles = StyleSheet.create({
   container: {
@@ -113,19 +146,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   inputContainerStyle: {
-    margin: 4,
+    margin: 4 
+    // marginLeft: 4,
+    // marginRight: 4,
   },
   button: {
     margin: 4,
+    marginTop: 10,
     height: 50,
     justifyContent: 'center',
   },
-  forgotMyPasswordText: {
-    color: 'rgb(98, 0, 238)', 
-    marginLeft: 1,
-    marginTop: 6, 
-    marginBottom: 12
-  }
+
 });
 
-export default LoginComponent;
+export default RegisterComponent;
