@@ -9,8 +9,7 @@ import BottomNavigationExample from './components/BottomNavigationExample';
 import LoginComponent from './components/LoginComponent';
 import RegisterComponent from './components/RegisterComponent';
 import RecoveryAccountComponent from './components/RecoveryAccountComponent';
-import EntranceParkingComponent from './components/EntranceParkingComponent';
-import EgressParkingComponent from './components/EgressParkingComponent';
+
 export const examples: Record<
   string,
   React.ComponentType<any> & { title: string }
@@ -20,8 +19,6 @@ export const examples: Record<
   loginComponent: LoginComponent,
   registerComponent: RegisterComponent,
   recoveryAccountComponent: RecoveryAccountComponent,
-  entranceParkingComponent: EntranceParkingComponent,
-  egressParkingComponent: EgressParkingComponent
 };
 
 type Props = {

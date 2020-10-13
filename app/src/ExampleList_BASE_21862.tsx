@@ -4,13 +4,11 @@ import { List, Divider, useTheme } from 'react-native-paper';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import AppbarExample from './components/AppbarExample';
-import BottomNavigationExample from './components/BottomNavigationExample';
-import LoginComponent from './components/LoginComponent';
-import RegisterComponent from './components/RegisterComponent';
-import RecoveryAccountComponent from './components/RecoveryAccountComponent';
-import EntranceParkingComponent from './components/EntranceParkingComponent';
-import EgressParkingComponent from './components/EgressParkingComponent';
+import AppbarExample from './Examples/AppbarExample';
+import LoginComponent from './Examples/LoginComponent';
+import RegisterComponent from './Examples/RegisterComponent';
+import BottomNavigationExample from './Examples/BottomNavigationExample';
+
 export const examples: Record<
   string,
   React.ComponentType<any> & { title: string }
@@ -19,9 +17,6 @@ export const examples: Record<
   bottomNavigation: BottomNavigationExample,
   loginComponent: LoginComponent,
   registerComponent: RegisterComponent,
-  recoveryAccountComponent: RecoveryAccountComponent,
-  entranceParkingComponent: EntranceParkingComponent,
-  egressParkingComponent: EgressParkingComponent
 };
 
 type Props = {
