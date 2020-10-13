@@ -46,3 +46,8 @@ node_modules/
 
 app/yarn.lock
 package-lock.json
+*_BACKUP_*
+*_BASE_*
+*_LOCAL_*
+*_REMOTE_*
+*.orig
