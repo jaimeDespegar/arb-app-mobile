@@ -11,6 +11,8 @@ import RegisterComponent from './components/RegisterComponent';
 import RecoveryAccountComponent from './components/RecoveryAccountComponent';
 import EntranceParkingComponent from './components/EntranceParkingComponent';
 import EgressParkingComponent from './components/EgressParkingComponent';
+import AvailabilityParkingComponent from './components/AvailabilityParkingComponent';
+
 export const examples: Record<
   string,
   React.ComponentType<any> & { title: string }
@@ -21,7 +23,8 @@ export const examples: Record<
   registerComponent: RegisterComponent,
   recoveryAccountComponent: RecoveryAccountComponent,
   entranceParkingComponent: EntranceParkingComponent,
-  egressParkingComponent: EgressParkingComponent
+  egressParkingComponent: EgressParkingComponent,
+  availabilityParkingComponent : AvailabilityParkingComponent
 };
 
 type Props = {

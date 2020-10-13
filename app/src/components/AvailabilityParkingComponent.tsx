@@ -13,7 +13,7 @@ const initialState = {
     return ( <>{children}</> );
   };
   
-  const EgressParkingComponent = () => {
+  const availabilityParkingComponent = () => {
     const [state, dispatch] = React.useReducer(inputReducer, initialState);
     const {
       text,
@@ -27,23 +27,23 @@ const initialState = {
         payload: payload,
       });
       
-    const  userName= 'Pepe';
+    const  bicicletero= '1';
     return (
       <TextInputAvoidingView>
           <View style={styles.inputs}>
             <Text style={styles.welcome}>
-              ¡Buen viaje, {userName}!
+              ¡Disponibilidad en el bicicletero {bicicletero} !
             </Text>
             
             <Button mode="contained" onPress={() => {}} style={styles.button}>
-              Retirar Bicicleta
+              Refrescar
             </Button>
           </View>
       </TextInputAvoidingView>
     );
   };
   
-  EgressParkingComponent.title = 'Egress Parking';
+  availabilityParkingComponent.title = 'Availability Parking';
   
   const styles = StyleSheet.create({
     inputs: {
@@ -54,7 +54,8 @@ const initialState = {
     welcome: {
       fontSize: 20,
       textAlign: 'center',
-      margin: 100
+      margin: 100,
+      backgroundColor : 'green'
     },
     button: {
       margin: 4,
@@ -63,4 +64,4 @@ const initialState = {
     },
   });
   
-  export default EgressParkingComponent;
+  export default availabilityParkingComponent;
