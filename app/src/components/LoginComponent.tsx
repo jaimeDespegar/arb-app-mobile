@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {  StyleSheet, View, TouchableOpacity, Text, Icon, Image  } from 'react-native';
-import { TextInput, HelperText, useTheme, Button } from 'react-native-paper';
+import {  StyleSheet, View, TouchableOpacity, Text  } from 'react-native';
+import { TextInput, Button } from 'react-native-paper';
 import { inputReducer } from '../../utils';
+import EmailInput from './EmailInput';
 
 const initialState = {
-  text: '',
   flatTextSecureEntry: true,
 };
 
@@ -17,14 +17,9 @@ const TextInputAvoidingView = ({ children }: AvoidingViewProps) => {
 const LoginComponent = () => {
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
   const {
-    text,
     flatTextSecureEntry,
     flatTextPassword,
   } = state;
-
-  const formatEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-  const _isEmailValid = (name: string) => formatEmail.test(name);
-  const { colors } = useTheme();
 
   const inputActionHandler = (type: string, payload: string) =>
     dispatch({
@@ -34,30 +29,8 @@ const LoginComponent = () => {
 
   return (
     <TextInputAvoidingView>
-        <View style={styles.inputs}>
-          <View style={styles.inputContainerStyle}>
-            <TextInput
-              label="Email"
-              placeholder="Ingrese su email"
-              value={text}
-              error={text && !_isEmailValid(text)}
-              onChangeText={text => inputActionHandler('text', text)}
-              right={
-                <TextInput.Icon
-                  name={!_isEmailValid(text) ? '' : 'check'}
-                  onPress={() =>
-                    console.log('clickeo el input')
-                  }
-                  forceTextInputFocus={false}
-                />
-              }
-            />
-            {(text && !_isEmailValid(text)) ?
-            <HelperText type="error" visible={text && !_isEmailValid(text)}>
-              Ingrese un email valido
-            </HelperText>:<></>}
-          </View>
-
+        <View style={styles.inputs}>        
+          <EmailInput />
           <View style={styles.inputContainerStyle}>
             <TextInput
               label="Contraseña"
@@ -100,26 +73,19 @@ const LoginComponent = () => {
 LoginComponent.title = 'Login';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 8,
-    alignItems: 'center'
-  },
   inputs: {
     flex: 1,
     padding: 8,
     justifyContent: 'center'
   },
-  wrapper: {
-    flex: 1,
-  },
-  inputContainerStyle: {
-    margin: 4,
-  },
   button: {
     margin: 4,
     height: 50,
     justifyContent: 'center',
+  },
+  inputContainerStyle: {
+    margin: 4,
+    marginBottom: 0,
   },
   forgotMyPasswordText: {
     color: 'rgb(98, 0, 238)', 

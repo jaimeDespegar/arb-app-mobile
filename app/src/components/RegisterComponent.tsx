@@ -1,13 +1,11 @@
 import * as React from 'react';
-import {  StyleSheet, View, TouchableOpacity, Text  } from 'react-native';
-import { TextInput, HelperText, useTheme, Button } from 'react-native-paper';
+import {  StyleSheet, View  } from 'react-native';
+import { TextInput, Button } from 'react-native-paper';
 import { inputReducer } from '../../utils';
-import ImagePicker from 'react-native-image-picker';
+import EmailInput from './EmailInput';
 
 const initialState = {
   name: '',
-  email: '',
-  emailConfirm: '',
   flatTextSecureEntry: true,
 };
 
@@ -17,16 +15,11 @@ const TextInputAvoidingView = ({ children }: AvoidingViewProps) => {
   return ( <>{children}</> );
 };
 
-
 const RegisterComponent = () => {
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
   const {
-    name, email, emailConfirm, flatTextSecureEntry, flatTextPassword,
+    name, flatTextSecureEntry, flatTextPassword,
   } = state;
-
-  const formatEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-  const _isEmailValid = (name: string) => formatEmail.test(name);
-  const { colors } = useTheme();
 
   const inputActionHandler = (type: string, payload: string) =>
     dispatch({
@@ -42,61 +35,14 @@ const RegisterComponent = () => {
               label="Nombre"
               placeholder="Ingrese su nombre"
               value={name}
-              error={!name}
+              // error={!name}
               onChangeText={name => inputActionHandler('name', name)}
-              right={
-                <TextInput.Icon
-                  name={!_isEmailValid(name) ? '' : 'check'}
-                  onPress={() => {}}
-                  forceTextInputFocus={false}
-                />
-              }
             />
           </View>
-          <View style={styles.inputContainerStyle}>
-            <TextInput
-              label="Email"
-              placeholder="Ingrese su email"
-              value={email}
-              error={email && !_isEmailValid(email)}
-              onChangeText={email => inputActionHandler('email', email)}
-              right={
-                <TextInput.Icon
-                  name={!_isEmailValid(email) ? '' : 'check'}
-                  onPress={() =>
-                    console.log('clickeo el input')
-                  }
-                  forceTextInputFocus={false}
-                />
-              }
-            />
-            {(email && !_isEmailValid(email)) ?
-            <HelperText type="error" visible={email && !_isEmailValid(email)}>
-              Ingrese un email valido
-            </HelperText>:<></>}
-          </View>
-          <View style={styles.inputContainerStyle}>
-            <TextInput
-              label="Confirmar Email"
-              placeholder="Ingrese su email nuevamente"
-              value={emailConfirm}
-              error={emailConfirm && !_isEmailValid(emailConfirm)}
-              onChangeText={emailConfirm => inputActionHandler('emailConfirm', emailConfirm)}
-              right={
-                <TextInput.Icon
-                  name={!_isEmailValid(emailConfirm) ? '' : 'check'}
-                  onPress={() =>
-                    console.log('clickeo el input')
-                  }
-                  forceTextInputFocus={false}
-                />
-              }
-            />
-            {(emailConfirm && !_isEmailValid(emailConfirm)) ?
-            <HelperText type="error" visible={emailConfirm && !_isEmailValid(emailConfirm)}>
-              Ingrese un email valido
-            </HelperText>:<></>}
-          </View>
+          <EmailInput />
+          {/* label="Confirmar Email"
+              placeholder="Ingrese su email nuevamente" */}
+          <EmailInput />
 
           <View style={styles.inputContainerStyle}>
             <TextInput
@@ -132,23 +78,10 @@ const RegisterComponent = () => {
 RegisterComponent.title = 'Register';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 8,
-    alignItems: 'center'
-  },
   inputs: {
     flex: 1,
     padding: 8,
     justifyContent: 'center'
-  },
-  wrapper: {
-    flex: 1,
-  },
-  inputContainerStyle: {
-    margin: 4 
-    // marginLeft: 4,
-    // marginRight: 4,
   },
   button: {
     margin: 4,
@@ -156,7 +89,10 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
   },
-
+  inputContainerStyle: {
+    margin: 4,
+    marginBottom: 0,
+  },
 });
 
 export default RegisterComponent;
