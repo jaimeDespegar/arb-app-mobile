@@ -8,6 +8,8 @@ import AppbarExample from './Examples/AppbarExample';
 import LoginComponent from './Examples/LoginComponent';
 import RegisterComponent from './Examples/RegisterComponent';
 import BottomNavigationExample from './Examples/BottomNavigationExample';
+import EntranceParkingComponent from './Examples/EntranceParkingComponent';
+import EgressParkingComponent from './Examples/EgressParkingComponent';
 
 export const examples: Record<
   string,
@@ -17,6 +19,8 @@ export const examples: Record<
   bottomNavigation: BottomNavigationExample,
   loginComponent: LoginComponent,
   registerComponent: RegisterComponent,
+  entranceParkingComponent: EntranceParkingComponent,
+  egressParkingComponent: EgressParkingComponent
 };
 
 type Props = {
