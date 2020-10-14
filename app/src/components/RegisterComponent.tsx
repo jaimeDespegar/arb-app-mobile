@@ -9,12 +9,6 @@ const initialState = {
   flatTextSecureEntry: true,
 };
 
-type AvoidingViewProps = { children: React.ReactNode; };
-
-const TextInputAvoidingView = ({ children }: AvoidingViewProps) => {
-  return ( <>{children}</> );
-};
-
 const RegisterComponent = () => {
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
   const {
@@ -28,7 +22,6 @@ const RegisterComponent = () => {
     });
 
   return (
-    <TextInputAvoidingView>
         <View style={styles.inputs}>
           <View style={styles.inputContainerStyle}>
             <TextInput
@@ -39,10 +32,9 @@ const RegisterComponent = () => {
               onChangeText={name => inputActionHandler('name', name)}
             />
           </View>
-          <EmailInput />
-          {/* label="Confirmar Email"
-              placeholder="Ingrese su email nuevamente" */}
-          <EmailInput />
+          
+          <EmailInput label="Email" placeholder="Ingrese su email"/>
+          <EmailInput label="Confirmar Email" placeholder="Ingrese su email nuevamente"/>
 
           <View style={styles.inputContainerStyle}>
             <TextInput
@@ -71,7 +63,6 @@ const RegisterComponent = () => {
             Registar
           </Button>
         </View>
-    </TextInputAvoidingView>
   );
 };
 

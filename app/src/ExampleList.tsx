@@ -4,7 +4,6 @@ import { List, Divider, useTheme } from 'react-native-paper';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import AppbarExample from './components/AppbarExample';
 import BottomNavigationExample from './components/BottomNavigationExample';
 import LoginComponent from './components/LoginComponent';
 import RegisterComponent from './components/RegisterComponent';
@@ -15,7 +14,6 @@ export const examples: Record<
   string,
   React.ComponentType<any> & { title: string }
 > = {
-  appbar: AppbarExample,
   bottomNavigation: BottomNavigationExample,
   loginComponent: LoginComponent,
   registerComponent: RegisterComponent,

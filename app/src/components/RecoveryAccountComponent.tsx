@@ -3,23 +3,14 @@ import {  StyleSheet, View, } from 'react-native';
 import { Button } from 'react-native-paper';
 import EmailInput from './EmailInput';
 
-type AvoidingViewProps = { children: React.ReactNode; };
-
-const TextInputAvoidingView = ({ children }: AvoidingViewProps) => {
-  return ( <>{children}</> );
-};
-
 const RecoveryAccountComponent = () => {
-
   return (
-    <TextInputAvoidingView>
-        <View style={styles.inputs}>
-          <EmailInput style={{marginBottom:4}}/>
-          <Button mode="contained" onPress={() => {}} style={styles.button}>
-            Recuperar
-          </Button>
-        </View>
-    </TextInputAvoidingView>
+      <View style={styles.inputs}>
+        <EmailInput  label="Email" placeholder="Ingrese su email" style={{marginBottom:12}}/>
+        <Button mode="contained" onPress={() => {}} style={styles.button}>
+          Recuperar
+        </Button>
+      </View>
   );
 };
 
@@ -33,7 +24,7 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 4,
-    marginTop: 0,
+    marginTop: 8,
     height: 50,
     justifyContent: 'center',
   },

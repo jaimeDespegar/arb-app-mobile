@@ -8,12 +8,6 @@ const initialState = {
   flatTextSecureEntry: true,
 };
 
-type AvoidingViewProps = { children: React.ReactNode; };
-
-const TextInputAvoidingView = ({ children }: AvoidingViewProps) => {
-  return ( <>{children}</> );
-};
-
 const LoginComponent = () => {
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
   const {
@@ -28,9 +22,8 @@ const LoginComponent = () => {
     });
 
   return (
-    <TextInputAvoidingView>
         <View style={styles.inputs}>        
-          <EmailInput />
+          <EmailInput label="Email" placeholder="Ingrese su email" />
           <View style={styles.inputContainerStyle}>
             <TextInput
               label="Contraseña"
@@ -66,7 +59,6 @@ const LoginComponent = () => {
             Crear Cuenta
           </Button>
         </View>
-    </TextInputAvoidingView>
   );
 };
 

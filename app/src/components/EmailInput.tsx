@@ -7,7 +7,7 @@ const initialState = {
     email: '',
 };
 
-const EmailInput = () => {
+const EmailInput = (props) => {
     const [state, dispatch] = React.useReducer(inputReducer, initialState);
     
     const inputActionHandler = (type: string, payload: string) =>
@@ -15,7 +15,7 @@ const EmailInput = () => {
             type: type,
             payload: payload,
     });
-
+    
     const {
         email,
     } = state;
@@ -26,8 +26,8 @@ const EmailInput = () => {
     return (
         <View style={styles.inputContainerStyle}>
             <TextInput
-              label="Email"
-              placeholder="Ingrese su email"
+              label={props.label}
+              placeholder={props.placeholder}
               value={email}
               error={email && !isEmailValid(email)}
               onChangeText={email => inputActionHandler('email', email)}

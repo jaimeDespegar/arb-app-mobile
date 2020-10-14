@@ -6,6 +6,7 @@ import {
   Dimensions,
   StyleSheet,
   Platform,
+  Text
 } from 'react-native';
 import { BottomNavigation } from 'react-native-paper';
 
@@ -20,6 +21,15 @@ type RoutesState = Array<{
 }>;
 
 type Route = { route: { key: string } };
+
+const History = () => {
+
+  return (
+        <View style={styles.item}>
+          <Text>Aca va las ultimas estadias!</Text>
+        </View>
+  );
+};
 
 const PhotoGallery = ({ route }: Route) => {
   const PHOTOS = Array.from({ length: 24 }).map(
@@ -40,23 +50,28 @@ const PhotoGallery = ({ route }: Route) => {
 const BottomNavigationExample = () => {
   const [index, setIndex] = React.useState<number>(0);
   const [routes] = React.useState<RoutesState>([
-    { key: 'album', title: 'Album', icon: 'image-album', color: '#6200ee' },
+    { 
+      key: 'album', 
+      title: 'Mi Estadia', 
+      icon: 'image-album', 
+      color: '#6200ee' 
+    },
     {
       key: 'library',
-      title: 'Library',
+      title: 'Estado',
       icon: 'inbox',
       color: '#2962ff',
       badge: true,
     },
     {
       key: 'favorites',
-      title: 'Favorites',
+      title: 'Disponibilidad',
       icon: 'heart',
       color: '#00796b',
     },
     {
       key: 'purchased',
-      title: 'Purchased',
+      title: 'Historial',
       icon: 'shopping-music',
       color: '#c51162',
     },
@@ -70,14 +85,14 @@ const BottomNavigationExample = () => {
         album: PhotoGallery,
         library: PhotoGallery,
         favorites: PhotoGallery,
-        purchased: PhotoGallery,
+        purchased: History,
       })}
       sceneAnimationEnabled={false}
     />
   );
 };
 
-BottomNavigationExample.title = 'Bottom Navigation';
+BottomNavigationExample.title = 'Estadia';
 
 export default BottomNavigationExample;
 
