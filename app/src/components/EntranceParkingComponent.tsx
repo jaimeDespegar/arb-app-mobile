@@ -26,12 +26,12 @@ const initialState = {
         type: type,
         payload: payload,
       });
-  
+      const  userName= 'Pepe';
     return (
       <TextInputAvoidingView>
           <View style={styles.inputs}>
-            <Text style={styles.hello}>
-              Bienvenido a la UNGS, Pepe!
+            <Text style={styles.goodBye}>
+              Bienvenido a la UNGS, {userName}!
             </Text>
             
             <Button mode="contained" onPress={() => {}} style={styles.button}>
@@ -45,39 +45,20 @@ const initialState = {
   EntranceParkingComponent.title = 'Entrance Parking';
   
   const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      padding: 8,
-      alignItems: 'center'
+    goodBye: {
+      fontSize: 20,
+      textAlign: 'center',
+      margin: 100
     },
-    hello: {
-        flex: 1,
-        flexDirection: 'column',
-        backgroundColor: 'white',
-        justifyContent: 'center',
-        alignItems: 'center'
-      },
     inputs: {
       flex: 1,
       padding: 8,
       justifyContent: 'center'
     },
-    wrapper: {
-      flex: 1,
-    },
-    inputContainerStyle: {
-      margin: 4,
-    },
     button: {
       margin: 4,
       height: 50,
       justifyContent: 'center',
-    },
-    forgotMyPasswordText: {
-      color: 'rgb(98, 0, 238)', 
-      marginLeft: 1,
-      marginTop: 6, 
-      marginBottom: 12
     }
   });
   
