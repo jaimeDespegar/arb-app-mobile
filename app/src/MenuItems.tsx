@@ -8,6 +8,7 @@ import {
   Colors,
   useTheme,
 } from 'react-native-paper';
+import StayBikeNavigation from './components/StayBikeNavigation';
 
 type Props = {
   toggleTheme: () => void;
@@ -18,12 +19,11 @@ type Props = {
 
 const DrawerItemsData = [
   { label: 'Inicio', icon: 'home', key: 0 },
-  { label: 'Estadia', icon: 'heart', key: 1 },
-  { label: 'Historial', icon: 'book', key: 2 },
-  { label: 'Mi Perfil', icon: 'send', key: 3 },
+  { label: 'Estadia', icon: 'heart', colors: { colors:{primary: Colors.tealA200}}, key: 1 },
+  { label: 'Mi Perfil', icon: 'send', colors: { colors:{primary: Colors.redA200}}, key: 3 },
 ];
 
-const DrawerItems = ({ toggleTheme, toggleRTL, isRTL, isDarkTheme }: Props) => {
+const MenuItems = ({ toggleTheme, isDarkTheme }: Props) => {
   const [drawerItemIndex, setDrawerItemIndex] = React.useState<number>(0);
 
   const _setDrawerItem = (index: number) => setDrawerItemIndex(index);
@@ -32,22 +32,17 @@ const DrawerItems = ({ toggleTheme, toggleRTL, isRTL, isDarkTheme }: Props) => {
 
   return (
     <View style={[styles.drawerContent, { backgroundColor: colors.surface }]}>
-      <Drawer.Section title="Example items">
+      <Drawer.Section title="Menu">
         {DrawerItemsData.map((props, index) => (
           <Drawer.Item
             {...props}
             key={props.key}
-            theme={
-              props.key === 1 || props.key === 3
-                ? { colors: { primary: Colors.tealA200 } }
-                : undefined
-            }
+            theme={props.colors}
             active={drawerItemIndex === index}
             onPress={() => _setDrawerItem(index)}
           />
         ))}
       </Drawer.Section>
-
       <Drawer.Section title="Preferencias">
         <TouchableRipple onPress={toggleTheme}>
           <View style={styles.preference}>
@@ -55,6 +50,13 @@ const DrawerItems = ({ toggleTheme, toggleRTL, isRTL, isDarkTheme }: Props) => {
             <View pointerEvents="none">
               <Switch value={isDarkTheme} />
             </View>
+          </View>
+        </TouchableRipple>
+      </Drawer.Section>
+      <Drawer.Section title="Mi Cuenta">
+        <TouchableRipple onPress={()=>{}}>
+          <View style={styles.preference}>
+            <Text>Cerrar Session</Text>
           </View>
         </TouchableRipple>
       </Drawer.Section>
@@ -75,4 +77,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DrawerItems;
+export default MenuItems;

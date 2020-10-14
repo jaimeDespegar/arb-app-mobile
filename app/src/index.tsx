@@ -11,7 +11,7 @@ import {
   Theme,
 } from 'react-native-paper';
 import App from './RootNavigator';
-import DrawerItems from './DrawerItems';
+import MenuItems from './MenuItems';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 YellowBox.ignoreWarnings(['Require cycle:']);
@@ -25,7 +25,7 @@ const DrawerContent = () => {
   return (
     <PreferencesContext.Consumer>
       {preferences => (
-        <DrawerItems
+        <MenuItems
           toggleTheme={preferences.toggleTheme}
           toggleRTL={preferences.toggleRtl}
           isRTL={preferences.rtl}

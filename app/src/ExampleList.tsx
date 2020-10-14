@@ -3,26 +3,17 @@ import { FlatList } from 'react-native';
 import { List, Divider, useTheme } from 'react-native-paper';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { StackNavigationProp } from '@react-navigation/stack';
-
-import BottomNavigationExample from './components/BottomNavigationExample';
 import LoginComponent from './components/LoginComponent';
 import RegisterComponent from './components/RegisterComponent';
 import RecoveryAccountComponent from './components/RecoveryAccountComponent';
-import EntranceParkingComponent from './components/EntranceParkingComponent';
-import EgressParkingComponent from './components/EgressParkingComponent';
-import AvailabilityParkingComponent from './components/AvailabilityParkingComponent';
 
 export const examples: Record<
   string,
   React.ComponentType<any> & { title: string }
 > = {
-  bottomNavigation: BottomNavigationExample,
   loginComponent: LoginComponent,
   registerComponent: RegisterComponent,
   recoveryAccountComponent: RecoveryAccountComponent,
-  entranceParkingComponent: EntranceParkingComponent,
-  egressParkingComponent: EgressParkingComponent,
-  availabilityParkingComponent : AvailabilityParkingComponent
 };
 
 type Props = {
