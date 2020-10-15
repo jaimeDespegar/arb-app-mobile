@@ -20,9 +20,9 @@ const StateBikeComponent = () => {
                 <Card.Title
                     title={buildMessage(2, 10)}
                     subtitle={description}
-                // right={(props: any) => (
-                //     <IconButton {...props} icon="chevron-down" onPress={() => {}} />
-                // )}
+                right={(props: any) => (
+                    <IconButton {...props} icon="bike" onPress={() => {}} />
+                )}
                 />
             </Card>
             <View style={styles.viewButton}>
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
      //   alignItems: 'center'
     },
     button: {
+      justifyContent: 'center',
       margin: 4,
       height: 50,
       //width: '50%'
