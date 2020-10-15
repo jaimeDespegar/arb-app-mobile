@@ -8,7 +8,7 @@ import {
   Colors,
   useTheme,
 } from 'react-native-paper';
-import StayBikeNavigation from './components/StayBikeNavigation';
+
 
 type Props = {
   toggleTheme: () => void;

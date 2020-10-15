@@ -33,7 +33,7 @@ const StayBikeNavigation = () => {
   const [index, setIndex] = React.useState<number>(0);
   const [routes] = React.useState<RoutesState>([
     { 
-      key: 1, 
+      key: 'myStay', 
       title: 'Mi Estadia', 
       icon: 'image-album', 
       color: '#6200ee' 

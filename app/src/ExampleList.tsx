@@ -6,6 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import LoginComponent from './components/LoginComponent';
 import RegisterComponent from './components/RegisterComponent';
 import RecoveryAccountComponent from './components/RecoveryAccountComponent';
+import StayBikeNavigation from './components/StayBikeNavigation';
 
 export const examples: Record<
   string,
@@ -14,6 +15,7 @@ export const examples: Record<
   loginComponent: LoginComponent,
   registerComponent: RegisterComponent,
   recoveryAccountComponent: RecoveryAccountComponent,
+  stayBikeNavigation: StayBikeNavigation,
 };
 
 type Props = {

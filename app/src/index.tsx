@@ -14,7 +14,7 @@ import App from './RootNavigator';
 import MenuItems from './MenuItems';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-YellowBox.ignoreWarnings(['Require cycle:']);
+//YellowBox.ignoreWarnings(['Require cycle:']);
 
 const PERSISTENCE_KEY = 'NAVIGATION_STATE';
 const PREFERENCES_KEY = 'APP_PREFERENCES';

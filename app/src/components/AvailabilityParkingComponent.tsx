@@ -2,7 +2,7 @@ import * as React from 'react';
 import {  StyleSheet, View, Text  } from 'react-native';
 import { Button } from 'react-native-paper';
 
-const availabilityParkingComponent = () => {
+const AvailabilityParkingComponent = () => {
  
   const  bicicletero= '1';
 
@@ -19,7 +19,7 @@ const availabilityParkingComponent = () => {
   );
 };
 
-availabilityParkingComponent.title = 'Availability Parking';
+AvailabilityParkingComponent.title = 'Availability Parking';
 
 const styles = StyleSheet.create({
   inputs: {
@@ -40,4 +40,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default availabilityParkingComponent;
+export default AvailabilityParkingComponent;
