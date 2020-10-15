@@ -4,14 +4,21 @@ import { Button } from 'react-native-paper';
 
 const availabilityParkingComponent = () => {
  
-  const  bicicletero= '1';
+  const  bicicletero= 1;
+  const  message_availability= (bicicletero >= 1)? "Hay disponibilidad":"No hay mas lugar";
 
+  const stylesContainer = {
+    ...styles.inputs,//clonacion
+    backgroundColor: (bicicletero >= 1)? '#82b74b':'red'
+  };
+
+  //console.log(stylesContainer) //es el print()
   return (
-    <View style={styles.inputs}>
+    <View style={stylesContainer}>
       <Text style={styles.welcome}>
-        ¡Disponibilidad en el bicicletero {bicicletero} !
+        {message_availability}
       </Text>
-      
+        
       <Button mode="contained" onPress={() => {}} style={styles.button}>
         Actualizar
       </Button>
@@ -21,22 +28,23 @@ const availabilityParkingComponent = () => {
 
 availabilityParkingComponent.title = 'Availability Parking';
 
+
+
 const styles = StyleSheet.create({
   inputs: {
     flex: 1,
     padding: 8,
-    justifyContent: 'center'
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 100,
-    backgroundColor : 'green'
+    justifyContent: 'center',
   },
   button: {
     margin: 4,
     height: 50,
     justifyContent: 'center',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 100,
   },
 });
 
