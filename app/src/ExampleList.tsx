@@ -8,6 +8,8 @@ import RegisterComponent from './components/RegisterComponent';
 import RecoveryAccountComponent from './components/RecoveryAccountComponent';
 import StayBikeNavigation from './components/StayBikeNavigation';
 
+import Fetch_Example from './components/Fetch_Example';//NUEVO
+
 export const examples: Record<
   string,
   React.ComponentType<any> & { title: string }
@@ -16,6 +18,8 @@ export const examples: Record<
   registerComponent: RegisterComponent,
   recoveryAccountComponent: RecoveryAccountComponent,
   stayBikeNavigation: StayBikeNavigation,
+  fetch_Example: Fetch_Example,//NUEVO
+
 };
 
 type Props = {
