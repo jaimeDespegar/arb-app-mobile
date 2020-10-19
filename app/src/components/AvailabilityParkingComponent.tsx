@@ -1,24 +1,33 @@
 import * as React from 'react';
-import {  StyleSheet, View, Text  } from 'react-native';
+import {  StyleSheet, View, Text,FlatList,ActivityIndicator  } from 'react-native';
 import { Button } from 'react-native-paper';
+import { useEffect ,useState} from 'react';
 
 const AvailabilityParkingComponent = () => {
- 
-  const  bicicletero= 1;
-  const  message_availability= (bicicletero >= 1)? "Hay disponibilidad":"No hay mas lugar";
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  //const  bicicletero= 1;
+  
+  useEffect(() => {
+    fetch('http://192.168.1.103:8000/api/bicycleParking-availability/')
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+  }, []);
+  
+  console.log(data) //es el print()
 
+  const  message_availability= (data.freePlaces >= 1)? "Hay disponibilidad":"No hay mas lugar";
   const stylesContainer = {
     ...styles.inputs,//clonacion
-    backgroundColor: (bicicletero >= 1)? '#82b74b':'red'
+    backgroundColor: (data.freePlaces >= 1)? '#82b74b':'red'
   };
-
-  //console.log(stylesContainer) //es el print()
   return (
     <View style={stylesContainer}>
       <Text style={styles.welcome}>
         {message_availability}
       </Text>
-        
       <Button mode="contained" onPress={() => {}} style={styles.button}>
         Actualizar
       </Button>
