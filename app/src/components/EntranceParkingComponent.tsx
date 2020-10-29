@@ -42,6 +42,31 @@ const EntranceParkingComponent = () => {
   //(ComboBox) Picker
   const [selectedValue, setSelectedValue] = useState("java");
 
+
+  // //POST
+  // //CARGO LOS NUEVOS DATOS DEL INPUT EN UN JSON
+  //   const someData = {
+  //     name: name,
+  //     email: "emailVacio",
+  //     password: flatTextPassword,
+  //     bicyclePhoto: bicyclePhoto,
+  //     profilePhoto: profilePhoto
+  //    }
+  //   //body: JSON.stringify(someData) // We send data in JSON format
+
+  //   const postMethod = {
+  //     method: 'POST',
+  //     headers: {
+  //      'Content-type': 'application/json; charset=UTF-8' // Indicates the content 
+  //     },
+  //     body: JSON.stringify(someData) // We send data in JSON format
+  //    }
+  //    const postData = () => {
+  //     fetch('http://192.168.1.103:8000/api/bikeOwner-create/', postMethod)
+  //     .then(response => response.json())
+  //     .then(data => console.log(someData)) 
+  //    .catch(err => console.log(err))
+  //    }
   return (
     <View style={styles.inputs}>
       <Text style={styles.goodBye}>
@@ -50,7 +75,7 @@ const EntranceParkingComponent = () => {
       <Picker
         selectedValue={selectedValue}
         style={{ height: 50, width: 150 }}
-        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+        onValueChange={(itemValue, itemIndex) => {setSelectedValue(itemValue); console.log(itemValue)}}
       >
         <Picker.Item label="1" value="1" />
         <Picker.Item label="2" value="2" />

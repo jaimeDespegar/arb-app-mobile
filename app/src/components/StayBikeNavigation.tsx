@@ -1,6 +1,3 @@
-//Es un componente de componentes
-//No falta nada
-
 import * as React from 'react';
 import {
   View,

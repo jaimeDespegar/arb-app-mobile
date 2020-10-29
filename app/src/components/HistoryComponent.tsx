@@ -1,12 +1,3 @@
-// Historial Mobile
-// https://callstack.github.io/react-native-paper/chip.html
-// Usar Card
-
-// Hay que mostrar las últimas estad{ias que realizo.
-// Primero probarlo con el getall,....
-
-//Luego hacer el StateBikeComponent
-
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Text, View, StyleSheet, } from 'react-native';
 
