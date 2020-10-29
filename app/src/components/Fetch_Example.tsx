@@ -5,6 +5,7 @@ import axios from "axios";
 const Fetch_Example = () => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
+    //http://127.0.0.1:8000/admin/
     //http://192.168.1.103:8000/api/bicycleParking-getAll/
     useEffect(() => {
       fetch('https://reactnative.dev/movies.json')

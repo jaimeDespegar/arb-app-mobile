@@ -7,6 +7,7 @@ import LoginComponent from './components/LoginComponent';
 import RegisterComponent from './components/RegisterComponent';
 import RecoveryAccountComponent from './components/RecoveryAccountComponent';
 import StayBikeNavigation from './components/StayBikeNavigation';
+import EditRegisterComponent from './components/EditRegisterComponent';
 
 //import Fetch_Example from './components/Fetch_Example';//NUEVO
 
@@ -19,7 +20,7 @@ export const examples: Record<
   recoveryAccountComponent: RecoveryAccountComponent,
   stayBikeNavigation: StayBikeNavigation,
   //fetch_Example: Fetch_Example,//NUEVO
-
+  editRegisterComponent : EditRegisterComponent,
 };
 
 type Props = {
