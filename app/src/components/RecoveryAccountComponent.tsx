@@ -1,3 +1,5 @@
+//lo mismo que Login
+
 import * as React from 'react';
 import {  StyleSheet, View, } from 'react-native';
 import { Button } from 'react-native-paper';

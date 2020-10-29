@@ -1,3 +1,6 @@
+//Es un componente de componentes
+//No falta nada
+
 import * as React from 'react';
 import {
   View,
@@ -8,6 +11,7 @@ import { BottomNavigation } from 'react-native-paper';
 import AvailabilityParkingComponent from './AvailabilityParkingComponent';
 import EntranceParkingComponent from './EntranceParkingComponent';
 import StateBikeComponent from './StateBikeComponent';
+import HistoryComponent from './HistoryComponent';
 
 type RoutesState = Array<{
   key: string;
@@ -21,13 +25,14 @@ type RoutesState = Array<{
 
 type Route = { route: { key: string } };
 
-const History = () => {
-  return (
-        <View style={styles.item}>
-          <Text>Aca va las ultimas estadias!</Text>
-        </View>
-  );
-};
+// //Borrar luego de crear el HistoryComponent.tsx
+// const History = () => {
+//   return (
+//         <View style={styles.item}>
+//           <Text>Aca va las ultimas estadias!</Text>
+//         </View>
+//   );
+// };
 
 const StayBikeNavigation = () => {
   const [index, setIndex] = React.useState<number>(0);
@@ -67,7 +72,7 @@ const StayBikeNavigation = () => {
         myStay: EntranceParkingComponent,
         stateMyBike: StateBikeComponent,
         available: AvailabilityParkingComponent,
-        history: History,
+        history: HistoryComponent,
       })}
       sceneAnimationEnabled={false}
     />

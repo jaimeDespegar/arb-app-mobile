@@ -1,3 +1,5 @@
+//primero hay que hacer lo del Objetivo 4, la parte de administración de usuarios
+
 import * as React from 'react';
 import {  StyleSheet, View, TouchableOpacity, Text  } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';

@@ -1,3 +1,5 @@
+//le falta lo del email
+
 import * as React from 'react';
 import {  StyleSheet, View, ScrollView } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';

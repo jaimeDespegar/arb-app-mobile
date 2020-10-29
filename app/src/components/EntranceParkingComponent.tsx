@@ -1,3 +1,7 @@
+//Vincularlo con la API (post-get-put)
+//Validaciones
+//Se deja para lo último 
+
 import * as React from 'react';
 import { useState } from "react"; ///(ComboBox) Picker
 import {  StyleSheet, View, TouchableOpacity, Text, Picker  } from 'react-native';

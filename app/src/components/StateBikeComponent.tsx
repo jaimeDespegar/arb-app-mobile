@@ -1,3 +1,5 @@
+//falta el GET y llenar los campos hardcodeados
+
 import * as React from 'react';
 import {  StyleSheet, View  } from 'react-native';
 import {   Card, Button, IconButton, Title } from 'react-native-paper';

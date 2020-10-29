@@ -1,3 +1,5 @@
+//Integrarlo con la API, primero se hace el del INGRESO
+
 import * as React from 'react';
 import {  StyleSheet, View, TouchableOpacity, Text  } from 'react-native';
 import { TextInput, HelperText, useTheme, Button } from 'react-native-paper';
