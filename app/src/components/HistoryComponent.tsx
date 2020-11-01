@@ -7,8 +7,6 @@ import { format } from 'date-fns';
 const HistoryComponent = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-  
-  axios.defaults.timeout = 1500;
 
   useEffect(() => { 
     axios
