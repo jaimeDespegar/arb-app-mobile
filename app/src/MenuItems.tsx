@@ -1,14 +1,10 @@
 import * as React from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
 import {
-  Drawer,
-  Switch,
-  TouchableRipple,
-  Text,
-  Colors,
-  useTheme,
+  Drawer, Switch, TouchableRipple,
+  Text, Colors, useTheme,
 } from 'react-native-paper';
-
+import axios from 'axios';
 
 type Props = {
   toggleTheme: () => void;
@@ -16,6 +12,22 @@ type Props = {
   isRTL: boolean;
   isDarkTheme: boolean;
 };
+
+function logOut() {
+
+  if (axios.defaults.headers.common.Authorization) {
+    axios
+    .get('http://192.168.1.56:8000/api/auth/logout/')
+    .then(response => {
+      axios.defaults.headers.common.Authorization = null;
+      console.log('User logout! ', response.status, response.statusText);
+    })
+    .catch(error => console.log(error));    
+  } else {
+    console.log('El usuario ya esta deslogueado.')
+  }
+
+}
 
 const DrawerItemsData = [
   { label: 'Inicio', icon: 'home', key: 0 },
@@ -54,7 +66,7 @@ const MenuItems = ({ toggleTheme, isDarkTheme }: Props) => {
         </TouchableRipple>
       </Drawer.Section>
       <Drawer.Section title="Mi Cuenta">
-        <TouchableRipple onPress={()=>{}}>
+        <TouchableRipple onPress={logOut}>
           <View style={styles.preference}>
             <Text>Cerrar Session</Text>
           </View>

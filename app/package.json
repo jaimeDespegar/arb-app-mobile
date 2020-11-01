@@ -15,6 +15,7 @@
     "@react-navigation/stack": "^5.4.2",
     "axios": "^0.20.0",
     "color": "^3.1.2",
+    "date-fns": "^2.16.1",
     "expo": "^39.0.3",
     "expo-keep-awake": "~8.3.0",
     "native-base": "^2.13.14",

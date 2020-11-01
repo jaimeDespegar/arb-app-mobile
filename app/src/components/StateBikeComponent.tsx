@@ -1,32 +1,37 @@
 import React, { useEffect , useState} from "react";
 import {  StyleSheet, View  } from 'react-native';
 import {   Card, Button, IconButton, Title } from 'react-native-paper';
-import { inputReducer } from '../../utils';
+import axios from 'axios';
 
 
 const StateBikeComponent = () => {
     //CARGA DATOS EXISTENTES (bicycleParking)
-    const [isLoading, setLoading] = useState(true);
+    
     const [data, setData] = useState({});
+
     useEffect(() => {
-        fetch('http://192.168.1.108:8000/api/bicycleParking-get/1')
-          .then((response) => response.json())
-          .then((json) => setData(json))
-          .catch((error) => console.error(error))
-          .finally(() => setLoading(false));
+        axios
+          .get('bicycleParking-get/1')
+          .then(json => {
+                setData(json.data)
+                console.log('ok bicycle ', json.data)
+            })
+          .catch((error) => console.log('error bicycle get 1'))
       }, []);
 
     //CARGA DATOS EXISTENTES (bicycleParking)
     const  userName= 'Test_3';
-    const [isLoading2, setLoading2] = useState(true);
     const [data2, setData2] = useState({});
     
     useEffect(() => {
-        fetch('http://192.168.1.108:8000/api/estadias-getUser/'+userName+'/') //ya no es por id!!!
-          .then((response) => response.json())
-          .then((json) => setData2(json))
-          .catch((error) => console.error(error))
-          .finally(() => setLoading2(false));
+	// estadias-getUser/'+userName+'/') //ya no es por id!
+        axios
+          .get('estadias-get/8')
+          .then(json => {
+                setData2(json.data)
+                console.log('ok estadia ', json.data)
+            })
+          .catch((error) => console.log('error estadia get 8'))
       }, []);
 
     const buildMessage = (nroBicicletero: number, 

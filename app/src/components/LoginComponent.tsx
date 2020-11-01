@@ -2,19 +2,45 @@
 
 import * as React from 'react';
 import {  StyleSheet, View, TouchableOpacity, Text  } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
+import { TextInput, Button, Paragraph, Dialog, Portal } from 'react-native-paper';
 import { inputReducer } from '../../utils';
-import EmailInput from './EmailInput';
+import axios from 'axios';
+
 
 const initialState = {
   flatTextSecureEntry: true,
+  userName: ''
 };
+
+function handleRequest(userName: string, password: string, showDialog: Function) {
+
+  const data = { 'username': userName, 'password': password } 
+
+  if (axios.defaults.headers.common.Authorization) {
+    axios.defaults.headers.common.Authorization = null;
+  }
+
+  axios
+    .post('auth/login/', data)
+    .then(response => {
+      const { token, user } = response.data;
+
+      axios.defaults.headers.common.Authorization = `Token ${token}`;
+      console.log('User logged: ', userName + ' - ' + token)
+      
+    })
+    .catch(error => {
+      console.log('Sign In Fail');
+      showDialog()
+    });
+}
 
 const LoginComponent = () => {
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
   const {
     flatTextSecureEntry,
-    flatTextPassword,
+    password,
+    userName
   } = state;
 
   const inputActionHandler = (type: string, payload: string) =>
@@ -23,16 +49,36 @@ const LoginComponent = () => {
       payload: payload,
     });
 
+    const [visible, setVisible] = React.useState(false);
+
+    const showDialog = () => setVisible(true);
+  
+    const hideDialog = () => setVisible(false);
+  
   return (
         <View style={styles.inputs}>        
-          <EmailInput label="Email" placeholder="Ingrese su email" />
+          <View style={styles.inputContainerStyle}>
+            <TextInput
+              label={'Nombre de usuario'}
+              placeholder={'Ingrese su nombre de usuario'}
+              value= {userName}
+              onChangeText={(userName) => inputActionHandler('userName', userName)}
+              right={
+                <TextInput.Icon
+                  name={!(userName) ? 'account' : 'check'}
+                  onPress={() => {}}
+                  forceTextInputFocus={false}
+                />
+              }
+            />
+          </View>
           <View style={styles.inputContainerStyle}>
             <TextInput
               label="Contraseña"
               placeholder="Ingrese su contraseña"
-              value={flatTextPassword}
-              onChangeText={(flatTextPassword) =>
-                inputActionHandler('flatTextPassword', flatTextPassword)
+              value={password}
+              onChangeText={(password) =>
+                inputActionHandler('password', password)
               }
               secureTextEntry={flatTextSecureEntry}
               right={
@@ -54,12 +100,26 @@ const LoginComponent = () => {
                 </Text>
             </TouchableOpacity>
           </View>
-          <Button mode="contained" onPress={() => {}} style={styles.button}>
+          <Button mode="contained" onPress={() => handleRequest(userName, password, showDialog)} style={styles.button}>
             Ingresar
           </Button>
           <Button mode="outlined" onPress={() => {}} style={styles.button}>
             Crear Cuenta
           </Button>
+      
+          <View>
+            <Portal>
+              <Dialog visible={visible} onDismiss={hideDialog}>
+                <Dialog.Title>Error al iniciar sesion</Dialog.Title>
+                <Dialog.Content>
+                  <Paragraph>Verifique los datos ingresados e intente nuevamente</Paragraph>
+                </Dialog.Content>
+                <Dialog.Actions>
+                  <Button onPress={hideDialog}>Ok</Button>
+                </Dialog.Actions>
+              </Dialog>
+            </Portal>
+          </View>
         </View>
   );
 };

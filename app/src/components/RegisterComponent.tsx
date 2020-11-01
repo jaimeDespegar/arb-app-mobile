@@ -1,15 +1,16 @@
-//le falta lo del email
-
 import * as React from 'react';
 import {  StyleSheet, View, ScrollView } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
+import { TextInput, Button, Paragraph, Dialog, Portal } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import EmailInput from './EmailInput';
+import axios from 'axios';
+
 
 const initialState = {
   name: '',
   flatTextSecureEntry: true,
-  email:'',
+  email: '',
+  confirmEmail: '',
   flatTextPassword:'',
   bicyclePhoto:'',
   profilePhoto:'',
@@ -18,7 +19,7 @@ const initialState = {
 const RegisterComponent = () => {
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
   const {
-    name, flatTextSecureEntry, flatTextPassword, email, bicyclePhoto, profilePhoto
+    name, flatTextSecureEntry, flatTextPassword, email, confirmEmail, bicyclePhoto, profilePhoto
   } = state;
 
   const inputActionHandler = (type: string, payload: string) =>
@@ -27,30 +28,44 @@ const RegisterComponent = () => {
       payload: payload,
     });
   
-  //POST
-  //CARGO LOS NUEVOS DATOS DEL INPUT EN UN JSON
+  const [visible, setVisible] = React.useState(false);
+  const showDialog = () => setVisible(true);
+  const hideDialog = () => setVisible(false);  
+  
+  const postData = () => {
+    
     const someData = {
-      name: name,
-      email: "emailVacio",
-      password: flatTextPassword,
-      bicyclePhoto: bicyclePhoto,
-      profilePhoto: profilePhoto
-     }
-    //body: JSON.stringify(someData) // We send data in JSON format
+      "bicyclePhoto": bicyclePhoto,
+      "email": email,
+      "password": flatTextPassword,
+      "profilePhoto": profilePhoto,
+      "username": name
+    }
+    
+    console.log('user to post ', someData)
 
-    const postMethod = {
+    const params = {
       method: 'POST',
       headers: {
-       'Content-type': 'application/json; charset=UTF-8' // Indicates the content 
+       'Content-type': 'application/json' // Indicates the content 
       },
-      body: JSON.stringify(someData) // We send data in JSON format
-     }
-     const postData = () => {
-      fetch('http://192.168.1.108:8000/api/bikeOwner-create/', postMethod)
-      .then(response => response.json())
-      .then(data => console.log(someData)) 
-     .catch(err => console.log(err))
-     }
+      body: someData // We send data in JSON format
+    }
+    if (axios.defaults.headers.common.Authorization) {
+      axios.defaults.headers.common.Authorization = null;
+    }
+    axios
+      .post('auth/register/', params)
+      .then(response => response.data)
+      .then(data => {
+        axios.defaults.headers.common.Authorization = `Token ${data.token}`;
+        console.log('Registro OK: ', data)
+      }) 
+      .catch(err => {
+        console.log(err)
+        showDialog()
+      })
+  }
 
   return (
     <ScrollView>
@@ -60,13 +75,12 @@ const RegisterComponent = () => {
               label="Nombre"
               placeholder="Ingrese su nombre"
               value={name}
-              // error={!name}
               onChangeText={name => inputActionHandler('name', name)}
             />
           </View>
           
-          <EmailInput label="Email" email={email} onChangeText={inputValue =>  inputActionHandler('email', "text")} placeholder="Ingrese su email"/>
-          <EmailInput label="Confirmar Email" placeholder="Ingrese su email nuevamente"/>
+          <EmailInput label="Email" value={email} onChangeText={e => { inputActionHandler('email', e) }} placeholder="Ingrese su email"/>
+          <EmailInput label="Confirmar Email" value={confirmEmail} onChangeText={e => { inputActionHandler('confirmEmail', e) }}  placeholder="Ingrese su email nuevamente"/>
 
           <View style={styles.inputContainerStyle}>
             <TextInput
@@ -94,8 +108,8 @@ const RegisterComponent = () => {
           
           <View style={styles.inputContainerStyle}>
             <TextInput
-              label="bicyclePhoto"
-              placeholder="Ingrese su bicyclePhoto"
+              label="Foto de la bicicleta"
+              placeholder="Ingrese una foto de su bicicleta"
               value={bicyclePhoto}
               onChangeText={inputValue => inputActionHandler('bicyclePhoto', inputValue)}
             />
@@ -103,17 +117,29 @@ const RegisterComponent = () => {
 
           <View style={styles.inputContainerStyle}>
             <TextInput
-              label="foto de perfil"
+              label="Foto de perfil"
               placeholder="Ingrese su foto de perfil"
               value={profilePhoto}
               onChangeText={inputValue => inputActionHandler('profilePhoto', inputValue)}
             />
           </View>
 
-
           <Button mode="contained" onPress={() => postData()} style={styles.button}>
-            Registar
+          Registar
           </Button>
+          <View>
+            <Portal>
+              <Dialog visible={visible} onDismiss={hideDialog}>
+                <Dialog.Title>Error al Registrarse</Dialog.Title>
+                <Dialog.Content>
+                  <Paragraph>Verifique los datos ingresados e intente nuevamente</Paragraph>
+                </Dialog.Content>
+                <Dialog.Actions>
+                  <Button onPress={hideDialog}>Ok</Button>
+                </Dialog.Actions>
+              </Dialog>
+            </Portal>
+          </View>
         </View>
     </ScrollView>
   );

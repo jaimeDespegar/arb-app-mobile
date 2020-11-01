@@ -1,12 +1,20 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { Appbar } from 'react-native-paper';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 import ExampleList, { examples } from './ExampleList';
+import axios from 'axios';
 
 const Stack = createStackNavigator();
 
 export default function Root() {
+
+  useEffect(() => {
+    // 192.168.1.103
+    axios.defaults.baseURL = 'http://192.168.1.56:8000/api/';
+    axios.defaults.timeout = 1500;
+  }, [])
+
   return (
     <Stack.Navigator
       headerMode="screen"

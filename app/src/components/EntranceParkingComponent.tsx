@@ -8,6 +8,8 @@ import {  StyleSheet, View, TouchableOpacity, Text, Picker  } from 'react-native
 import { useTheme, Button, } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import { DialogWithCustomColors } from './Dialogs';
+import axios from 'axios';
+
 
 const initialState = {
     text: '',
@@ -33,7 +35,6 @@ const EntranceParkingComponent = () => {
       payload: payload,
     });
     const  userName2= 'Pepe';
-    //const [visible, setVisible] = React.useState<ButtonVisibility>({});
     const [visible, setVisible] = React.useState(false);
 
   const _toggleDialog = (name: string) => () =>
@@ -46,16 +47,14 @@ const EntranceParkingComponent = () => {
 
 
   //Alerta
-  const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-  //fetch('http://192.168.1.108:8000/api/notificationEgress-getUser/'+userName2+'/')//buscar userName
-  
+
   useEffect(() => {
-    fetch('http://192.168.1.108:8000/api/notificationEgress-get/13/')
-      .then((response) => response.json())
+    axios  
+      .get('notificationEgress-get/43/')
+      .then((response) => response.data)
       .then((json) => setData(json)) //es el print()
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
+      .catch((error) => console.error('Error Entrance', error))
 
       if(data.userName === "userName"){
         setVisible(true)
@@ -109,7 +108,6 @@ const EntranceParkingComponent = () => {
 
 EntranceParkingComponent.title = 'Entrance Parking';
 
-  
 const styles = StyleSheet.create({
   goodBye: {
     fontSize: 20,
