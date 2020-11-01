@@ -3,7 +3,7 @@
 //Se deja para lo último 
 
 import * as React from 'react';
-import { useState } from "react"; ///(ComboBox) Picker
+import { useState, useEffect } from "react"; ///(ComboBox) Picker
 import {  StyleSheet, View, TouchableOpacity, Text, Picker  } from 'react-native';
 import { useTheme, Button, } from 'react-native-paper';
 import { inputReducer } from '../../utils';
@@ -11,6 +11,7 @@ import { DialogWithCustomColors } from './Dialogs';
 
 const initialState = {
     text: '',
+    userName:'',
 };
 
 type ButtonVisibility = {
@@ -21,7 +22,7 @@ type ButtonVisibility = {
 const EntranceParkingComponent = () => {
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
   const {
-    text,
+    text,userName,photoPath,place,isOk,isSuspected,estadia
   } = state;
 
   const { colors } = useTheme();
@@ -31,8 +32,9 @@ const EntranceParkingComponent = () => {
       type: type,
       payload: payload,
     });
-    const  userName= 'Pepe';
-    const [visible, setVisible] = React.useState<ButtonVisibility>({});
+    const  userName2= 'Pepe';
+    //const [visible, setVisible] = React.useState<ButtonVisibility>({});
+    const [visible, setVisible] = React.useState(false);
 
   const _toggleDialog = (name: string) => () =>
     setVisible({ ...visible, [name]: !visible[name] });
@@ -43,32 +45,33 @@ const EntranceParkingComponent = () => {
   const [selectedValue, setSelectedValue] = useState("java");
 
 
-  // //POST
-  // //CARGO LOS NUEVOS DATOS DEL INPUT EN UN JSON
-  //   const someData = {
-  //     name: name,
-  //     email: "emailVacio",
-  //     password: flatTextPassword,
-  //     bicyclePhoto: bicyclePhoto,
-  //     profilePhoto: profilePhoto
-  //    }
-  //   //body: JSON.stringify(someData) // We send data in JSON format
+  //Alerta
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
 
-  //   const postMethod = {
-  //     method: 'POST',
-  //     headers: {
-  //      'Content-type': 'application/json; charset=UTF-8' // Indicates the content 
-  //     },
-  //     body: JSON.stringify(someData) // We send data in JSON format
-  //    }
-  //    const postData = () => {
-  //     fetch('http://192.168.1.103:8000/api/bikeOwner-create/', postMethod)
-  //     .then(response => response.json())
-  //     .then(data => console.log(someData)) 
-  //    .catch(err => console.log(err))
-  //    }
+  useEffect(() => {
+    fetch('http://192.168.1.108:8000/api/notificationEgress-get/43/')
+      .then((response) => response.json())
+      .then((json) => setData(json)) //es el print()
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+
+      if(data.userName === "userName"){
+        setVisible(true)
+        _getVisible('dialog5') 
+        console.log("tu bici esta en peligro!")
+      }
+      else{
+        console.log("tu bici esta ok")
+      }
+       
+  }, []);
+  
+  const notificarAlerta = () => (data.userName == "userName")?  _toggleDialog('dialog5') : "OK"
+  
   return (
     <View style={styles.inputs}>
+      
       <Text style={styles.goodBye}>
         Seleccione su estacionamiento:
       </Text>
@@ -83,29 +86,30 @@ const EntranceParkingComponent = () => {
         <Picker.Item label="4" value="4" />
         <Picker.Item label="5" value="5" />
         <Picker.Item label="6" value="6" />
-        <Picker.Item label="7" value="7" />
-        <Picker.Item label="8" value="8" />
-        <Picker.Item label="9" value="9" />
-        <Picker.Item label="10" value="10" />
       </Picker>
       <Text style={styles.goodBye}>
-        Bienvenido a la UNGS, {userName}!
+        Bienvenido a la UNGS, {userName2}!
       </Text>
       
       <Button mode="contained" onPress={() => {}} style={styles.button}>
         Estacionar Bicicleta
       </Button>
-      <Button mode="outlined" icon="alert" onPress={_toggleDialog('dialog5')} style={styles.button}>
+      <Button mode="outlined" icon="alert" onPress={_toggleDialog('dialog5')}  style={styles.stylesContainer}>
         Alerta Robo
       </Button>
       <DialogWithCustomColors
-        visible={_getVisible('dialog5')}
+        visible={visible}
         close={_toggleDialog('dialog5')}
+        data={data}
       />
     </View>
   );
 };
-  
+//close={setVisible(false)}
+//close={_toggleDialog('dialog5')} //funciona pero...
+//onPress={_toggleDialog('dialog5')}  //funciona
+//onPress={() => notificar()}
+//onPress={notificar()}
 EntranceParkingComponent.title = 'Entrance Parking';
 
   

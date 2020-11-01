@@ -8,8 +8,8 @@ const AvailabilityParkingComponent = () => {
   const [data, setData] = useState([]);
   //const  bicicletero= 1;
   
-  useEffect(() => {
-    fetch('http://192.168.1.103:8000/api/bicycleParking-availability/')
+  useEffect(() => {//192.168.1.108//javier
+    fetch('http://192.168.1.108:8000/api/bicycleParking-availability/')
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => console.error(error))
