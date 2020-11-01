@@ -35,6 +35,8 @@ const putFunction_OK = (data) => {
    }
    putData()
   }
+//fetch('http://192.168.1.108:8000/api/notificationEgress-updateUser/'+data.userName+'/')//buscar userName
+
 
 const putFunction_Suspected = (data) => {
 console.log("putFunction_Suspected")
@@ -65,7 +67,7 @@ const putMethod = {
  }
  putData()
 }
-//fetch('http://192.168.1.108:8000/api/notificationEgress-getUser/'+userName2+'/')//buscar userName
+//fetch('http://192.168.1.108:8000/api/notificationEgress-updateUser/'+data.userName+'/')//buscar userName
 const DialogWithCustomColors = ({
   visible,
   close,
