@@ -3,9 +3,7 @@ import { TextInput, HelperText } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import React, { useEffect , useState} from "react";
 
-const initialState = {
-    email: '',
-};
+const initialState = { email: '' };
 
 const EmailInput = (props) => {
     const [state, dispatch] = React.useReducer(inputReducer, initialState);
@@ -16,9 +14,7 @@ const EmailInput = (props) => {
             payload: payload,
     });
     
-    const {
-        email,
-    } = state;
+    const { email } = state;
 
     const formatEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     const isEmailValid = (name: string) => formatEmail.test(name);
@@ -27,6 +23,7 @@ const EmailInput = (props) => {
     useEffect(() => {
       inputActionHandler('email', props.email) // hay 2 tipos de email!!
     }, []);
+  
     return (
         <View style={styles.inputContainerStyle}>
             <TextInput
@@ -37,7 +34,7 @@ const EmailInput = (props) => {
               onChangeText={email => props.onChangeText} //{inputActionHandler('email', email)}
               right={
                 <TextInput.Icon
-                  name={!isEmailValid(email) ? '' : 'check'}
+                  name={!isEmailValid(email) ? 'info' : 'check'}
                   onPress={() => {}}
                   forceTextInputFocus={false}
                 />

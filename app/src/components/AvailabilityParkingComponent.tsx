@@ -1,34 +1,38 @@
 import * as React from 'react';
-import {  StyleSheet, View, Text,FlatList,ActivityIndicator  } from 'react-native';
+import {  StyleSheet, View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useEffect ,useState} from 'react';
+import axios from 'axios';
+
 
 const AvailabilityParkingComponent = () => {
-  const [isLoading, setLoading] = useState(true);
+
   const [data, setData] = useState([]);
-  //const  bicicletero= 1;
   
-  useEffect(() => {//192.168.1.108//javier
-    fetch('http://192.168.1.108:8000/api/bicycleParking-availability/')
-      .then((response) => response.json())
+  const checkAvailability = () => {
+    axios
+      .get('bicycleParking-availability/')
+      .then((response) => response.data)
       .then((json) => setData(json))
       .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
+  }
+  
+  useEffect(() => {//192.168.1.108//javier
+    checkAvailability();
   }, []);
   
-  console.log(data) //es el print()
-
   const  message_availability= (data.freePlaces >= 1)? "Hay disponibilidad":"No hay mas lugar";
   const stylesContainer = {
-    ...styles.inputs,//clonacion
+    ...styles.inputs, //clonacion
     backgroundColor: (data.freePlaces >= 1)? '#82b74b':'red'
   };
+
   return (
     <View style={stylesContainer}>
       <Text style={styles.welcome}>
         {message_availability}
       </Text>
-      <Button mode="contained" onPress={() => {}} style={styles.button}>
+      <Button mode="contained" onPress={checkAvailability} style={styles.button}>
         Actualizar
       </Button>
     </View>
@@ -36,7 +40,6 @@ const AvailabilityParkingComponent = () => {
 };
 
 AvailabilityParkingComponent.title = 'Availability Parking';
-
 
 
 const styles = StyleSheet.create({

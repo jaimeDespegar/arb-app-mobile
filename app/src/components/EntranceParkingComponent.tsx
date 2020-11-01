@@ -8,6 +8,8 @@ import {  StyleSheet, View, TouchableOpacity, Text, Picker  } from 'react-native
 import { useTheme, Button, } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import { DialogWithCustomColors } from './Dialogs';
+import axios from 'axios';
+
 
 const initialState = {
     text: '',
@@ -46,15 +48,14 @@ const EntranceParkingComponent = () => {
 
 
   //Alerta
-  const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch('http://192.168.1.108:8000/api/notificationEgress-get/43/')
-      .then((response) => response.json())
+    axios  
+      .get('notificationEgress-get/43/')
+      .then((response) => response.data)
       .then((json) => setData(json)) //es el print()
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
+      .catch((error) => console.error('Error Entrance', error))
 
       if(data.userName === "userName"){
         setVisible(true)

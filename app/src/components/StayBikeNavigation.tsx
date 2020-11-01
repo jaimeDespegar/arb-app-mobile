@@ -1,9 +1,4 @@
 import * as React from 'react';
-import {
-  View,
-  StyleSheet,
-  Text
-} from 'react-native';
 import { BottomNavigation } from 'react-native-paper';
 import AvailabilityParkingComponent from './AvailabilityParkingComponent';
 import EntranceParkingComponent from './EntranceParkingComponent';
@@ -20,16 +15,6 @@ type RoutesState = Array<{
   getTestID?: string;
 }>;
 
-type Route = { route: { key: string } };
-
-// //Borrar luego de crear el HistoryComponent.tsx
-// const History = () => {
-//   return (
-//         <View style={styles.item}>
-//           <Text>Aca va las ultimas estadias!</Text>
-//         </View>
-//   );
-// };
 
 const StayBikeNavigation = () => {
   const [index, setIndex] = React.useState<number>(0);
@@ -77,7 +62,5 @@ const StayBikeNavigation = () => {
 };
 
 StayBikeNavigation.title = 'Estadia';
-
-const styles = StyleSheet.create({});
 
 export default StayBikeNavigation;

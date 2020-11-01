@@ -1,20 +1,27 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Text, View, StyleSheet, } from 'react-native';
+import { format } from 'date-fns';
 
 
 const HistoryComponent = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  
+  axios.defaults.timeout = 1500;
 
-  useEffect(() => {
-    fetch('http://192.168.1.103:8000/api/estadias-getAll/')
-      .then((response) => response.json())
-      .then((json) => setData(json))
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
+  useEffect(() => { 
+    axios
+      .get('estadias-getAll/')
+      .then((response) => response.data)
+      .then((json) => {
+        setData(json)
+        setLoading(false)
+      })
+      .catch((error) => console.error('error history component'))
   }, []);
   
-  console.log(data) //es el print()
+  console.log(data)
 
   const separador = () => {
     return(
@@ -35,7 +42,7 @@ const HistoryComponent = () => {
           data={data}
           keyExtractor={({ id }, index) => id}
           renderItem={({ item }) => (
-            <Text>{item.placeUsed} | {item.dateCreated} | {item.userEmail} | {item.isAnonymous}</Text>
+            <Text>{item.placeUsed.toString()} | {format(new Date(item.dateCreated), 'dd-MM-yyyy HH:mm:sss')} | {item.userName} </Text>
           )}
           horizontal= {false}
           ItemSeparatorComponent=  {() => separador()}
@@ -48,8 +55,6 @@ const HistoryComponent = () => {
 };
 
 HistoryComponent.title = 'History Estadias';
-
-
 
 const styles = StyleSheet.create({
   welcome: {

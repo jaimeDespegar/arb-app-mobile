@@ -46,7 +46,7 @@ const RegisterComponent = () => {
       body: JSON.stringify(someData) // We send data in JSON format
      }
      const postData = () => {
-      fetch('http://192.168.1.103:8000/api/bikeOwner-create/', postMethod)
+      fetch('bikeOwner-create/', postMethod)
       .then(response => response.json())
       .then(data => console.log(someData)) 
      .catch(err => console.log(err))

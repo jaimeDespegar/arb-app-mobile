@@ -36,7 +36,7 @@ const EditRegisterComponent = () => {
     //const [data, setData] = useState([]); //lista vacia
     const [data, setData] = useState({});//objeto vacio
     useEffect(() => {
-      fetch('http://192.168.1.103:8000/api/bikeOwner-get/1/')
+      fetch('bikeOwner-get/1/')
         .then((response) => response.json())
         .then((json) => {console.log(json); setData(json); inputActionHandler('name', json.name);
         inputActionHandler('email', json.email);inputActionHandler('flatTextPassword', json.password);
@@ -65,7 +65,7 @@ const EditRegisterComponent = () => {
       body: JSON.stringify(someData) // We send data in JSON format
      }
      const putData = () => {
-      fetch('http://192.168.1.103:8000/api/bikeOwner-update/1/', putMethod)
+      fetch('bikeOwner-update/1/', putMethod)
       .then(response => response.json())
       .then(data => console.log(someData)) 
      .catch(err => console.log(err))
