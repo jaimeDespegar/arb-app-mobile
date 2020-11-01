@@ -66,7 +66,7 @@ const EntranceParkingComponent = () => {
       }
        
   }, []);
-  
+  //.get('notificationEgress-getUser/'+userName+'/')
   const notificarAlerta = () => (data.userName == "userName")?  _toggleDialog('dialog5') : "OK"
   
   return (
