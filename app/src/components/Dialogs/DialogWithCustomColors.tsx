@@ -6,8 +6,38 @@ const initialState = {
   isSuspected: ''
 };
 
-const putFunction = (data) => {
-console.log("putFunction")
+const putFunction_OK = (data) => {
+  console.log("putFunction_OK")
+  
+  //CARGO LOS NUEVOS DATOS DEL INPUT EN UN JSON
+  const someData = {
+    userName: data.userName,
+    photoPath: data.photoPath,
+    place: data.place,
+    isOk: data.isOk,
+    isSuspected: "False",//si presiona no es True
+    estadia : data.estadia
+   }
+  body: JSON.stringify(someData) 
+  
+  const putMethod = {
+    method: 'PUT',
+    headers: {
+     'Content-type': 'application/json; charset=UTF-8' 
+    },
+    body: JSON.stringify(someData) 
+   }
+   const putData = () => {
+    fetch('http://192.168.1.108:8000/api/notificationEgress-update/13/', putMethod)
+    .then(response => response.json())
+    .then(data => console.log(someData)) 
+   .catch(err => console.log(err))
+   }
+   putData()
+  }
+
+const putFunction_Suspected = (data) => {
+console.log("putFunction_Suspected")
 
 //CARGO LOS NUEVOS DATOS DEL INPUT EN UN JSON
 const someData = {
@@ -60,10 +90,10 @@ const DialogWithCustomColors = ({
         </Paragraph>
       </Dialog.Content>
       <Dialog.Actions>
-      <Button color={Colors.white} onPress={() => putFunction(data)}>
+      <Button color={Colors.white} onPress={() => putFunction_Suspected(data)}>
           No, notificar al guardia
         </Button>
-        <Button color={Colors.white} onPress={close}>
+        <Button color={Colors.white} onPress={() => putFunction_OK(data)}>
           Si, soy yo
         </Button>
       </Dialog.Actions>
