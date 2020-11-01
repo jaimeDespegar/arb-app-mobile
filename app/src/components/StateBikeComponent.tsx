@@ -9,7 +9,7 @@ const StateBikeComponent = () => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState({});
     useEffect(() => {
-        fetch('http://192.168.1.103:8000/api/bicycleParking-get/1')
+        fetch('http://192.168.1.108:8000/api/bicycleParking-get/1')
           .then((response) => response.json())
           .then((json) => setData(json))
           .catch((error) => console.error(error))
@@ -17,10 +17,13 @@ const StateBikeComponent = () => {
       }, []);
 
     //CARGA DATOS EXISTENTES (bicycleParking)
+    const  userName= 'Test_3';
     const [isLoading2, setLoading2] = useState(true);
     const [data2, setData2] = useState({});
+    //fetch('http://192.168.1.108:8000/api/estadias-get/5/') //ok
+    
     useEffect(() => {
-        fetch('http://192.168.1.103:8000/api/estadias-get/2')
+        fetch('http://192.168.1.108:8000/api/estadias-getUser/'+userName+'/') //ya no es por id!!!
           .then((response) => response.json())
           .then((json) => setData2(json))
           .catch((error) => console.error(error))

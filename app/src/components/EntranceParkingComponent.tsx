@@ -48,9 +48,10 @@ const EntranceParkingComponent = () => {
   //Alerta
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-
+  //fetch('http://192.168.1.108:8000/api/notificationEgress-getUser/'+userName2+'/')//buscar userName
+  
   useEffect(() => {
-    fetch('http://192.168.1.108:8000/api/notificationEgress-get/43/')
+    fetch('http://192.168.1.108:8000/api/notificationEgress-get/13/')
       .then((response) => response.json())
       .then((json) => setData(json)) //es el print()
       .catch((error) => console.error(error))
@@ -105,11 +106,7 @@ const EntranceParkingComponent = () => {
     </View>
   );
 };
-//close={setVisible(false)}
-//close={_toggleDialog('dialog5')} //funciona pero...
-//onPress={_toggleDialog('dialog5')}  //funciona
-//onPress={() => notificar()}
-//onPress={notificar()}
+
 EntranceParkingComponent.title = 'Entrance Parking';
 
   

@@ -15,7 +15,7 @@ const someData = {
   photoPath: data.photoPath,
   place: data.place,
   isOk: data.isOk,
-  isSuspected: "False",//si presiona no es True
+  isSuspected: "True",//si presiona no es True
   estadia : data.estadia
  }
 body: JSON.stringify(someData) 
@@ -28,14 +28,14 @@ const putMethod = {
   body: JSON.stringify(someData) 
  }
  const putData = () => {
-  fetch('http://192.168.1.108:8000/api/notificationEgress-update/43/', putMethod)
+  fetch('http://192.168.1.108:8000/api/notificationEgress-update/13/', putMethod)
   .then(response => response.json())
   .then(data => console.log(someData)) 
  .catch(err => console.log(err))
  }
  putData()
 }
-
+//fetch('http://192.168.1.108:8000/api/notificationEgress-getUser/'+userName2+'/')//buscar userName
 const DialogWithCustomColors = ({
   visible,
   close,

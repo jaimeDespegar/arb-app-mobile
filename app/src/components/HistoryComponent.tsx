@@ -7,7 +7,7 @@ const HistoryComponent = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch('http://192.168.1.103:8000/api/estadias-getAll/')
+    fetch('http://192.168.1.108:8000/api/estadias-getAll/')
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => console.error(error))
@@ -35,7 +35,7 @@ const HistoryComponent = () => {
           data={data}
           keyExtractor={({ id }, index) => id}
           renderItem={({ item }) => (
-            <Text>{item.placeUsed} | {item.dateCreated} | {item.userEmail} | {item.isAnonymous}</Text>
+            <Text>{item.placeUsed} | {item.dateCreated} | {item.userName} | {item.isAnonymous}</Text>
           )}
           horizontal= {false}
           ItemSeparatorComponent=  {() => separador()}
