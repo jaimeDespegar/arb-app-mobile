@@ -22,7 +22,6 @@ const StateBikeComponent = () => {
     //CARGA DATOS EXISTENTES (bicycleParking)
     const  userName= 'Test_3';
     const [data2, setData2] = useState({});
-    //fetch('http://192.168.1.108:8000/api/estadias-get/5/') //ok
     
     useEffect(() => {
 	// estadias-getUser/'+userName+'/') //ya no es por id!
