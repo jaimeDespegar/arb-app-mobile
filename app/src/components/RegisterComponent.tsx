@@ -31,7 +31,21 @@ const RegisterComponent = () => {
   const [visible, setVisible] = React.useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);  
+
+  const [visibleRegister, setVisibleRegister] = React.useState(false);
+  const showDialogRegister = () => setVisibleRegister(true);
+  const hideDialogRegister = () => setVisibleRegister(false);  
   
+  const successRegister = () => { 
+    inputActionHandler('name', '');
+    inputActionHandler('email', '');
+    inputActionHandler('confirmEmail', '');
+    inputActionHandler('flatTextPassword', '');
+    inputActionHandler('bicyclePhoto', '');
+    inputActionHandler('profilePhoto', '');
+    showDialogRegister();
+  }
+
   const postData = () => {
     
     const someData = {
@@ -60,6 +74,7 @@ const RegisterComponent = () => {
       .then(data => {
         axios.defaults.headers.common.Authorization = `Token ${data.token}`;
         console.log('Registro OK: ', data)
+        successRegister()
       }) 
       .catch(err => {
         console.log(err)
@@ -136,6 +151,15 @@ const RegisterComponent = () => {
               close={hideDialog}
             />
           </View>
+          <View>
+              <DialogCustom
+                visible={visibleRegister}
+                title='Registro exitoso'
+                content='¡Bienvenido!'
+                messageAction='Ok'
+                close={hideDialogRegister}
+              />
+            </View>
         </View>
     </ScrollView>
   );

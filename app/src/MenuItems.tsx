@@ -5,6 +5,8 @@ import {
   Text, Colors, useTheme,
 } from 'react-native-paper';
 import axios from 'axios';
+import DialogCustom from './components/Dialogs/DialogCustom'
+
 
 type Props = {
   toggleTheme: () => void;
@@ -13,7 +15,7 @@ type Props = {
   isDarkTheme: boolean;
 };
 
-function logOut() {
+function logOut(showDialogLogout: Function) {
 
   if (axios.defaults.headers.common.Authorization) {
     axios
@@ -21,8 +23,10 @@ function logOut() {
     .then(response => {
       axios.defaults.headers.common.Authorization = null;
       console.log('User logout! ', response.status, response.statusText);
+      showDialogLogout()
     })
-    .catch(error => console.log(error));    
+    .catch(error => console.log(error));
+    
   } else {
     console.log('El usuario ya esta deslogueado.')
   }
@@ -41,6 +45,9 @@ const MenuItems = ({ toggleTheme, isDarkTheme }: Props) => {
   const _setDrawerItem = (index: number) => setDrawerItemIndex(index);
 
   const { colors } = useTheme();
+  const [showLogout, setShowLogout] = React.useState(false);
+  const showDialogLogout = () => setShowLogout(true);
+  const hideDialogLogout = () => setShowLogout(false);
 
   return (
     <View style={[styles.drawerContent, { backgroundColor: colors.surface }]}>
@@ -66,13 +73,23 @@ const MenuItems = ({ toggleTheme, isDarkTheme }: Props) => {
         </TouchableRipple>
       </Drawer.Section>
       <Drawer.Section title="Mi Cuenta">
-        <TouchableRipple onPress={logOut}>
+        <TouchableRipple onPress={() => logOut(showDialogLogout)}>
           <View style={styles.preference}>
             <Text>Cerrar Session</Text>
           </View>
         </TouchableRipple>
       </Drawer.Section>
+      <View>
+        <DialogCustom
+          visible={showLogout}
+          title='Logout exitoso'
+          content='Cierre de sesion correcto'
+          messageAction='OK'
+          close={hideDialogLogout}
+        />
+      </View>
     </View>
+    
   );
 };
 

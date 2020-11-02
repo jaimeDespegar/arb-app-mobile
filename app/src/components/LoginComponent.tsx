@@ -13,7 +13,7 @@ const initialState = {
   userName: ''
 };
 
-function handleRequest(userName: string, password: string, showDialog: Function) {
+function handleRequest(userName: string, password: string, showDialogOk: Function, showDialogError: Function ) {
 
   const data = { 'username': userName, 'password': password } 
 
@@ -28,11 +28,11 @@ function handleRequest(userName: string, password: string, showDialog: Function)
 
       axios.defaults.headers.common.Authorization = `Token ${token}`;
       console.log('User logged: ', userName + ' - ' + token)
-      
+      showDialogOk()
     })
     .catch(error => {
       console.log('Sign In Fail');
-      showDialog()
+      showDialogError()
     });
 }
 
@@ -51,10 +51,15 @@ const LoginComponent = () => {
     });
 
     const [visible, setVisible] = React.useState(false);
-
     const showDialog = () => setVisible(true);
-  
     const hideDialog = () => setVisible(false);
+    const [showLogin, setShowLogin] = React.useState(false);
+    const showDialogLogin = () => {
+      inputActionHandler('userName', '')
+      inputActionHandler('password', '')
+      setShowLogin(true)
+    };
+    const hideDialogLogin = () => setShowLogin(false);
   
   return (
         <View style={styles.inputs}>        
@@ -101,7 +106,9 @@ const LoginComponent = () => {
                 </Text>
             </TouchableOpacity>
           </View>
-          <Button mode="contained" onPress={() => handleRequest(userName, password, showDialog)} style={styles.button}>
+          <Button mode="contained"
+                  onPress={() => handleRequest(userName, password, showDialogLogin, showDialog)}
+                  style={styles.button}>
             Ingresar
           </Button>
           <Button mode="outlined" onPress={() => {}} style={styles.button}>
@@ -115,6 +122,15 @@ const LoginComponent = () => {
               content='Verifique los datos ingresados e intente nuevamente'
               messageAction='Ok'
               close={hideDialog}
+            />
+          </View>
+          <View>
+            <DialogCustom
+              visible={showLogin}
+              title='Login exitoso'
+              content='Puede navegar correctamente'
+              messageAction='OK'
+              close={hideDialogLogin}
             />
           </View>
         </View>

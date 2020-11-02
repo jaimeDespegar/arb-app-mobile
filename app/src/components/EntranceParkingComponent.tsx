@@ -10,7 +10,6 @@ import { inputReducer } from '../../utils';
 import { DialogWithCustomColors } from './Dialogs';
 import DialogCustom from './Dialogs/DialogCustom'
 import axios from 'axios';
-import GetLocation from 'react-native-get-location'
 
 const initialState = {
     text: '',
@@ -48,33 +47,21 @@ const EntranceParkingComponent = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    // axios  
-    //   .get('notificationEgress-get/43/')
-    //   .then((response) => response.data)
-    //   .then((json) => setData(json)) //es el print()
-    //   .catch((error) => console.error('Error Entrance', error))
+    axios  
+      .get('notificationEgress-get/43/')
+      .then((response) => response.data)
+      .then((json) => setData(json)) //es el print()
+      .catch((error) => console.error('Error Entrance', error))
 
-    //   if(data.userName === "userName"){
-    //     setVisible(true)
-    //     _getVisible('dialog5') 
-    //     console.log("tu bici esta en peligro!")
-    //   }
-    //   else{
-    //     console.log("tu bici esta ok")
-    //   }
+      if(data.userName === "userName"){
+        setVisible(true)
+        _getVisible('dialog5') 
+        console.log("tu bici esta en peligro!")
+      }
+      else{
+        console.log("tu bici esta ok")
+      }
 
-    GetLocation.getCurrentPosition({
-      enableHighAccuracy: true,
-      timeout: 15000,
-    })
-    .then(location => {
-      console.log("location OK ", location);
-    })
-    .catch(error => {
-        const { code, message } = error;
-      console.warn("ERROR 1: ", code, message);
-      console.log(error)
-    })
        
   }, []);
   
@@ -113,13 +100,13 @@ const EntranceParkingComponent = () => {
         close={_toggleDialog('dialog5')}
         data={data}
       />
-      <DialogCustom
+      {/* <DialogCustom
               visible={showErrorLocation}
               title='Estacionamiento no permitido'
               content='Verifique que este cerca de un bicicletero'
               messageAction='Ok'
               close={()=>{setShowErrorLocation(false)}}
-       />
+       /> */}
     </View>
   );
 };
