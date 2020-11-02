@@ -136,10 +136,10 @@ const EditRegisterComponent = () => {
             />
           </View>
               
-          <View style={styles.inputContainerStyle}>
+          {/* <View style={styles.inputContainerStyle}>
             <Card.Cover source={require('../../assets/images/bici1.png')} />
             <Card.Cover source={require('../../assets/images/ciclista.png')} />
-          </View>
+          </View> */}
           
           <Button mode="contained" onPress={() => putData()} style={styles.button}>
             Guardar

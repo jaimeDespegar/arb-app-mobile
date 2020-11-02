@@ -3,13 +3,14 @@ import {  StyleSheet, View  } from 'react-native';
 import {   Card, Button, IconButton, Title } from 'react-native-paper';
 import axios from 'axios';
 
-
+  
 const StateBikeComponent = () => {
     //CARGA DATOS EXISTENTES (bicycleParking)
     
     const [data, setData] = useState({});
 
     useEffect(() => {
+
         axios
           .get('bicycleParking-get/1')
           .then(json => {
@@ -17,7 +18,7 @@ const StateBikeComponent = () => {
                 console.log('ok bicycle ', json.data)
             })
           .catch((error) => console.log('error bicycle get 1'))
-      }, []);
+    }, []);
 
     //CARGA DATOS EXISTENTES (bicycleParking)
     const [data2, setData2] = useState({});
@@ -27,17 +28,18 @@ const StateBikeComponent = () => {
         axios
           .get('estadias-getUser/'+userNameHardcode+'/')
           .then(json => {
-                setData2(json.data)
-                console.log('ok estadia ', json.data)
-            })
+            setData2(json.data)
+            console.log('ok estadia ', json.data)
+          })
           .catch((error) => console.log('error estadia get 8'))
-      }, []);
+    }, []);
 
     const buildMessage = (nroBicicletero: number, 
                           placeNumber: number) => 
                           "Bicicletero " + nroBicicletero +" en el lugar "+placeNumber; 
     //const description = "Enfrente del modulo 2";
    
+    
     return (
         <View style={styles.container}>
             <View style={{ alignItems: 'center' }}>
