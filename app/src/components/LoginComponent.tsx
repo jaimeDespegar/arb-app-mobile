@@ -5,6 +5,7 @@ import {  StyleSheet, View, TouchableOpacity, Text  } from 'react-native';
 import { TextInput, Button, Paragraph, Dialog, Portal } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import axios from 'axios';
+import DialogCustom from './Dialogs/DialogCustom'
 
 
 const initialState = {
@@ -108,17 +109,13 @@ const LoginComponent = () => {
           </Button>
       
           <View>
-            <Portal>
-              <Dialog visible={visible} onDismiss={hideDialog}>
-                <Dialog.Title>Error al iniciar sesion</Dialog.Title>
-                <Dialog.Content>
-                  <Paragraph>Verifique los datos ingresados e intente nuevamente</Paragraph>
-                </Dialog.Content>
-                <Dialog.Actions>
-                  <Button onPress={hideDialog}>Ok</Button>
-                </Dialog.Actions>
-              </Dialog>
-            </Portal>
+            <DialogCustom
+              visible={visible}
+              title='Error al iniciar sesion'
+              content='Verifique los datos ingresados e intente nuevamente'
+              messageAction='Ok'
+              close={hideDialog}
+            />
           </View>
         </View>
   );
