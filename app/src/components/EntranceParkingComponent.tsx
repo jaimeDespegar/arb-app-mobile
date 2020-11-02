@@ -48,10 +48,11 @@ const EntranceParkingComponent = () => {
 
   //Alerta
   const [data, setData] = useState([]);
+  const userNameHardcode= "userName3"
 
   useEffect(() => {
     axios  
-      .get('notificationEgress-get/43/')
+      .get('notificationEgress-getUser/'+userNameHardcode+'/')
       .then((response) => response.data)
       .then((json) => setData(json)) //es el print()
       .catch((error) => console.error('Error Entrance', error))

@@ -17,7 +17,7 @@ function logOut() {
 
   if (axios.defaults.headers.common.Authorization) {
     axios
-    .get('http://192.168.1.56:8000/api/auth/logout/')
+    .get('auth/logout/')
     .then(response => {
       axios.defaults.headers.common.Authorization = null;
       console.log('User logout! ', response.status, response.statusText);

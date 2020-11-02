@@ -20,13 +20,12 @@ const StateBikeComponent = () => {
       }, []);
 
     //CARGA DATOS EXISTENTES (bicycleParking)
-    const  userName= 'Test_3';
     const [data2, setData2] = useState({});
-    
+    const userNameHardcode= 'Test_3';
     useEffect(() => {
 	// estadias-getUser/'+userName+'/') //ya no es por id!
         axios
-          .get('estadias-get/8')
+          .get('estadias-getUser/'+userNameHardcode+'/')
           .then(json => {
                 setData2(json.data)
                 console.log('ok estadia ', json.data)
