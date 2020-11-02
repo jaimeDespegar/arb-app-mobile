@@ -35,8 +35,9 @@ const EditRegisterComponent = () => {
     const [isLoading, setLoading] = useState(true);
     //const [data, setData] = useState([]); //lista vacia
     const [data, setData] = useState({});//objeto vacio
+    const userNameHardcode= "javier"
     useEffect(() => {
-      fetch('bikeOwner-get/1/')
+      fetch('bikeOwner-getUser/'+ userNameHardcode +'/')
         .then((response) => response.json())
         .then((json) => {console.log(json); setData(json); inputActionHandler('name', json.name);
         inputActionHandler('email', json.email);inputActionHandler('flatTextPassword', json.password);
@@ -46,7 +47,7 @@ const EditRegisterComponent = () => {
         .finally(() => setLoading(false));
     }, []);
     
-    //fetch('http://192.168.1.108:8000/api/bikeOwner-getUser/'+ userX +'/')
+    //fetch('bikeOwner-getUser/'+ userX +'/')
 
     //CARGO LOS NUEVOS DATOS DEL INPUT EN UN JSON
     const someData = {
@@ -66,12 +67,12 @@ const EditRegisterComponent = () => {
       body: JSON.stringify(someData) // We send data in JSON format
      }
      const putData = () => {
-      fetch('bikeOwner-update/1/', putMethod)
+      fetch('bikeOwner-updateUser/'+ userNameHardcode +'/', putMethod)
       .then(response => response.json())
       .then(data => console.log(someData)) 
      .catch(err => console.log(err))
      }
-     //fetch('http://192.168.1.108:8000/api/bikeOwner-updateUser/+ userX +'/'', putMethod)//ver userName
+     //fetch('bikeOwner-updateUser/'+ userX +'/', putMethod)//ver userName
      
      //<EmailInput label="Email" email={email} onChangeText={ inputActionHandler('email', "text")} placeholder="Ingrese su email"/>
      //<EmailInput label="Confirmar Email" email={email2} onChangeText={ inputActionHandler('email2', "text2")} placeholder="Ingrese su email nuevamente"/>

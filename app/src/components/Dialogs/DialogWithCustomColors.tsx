@@ -59,15 +59,16 @@ const putMethod = {
   },
   body: JSON.stringify(someData) 
  }
+ const userNameHardcode= data.userName;
  const putData = () => {
-  fetch('http://192.168.1.108:8000/api/notificationEgress-update/13/', putMethod)
+  fetch('http://192.168.1.108:8000/api/notificationEgress-updateUser/'+userNameHardcode+'/', putMethod)
   .then(response => response.json())
   .then(data => console.log(someData)) 
  .catch(err => console.log(err))
  }
  putData()
 }
-//fetch('http://192.168.1.108:8000/api/notificationEgress-updateUser/'+data.userName+'/')//buscar userName
+//fetch('http://192.168.1.108:8000/api/notificationEgress-updateUser/'+data.userName+'/', putMethod)//buscar userName
 const DialogWithCustomColors = ({
   visible,
   close,
