@@ -1,12 +1,13 @@
 //nombre,mail y contraseña, foto
 //hacer un get de la api y traer los datos de ahi
 import React, { useEffect , useState} from "react";
-import {  StyleSheet, View, Image, ScrollView } from 'react-native';
+import {  StyleSheet, View, Image, ScrollView, AsyncStorage } from 'react-native';
 import { TextInput, Button, Card } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import EmailInput from './EmailInput';
 import { ActivityIndicator, FlatList, Text} from 'react-native';
   
+const STORAGE_KEY = 'userName'
 
 const initialState = {
   name: '',
@@ -18,7 +19,22 @@ const initialState = {
   profilePhoto:'',
 };
 
+let userNameLogin
+const  load = async () => {
+  try {
+    userNameLogin = await AsyncStorage.getItem(STORAGE_KEY);
+    //alert(userNameLogin);
+
+    if (name !== null) {
+    }
+  } catch (e) {
+    //console.error('Failed to load .')
+  }
+}
+
 const EditRegisterComponent = () => {
+  load() //AsyncStorage
+
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
   const {
     name,email,email2, flatTextSecureEntry, flatTextPassword,bicyclePhoto,profilePhoto
@@ -35,9 +51,9 @@ const EditRegisterComponent = () => {
     const [isLoading, setLoading] = useState(true);
     //const [data, setData] = useState([]); //lista vacia
     const [data, setData] = useState({});//objeto vacio
-    const userNameHardcode= "javier"
+
     useEffect(() => {
-      fetch('bikeOwner-getUser/'+ userNameHardcode +'/')
+      fetch('bikeOwner-getUser/'+ userNameLogin +'/')
         .then((response) => response.json())
         .then((json) => {console.log(json); setData(json); inputActionHandler('name', json.name);
         inputActionHandler('email', json.email);inputActionHandler('flatTextPassword', json.password);
@@ -47,7 +63,6 @@ const EditRegisterComponent = () => {
         .finally(() => setLoading(false));
     }, []);
     
-    //fetch('bikeOwner-getUser/'+ userX +'/')
 
     //CARGO LOS NUEVOS DATOS DEL INPUT EN UN JSON
     const someData = {
@@ -67,12 +82,11 @@ const EditRegisterComponent = () => {
       body: JSON.stringify(someData) // We send data in JSON format
      }
      const putData = () => {
-      fetch('bikeOwner-updateUser/'+ userNameHardcode +'/', putMethod)
+      fetch('bikeOwner-updateUser/'+ userNameLogin +'/', putMethod)
       .then(response => response.json())
       .then(data => console.log(someData)) 
      .catch(err => console.log(err))
      }
-     //fetch('bikeOwner-updateUser/'+ userX +'/', putMethod)//ver userName
      
      //<EmailInput label="Email" email={email} onChangeText={ inputActionHandler('email', "text")} placeholder="Ingrese su email"/>
      //<EmailInput label="Confirmar Email" email={email2} onChangeText={ inputActionHandler('email2', "text2")} placeholder="Ingrese su email nuevamente"/>

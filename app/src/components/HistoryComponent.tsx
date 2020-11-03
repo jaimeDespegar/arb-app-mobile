@@ -1,16 +1,31 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Text, View, StyleSheet, } from 'react-native';
+import { ActivityIndicator, FlatList, Text, View, StyleSheet, AsyncStorage} from 'react-native';
 import { format } from 'date-fns';
 
+const STORAGE_KEY = 'userName'
+
+let userNameLogin
+const  load = async () => {
+  try {
+    userNameLogin = await AsyncStorage.getItem(STORAGE_KEY);
+    alert(userNameLogin);
+  } 
+  catch (e) {
+    //console.error('Failed to load .')
+  }
+}
 
 const HistoryComponent = () => {
+  load() //AsyncStorage
+
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-
+//.get('estadias-getUser/'+userNameLogin+'/')
+//.get('estadias-getAll')
   useEffect(() => { 
     axios
-      .get('estadias-getAll/')
+    .get('estadias-getAll')
       .then((response) => response.data)
       .then((json) => {
         setData(json)

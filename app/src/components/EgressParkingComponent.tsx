@@ -28,7 +28,11 @@ const initialState = {
         type: type,
         payload: payload,
       });
-      
+    
+    const retirarBici = () => {
+      console.log("Retirar Bicicleta")
+    }
+    
     const  userName= 'Pepe';
     return (
       <TextInputAvoidingView>
@@ -37,7 +41,7 @@ const initialState = {
               ¡Buen viaje, {userName}!
             </Text>
             
-            <Button mode="contained" onPress={() => {}} style={styles.button}>
+            <Button mode="contained" onPress={() => retirarBici()} style={styles.button}>
               Retirar Bicicleta
             </Button>
           </View>

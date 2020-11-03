@@ -1,13 +1,31 @@
 import React, { useEffect , useState} from "react";
 import { Paragraph, Button, Portal, Dialog, Colors } from 'react-native-paper';
 import { inputReducer } from '../../../utils';
+import { AsyncStorage } from 'react-native'
+
+const STORAGE_KEY = 'userName'
 
 const initialState = {
-  isSuspected: ''
+  isSuspected: '',
 };
+
+let userNameLogin
+const  load = async () => {
+  try {
+    userNameLogin = await AsyncStorage.getItem(STORAGE_KEY);
+    //alert(userNameLogin);
+
+    if (name !== null) {
+    }
+  } catch (e) {
+    //console.error('Failed to load .')
+  }
+}
 
 const putFunction_OK = (data) => {
   console.log("putFunction_OK")
+
+  load() //AsyncStorage
   
   //CARGO LOS NUEVOS DATOS DEL INPUT EN UN JSON
   const someData = {
@@ -28,7 +46,7 @@ const putFunction_OK = (data) => {
     body: JSON.stringify(someData) 
    }
    const putData = () => {
-    fetch('http://192.168.1.108:8000/api/notificationEgress-update/13/', putMethod)
+    fetch('http://192.168.1.106:8000/api/notificationEgress-updateUser/'+userNameLogin+'/')
     .then(response => response.json())
     .then(data => console.log(someData)) 
    .catch(err => console.log(err))
@@ -36,7 +54,7 @@ const putFunction_OK = (data) => {
    putData()
   }
 //fetch('http://192.168.1.108:8000/api/notificationEgress-updateUser/'+data.userName+'/')//buscar userName
-
+//fetch('http://192.168.1.108:8000/api/notificationEgress-update/13/', putMethod)
 
 const putFunction_Suspected = (data) => {
 console.log("putFunction_Suspected")
@@ -59,9 +77,9 @@ const putMethod = {
   },
   body: JSON.stringify(someData) 
  }
- const userNameHardcode= data.userName;
+ //const userNameHardcode= data.userName;
  const putData = () => {
-  fetch('http://192.168.1.108:8000/api/notificationEgress-updateUser/'+userNameHardcode+'/', putMethod)
+  fetch('http://192.168.1.106:8000/api/notificationEgress-updateUser/'+userNameLogin+'/', putMethod)
   .then(response => response.json())
   .then(data => console.log(someData)) 
  .catch(err => console.log(err))
