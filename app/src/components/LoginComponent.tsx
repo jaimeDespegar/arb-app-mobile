@@ -1,7 +1,7 @@
 //primero hay que hacer lo del Objetivo 4, la parte de administración de usuarios
 
 import * as React from 'react';
-import {  StyleSheet, View, TouchableOpacity, Text  } from 'react-native';
+import {  StyleSheet, View, TouchableOpacity, Text, AsyncStorage  } from 'react-native';
 import { TextInput, Button, Paragraph, Dialog, Portal } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import axios from 'axios';
@@ -12,6 +12,16 @@ const initialState = {
   flatTextSecureEntry: true,
   userName: ''
 };
+
+//AsyncStorages
+const STORAGE_KEY = 'userName'
+const  save = async (name) => {
+  try {
+    await AsyncStorage.setItem(STORAGE_KEY, name)
+  } catch (e) {
+    //console.error('Failed to save name.')
+  }
+}
 
 function handleRequest(userName: string, password: string, showDialogOk: Function, showDialogError: Function ) {
 
@@ -28,10 +38,13 @@ function handleRequest(userName: string, password: string, showDialogOk: Functio
 
       axios.defaults.headers.common.Authorization = `Token ${token}`;
       console.log('User logged: ', userName + ' - ' + token)
+
+      save(userName) //AsyncStorages
+
       showDialogOk()
     })
     .catch(error => {
-      console.log('Sign In Fail');
+      console.log('Sign In Fail',error);
       showDialogError()
     });
 }

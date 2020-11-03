@@ -4,20 +4,35 @@
 
 import * as React from 'react';
 import { useState, useEffect } from "react"; 
-import {  StyleSheet, View, Text, Picker  } from 'react-native';
+import {  StyleSheet, View, Text, Picker, AsyncStorage  } from 'react-native';
 import { useTheme, Button, } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import { DialogWithCustomColors } from './Dialogs';
 import DialogCustom from './Dialogs/DialogCustom'
 import axios from 'axios';
 
+const STORAGE_KEY = 'userName'
+
 const initialState = {
     text: '',
     userName:'',
 };
 
+let userNameLogin
+const  load = async () => {
+  try {
+    userNameLogin = await AsyncStorage.getItem(STORAGE_KEY);
+    //alert(userNameLogin);
+
+    if (name !== null) {
+    }
+  } catch (e) {
+    //console.error('Failed to load .')
+  }
+}
   
 const EntranceParkingComponent = () => {
+  load() //AsyncStorage
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
   const {
     text,userName,photoPath,place,isOk,isSuspected,estadia
@@ -45,11 +60,11 @@ const EntranceParkingComponent = () => {
 
   //Alerta
   const [data, setData] = useState([]);
-  const userNameHardcode= "userName3"
+  //const userNameHardcode= "userName3"
 
   useEffect(() => {
     axios  
-      .get('notificationEgress-getUser/'+userNameHardcode+'/')
+      .get('notificationEgress-getUser/'+userNameLogin+'/')
       .then((response) => response.data)
       .then((json) => setData(json)) //es el print()
       .catch((error) => console.error('Error Entrance', error))
@@ -67,7 +82,9 @@ const EntranceParkingComponent = () => {
   }, []);
   //.get('notificationEgress-getUser/'+userName+'/')
   const notificarAlerta = () => (data.userName == "userName")?  _toggleDialog('dialog5') : "OK"
-  
+  const estacionarBici = () => {
+    console.log("Estacionar Bicicleta")
+  }
   return (
     <View style={styles.inputs}>
       
@@ -87,10 +104,10 @@ const EntranceParkingComponent = () => {
         <Picker.Item label="6" value="6" />
       </Picker>
       <Text style={styles.goodBye}>
-        Bienvenido a la UNGS, {userName2}!
+        Bienvenido a la UNGS, {userNameLogin}!
       </Text>
       
-      <Button mode="contained" onPress={() => {}} style={styles.button}>
+      <Button mode="contained" onPress={() => estacionarBici()} style={styles.button}>
         Estacionar Bicicleta
       </Button>
       <Button mode="outlined" icon="alert" onPress={_toggleDialog('dialog5')}  style={styles.stylesContainer}>
