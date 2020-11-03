@@ -6,7 +6,8 @@ import { TextInput, Button, Card } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import EmailInput from './EmailInput';
 import { ActivityIndicator, FlatList, Text} from 'react-native';
-  
+import axios from 'axios';
+
 
 const initialState = {
   name: '',
@@ -35,16 +36,20 @@ const EditRegisterComponent = () => {
     const [isLoading, setLoading] = useState(true);
     //const [data, setData] = useState([]); //lista vacia
     const [data, setData] = useState({});//objeto vacio
-    const userNameHardcode= "javier"
+    const userNameHardcode= "pepe"
     useEffect(() => {
-      fetch('bikeOwner-getUser/'+ userNameHardcode +'/')
-        .then((response) => response.json())
-        .then((json) => {console.log(json); setData(json); inputActionHandler('name', json.name);
-        inputActionHandler('email', json.email);inputActionHandler('flatTextPassword', json.password);
-        inputActionHandler('bicyclePhoto', json.bicyclePhoto);inputActionHandler('profilePhoto', json.profilePhoto);
+      axios
+      .get('bikeOwner-getUser/' + userNameHardcode + '/')
+        .then((response) => response.data)
+        .then((json) => {
+          console.log(json); setData(json);
+          inputActionHandler('name', json.name);
+          inputActionHandler('email', json.email);
+          inputActionHandler('flatTextPassword', json.password);
+          inputActionHandler('bicyclePhoto', json.bicyclePhoto);
+          inputActionHandler('profilePhoto', json.profilePhoto);
       })
-        .catch((error) => console.error(error))
-        .finally(() => setLoading(false));
+      .catch((error) => console.error('Error edition user: ', error))
     }, []);
     
     //fetch('bikeOwner-getUser/'+ userX +'/')
