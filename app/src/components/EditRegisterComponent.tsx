@@ -1,97 +1,96 @@
-//nombre,mail y contraseña, foto
-//hacer un get de la api y traer los datos de ahi
 import React, { useEffect , useState} from "react";
-import {  StyleSheet, View, Image, ScrollView, AsyncStorage } from 'react-native';
-import { TextInput, Button, Card } from 'react-native-paper';
+import {  StyleSheet, View, ScrollView, AsyncStorage } from 'react-native';
+import { TextInput, Button } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import EmailInput from './EmailInput';
-import { ActivityIndicator, FlatList, Text} from 'react-native';
 import axios from 'axios';
+import DialogCustom from './Dialogs/DialogCustom'
+
 const STORAGE_KEY = 'userName'
 
 const initialState = {
   name: '',
   flatTextSecureEntry: true,
   email:'',
-  email2:'',
+  confirmEmail:'',
   flatTextPassword:'',
   bicyclePhoto:'',
   profilePhoto:'',
 };
 
-let userNameLogin
-const  load = async () => {
-  try {
-    userNameLogin = await AsyncStorage.getItem(STORAGE_KEY);
-    //alert(userNameLogin);
-
-    if (name !== null) {
-    }
-  } catch (e) {
-    //console.error('Failed to load .')
-  }
-}
-
 const EditRegisterComponent = () => {
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
   const {
-    name,email,email2, flatTextSecureEntry, flatTextPassword,bicyclePhoto,profilePhoto
+    name,email,confirmEmail, flatTextSecureEntry, flatTextPassword,bicyclePhoto,profilePhoto
   } = state;
 
   const inputActionHandler = (type: string, payload: string) =>
     dispatch({
       type: type,
       payload: payload,
-    });
+  });
 
+  const [showEditionOk, setShowEditionOk] = React.useState(false);
 
+  const showDialogEdition = () => {
+    setShowEditionOk(true)
+
+    inputActionHandler('name', '')
+    inputActionHandler('email', '')
+    inputActionHandler('confirmEmail', '')
+    inputActionHandler('flatTextPassword', '')
+    inputActionHandler('bicyclePhoto', '')
+    inputActionHandler('profilePhoto', '')    
+  };
+
+  const hideDialogEdition = () => setShowEditionOk(false);
+  
     //CARGA DATOS EXISTENTES
-    const [isLoading, setLoading] = useState(true);
-    //const [data, setData] = useState([]); //lista vacia
-    const [data, setData] = useState({});//objeto vacio
+  const [titleDialog, setTitleDialog] = useState('')
+  const [contentDialog, setContentDialog] = useState('')
+  //const [data, setData] = useState({});
 
-    useEffect(() => {
-      axios
-      .get('bikeOwner-getUser/' + userNameLogin + '/')
-        .then((response) => response.data)
-        .then((json) => {
-          console.log(json); setData(json);
-          inputActionHandler('name', json.name);
-          inputActionHandler('email', json.email);
-          inputActionHandler('flatTextPassword', json.password);
-          inputActionHandler('bicyclePhoto', json.bicyclePhoto);
-          inputActionHandler('profilePhoto', json.profilePhoto);
+  useEffect(() => {
+    axios
+      .get('bikeOwner-getUser/' + 'pepe' + '/')
+      .then((response) => response.data)
+      .then((json) => {
+        inputActionHandler('name', json.userName);
+        inputActionHandler('email', json.email);
+        inputActionHandler('confirmEmail', json.email);
+        //inputActionHandler('flatTextPassword', json.password);
+        inputActionHandler('bicyclePhoto', json.bicyclePhoto);
+        inputActionHandler('profilePhoto', json.profilePhoto);
+    })
+    .catch((error) => console.error('Error edition user: ', error))
+  }, []);
+  
+  //CARGO LOS NUEVOS DATOS DEL INPUT EN UN JSON
+  const someData = {
+    name: name,
+    email: email,
+    password: flatTextPassword,
+    bicyclePhoto: bicyclePhoto,
+    profilePhoto: profilePhoto
+  }
+
+  const putData = () => {
+    console.log("data to save ", someData)
+    axios
+      .put('bikeOwner/update/'+ 'pepe' +'/', someData)
+      .then(response => response.data)
+      .then(data => {
+        setTitleDialog('Edicion exitosa')
+        setContentDialog('Sus datos fueron actualizados correctamente')
+      }) 
+      .catch(err => {
+        console.log('ERROR put ', err)
+        setTitleDialog('Error en la edicion')
+        setContentDialog('Verifique los datos ingresados')
       })
-      .catch((error) => console.error('Error edition user: ', error))
-    }, []);
-    
-
-    //CARGO LOS NUEVOS DATOS DEL INPUT EN UN JSON
-    const someData = {
-      name: name,
-      email: email,
-      password: flatTextPassword,
-      bicyclePhoto: bicyclePhoto,
-      profilePhoto: profilePhoto
-     }
-    body: JSON.stringify(someData) // We send data in JSON format
-
-    const putMethod = {
-      method: 'PUT',
-      headers: {
-       'Content-type': 'application/json; charset=UTF-8' // Indicates the content 
-      },
-      body: JSON.stringify(someData) // We send data in JSON format
-     }
-     const putData = () => {
-      fetch('bikeOwner-updateUser/'+ userNameLogin +'/', putMethod)
-      .then(response => response.json())
-      .then(data => console.log(someData)) 
-     .catch(err => console.log(err))
-     }
+      showDialogEdition()
+  }
      
-     //<EmailInput label="Email" email={email} onChangeText={ inputActionHandler('email', "text")} placeholder="Ingrese su email"/>
-     //<EmailInput label="Confirmar Email" email={email2} onChangeText={ inputActionHandler('email2', "text2")} placeholder="Ingrese su email nuevamente"/>
   return (
     <ScrollView>
         <View style={styles.inputs}>
@@ -106,9 +105,8 @@ const EditRegisterComponent = () => {
             />
           </View>
 
-          
-          <EmailInput label="Email" email={email} onChangeText={inputValue =>  inputActionHandler('email', "text")} placeholder="Ingrese su email"/>
-          <EmailInput label="Confirmar Email" email={data.email} placeholder="Ingrese su email nuevamente"/>
+          <EmailInput label="Email" value={email} onChangeText={e => { inputActionHandler('email', e) }} placeholder="Ingrese su email"/>
+          <EmailInput label="Confirmar Email" value={confirmEmail} onChangeText={e => { inputActionHandler('confirmEmail', e) }}  placeholder="Ingrese su email nuevamente"/>
 
           <View style={styles.inputContainerStyle}>
             <TextInput
@@ -151,19 +149,24 @@ const EditRegisterComponent = () => {
               onChangeText={inputValue => inputActionHandler('profilePhoto', inputValue)}
             />
           </View>
-              
-          {/* <View style={styles.inputContainerStyle}>
-            <Card.Cover source={require('../../assets/images/bici1.png')} />
-            <Card.Cover source={require('../../assets/images/ciclista.png')} />
-          </View> */}
-          
+                    
           <Button mode="contained" onPress={() => putData()} style={styles.button}>
             Guardar
           </Button>
 
           <Button mode="contained" onPress={() => {}} style={styles.button}>
-            Cancelar
+          Cancelar
           </Button>
+        
+          <View>
+            <DialogCustom
+              visible={showEditionOk}
+              title={titleDialog}
+              content={contentDialog}
+              messageAction='OK'
+              close={hideDialogEdition}
+            />
+          </View>
         </View>
     </ScrollView>
   );
