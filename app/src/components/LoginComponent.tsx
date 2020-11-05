@@ -1,51 +1,25 @@
-//primero hay que hacer lo del Objetivo 4, la parte de administración de usuarios
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {  StyleSheet, View, TouchableOpacity, Text  } from 'react-native';
-import { TextInput, Button, Paragraph, Dialog, Portal } from 'react-native-paper';
+import { TextInput, Button } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import axios from 'axios';
 import DialogCustom from './Dialogs/DialogCustom'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-//import {AsyncStorage} from 'react-native';
+import { saveValue, USER_KEY } from './utils/StorageHelper'
 
 const initialState = {
   flatTextSecureEntry: true,
   userName: ''
 };
 
-//AsyncStorages
-const STORAGE_KEY = 'userName'
-const  save = async (name) => {
-  try {
-    await AsyncStorage.setItem(STORAGE_KEY, name)
-    console.log("guardado", name)
-  } catch (e) {
-    console.error('Failed to save name.')
-  }
-}
-  const  load = async () => {
-    try {
-      let userAux= await AsyncStorage.getItem(STORAGE_KEY);
-      //alert(userAux);
-      console.log(userAux)
-  
-    } catch (e) {
-      console.error('Failed to load .')
-    }
-  }
-
-
 function handleRequest(userName: string, password: string, showDialogOk: Function, showDialogError: Function ) {
 
   const data = { 'username': userName, 'password': password } 
-  save(userName) //AsyncStorages
+  
   if (axios.defaults.headers.common.Authorization) {
     axios.defaults.headers.common.Authorization = null;
   }
-  //useEffect(() => {
-    load() //AsyncStorage
-    //}, []); 
+
   axios
     .post('auth/login/', data)
     .then(response => {
@@ -53,9 +27,7 @@ function handleRequest(userName: string, password: string, showDialogOk: Functio
 
       axios.defaults.headers.common.Authorization = `Token ${token}`;
       console.log('User logged: ', userName + ' - ' + token)
-
-      save(userName) //AsyncStorages
-
+      saveValue(USER_KEY, userName);
       showDialogOk()
     })
     .catch(error => {

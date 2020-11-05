@@ -1,12 +1,12 @@
 import React, { useEffect , useState} from "react";
-import {  StyleSheet, View, ScrollView, AsyncStorage } from 'react-native';
+import {  StyleSheet, View, ScrollView } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import EmailInput from './EmailInput';
 import axios from 'axios';
 import DialogCustom from './Dialogs/DialogCustom'
+import { loadValue, USER_KEY } from './utils/StorageHelper'
 
-const STORAGE_KEY = 'userName'
 
 const initialState = {
   name: '',
@@ -18,8 +18,13 @@ const initialState = {
   profilePhoto:'',
 };
 
+
 const EditRegisterComponent = () => {
+
+  const [userNameLogin, setUserNameLogin] = useState("");
+  
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
+
   const {
     name,email,confirmEmail, flatTextSecureEntry, flatTextPassword,bicyclePhoto,profilePhoto
   } = state;
@@ -45,28 +50,32 @@ const EditRegisterComponent = () => {
 
   const hideDialogEdition = () => setShowEditionOk(false);
   
-    //CARGA DATOS EXISTENTES
   const [titleDialog, setTitleDialog] = useState('')
   const [contentDialog, setContentDialog] = useState('')
-  //const [data, setData] = useState({});
 
   useEffect(() => {
-    axios
-      .get('bikeOwner-getUser/' + 'pepe' + '/')
+    
+    loadValue(USER_KEY, setUserNameLogin);
+
+    if (userNameLogin) {
+      axios
+      .get('bikeOwner-getUser/' + userNameLogin + '/')
       .then((response) => response.data)
       .then((json) => {
         inputActionHandler('name', json.userName);
         inputActionHandler('email', json.email);
         inputActionHandler('confirmEmail', json.email);
-        //inputActionHandler('flatTextPassword', json.password);
         inputActionHandler('bicyclePhoto', json.bicyclePhoto);
         inputActionHandler('profilePhoto', json.profilePhoto);
-    })
+      })
     .catch((error) => console.error('Error edition user: ', error))
-  }, []);
+    } else {
+      console.warn("El usuario no esta cargado todavia")
+    }
+    
+  }, [userNameLogin]);
   
-  //CARGO LOS NUEVOS DATOS DEL INPUT EN UN JSON
-  const someData = {
+  const userEdited = {
     name: name,
     email: email,
     password: flatTextPassword,
@@ -75,9 +84,9 @@ const EditRegisterComponent = () => {
   }
 
   const putData = () => {
-    console.log("data to save ", someData)
+    console.log("data to save ", userEdited)
     axios
-      .put('bikeOwner/update/'+ 'pepe' +'/', someData)
+      .put('bikeOwner/update/'+ userNameLogin +'/', userEdited)
       .then(response => response.data)
       .then(data => {
         setTitleDialog('Edicion exitosa')
