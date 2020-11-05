@@ -12,7 +12,6 @@ const HistoryComponent = () => {
     //Hacerlo desde la API a la relacion
     const [userNameLogin, setUserNameLogin]=  useState("");
     const  load = async () => {
-      console.log("load")
       try {
         let userAux= await AsyncStorage.getItem(STORAGE_KEY);
         setUserNameLogin(userAux)
@@ -26,19 +25,19 @@ const HistoryComponent = () => {
   const [isLoading, setLoading] = useState(true);
   //CARGA DATOS EXISTENTES (estadía)
   const [data, setData] = useState({});
+  //.get('notificationEgress-getUser/'+userNameLogin+'/')
   useEffect(() => {
     load() //AsyncStorage
       axios
-        .get('estadias-getUser/'+userNameLogin+'/')
+        .get('notificationEgress-getUser/'+userNameLogin+'/')
         .then(json => {
               setData(json.data)
               console.log('ok estadia ', json.data)
+              setLoading(false)
           })
         .catch((error) => console.log('error estadia get ',userNameLogin))
     }, [userNameLogin]);
-    console.log("data History: ")
-    console.log(data)
-
+  
   const separador = () => {
     return(
         <View style={{
@@ -53,13 +52,12 @@ const HistoryComponent = () => {
   //<Text> {data.placeUsed} | {data.dateCreated} | {data.userName}</Text>
   return (
     <View style={{ flex: 1, padding: 24 }}>
-      <Text> {data.placeUsed} | {data.dateCreated} | {data.userName}</Text>
       {isLoading ? <ActivityIndicator/> : (
         <FlatList
           data={data}
           keyExtractor={({ id }, index) => id}
           renderItem={({ item }) => (
-            <Text>{item.placeUsed.toString()} | {format(new Date(item.dateCreated), 'dd-MM-yyyy HH:mm:sss')} | {item.userName} </Text>
+            <Text>{item.place.toString()} | {format(new Date(item.dateCreated), 'dd-MM-yyyy HH:mm:sss')} | {item.userName} </Text>
           )}
           horizontal= {false}
           ItemSeparatorComponent=  {() => separador()}
