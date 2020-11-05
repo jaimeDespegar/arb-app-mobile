@@ -26,7 +26,7 @@ const StateBikeComponent = () => {
     }
     
 
-    //CARGA DATOS EXISTENTES (estadía)
+    
     const [data, setData] = useState({});
     useEffect(() => {
         load() //AsyncStorage
