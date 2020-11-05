@@ -4,8 +4,8 @@ import { TextInput, Button } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import EmailInput from './EmailInput';
 import axios from 'axios';
-import DialogCustom from './Dialogs/DialogCustom'
-import { loadValue, USER_KEY } from './utils/StorageHelper'
+import DialogCustom from './Dialogs/DialogCustom';
+import { loadValue, USER_KEY } from './utils/StorageHelper';
 
 
 const initialState = {

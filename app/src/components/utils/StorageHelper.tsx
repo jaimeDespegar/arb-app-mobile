@@ -21,3 +21,13 @@ export const saveValue = async (key: string, value: string) => {
     console.error('Failed to save value ', value);
   }
 }
+
+export const removeValue = async (key: string) => {
+  try {
+    await AsyncStorage.removeItem(key)
+  } catch(e) {
+    console.error('Error deleting item ', key)
+  }
+
+  console.log('Item delete ', key)
+}

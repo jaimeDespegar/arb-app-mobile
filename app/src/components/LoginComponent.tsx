@@ -7,6 +7,7 @@ import axios from 'axios';
 import DialogCustom from './Dialogs/DialogCustom'
 import { saveValue, USER_KEY } from './utils/StorageHelper'
 
+
 const initialState = {
   flatTextSecureEntry: true,
   userName: ''

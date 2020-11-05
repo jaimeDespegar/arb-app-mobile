@@ -6,6 +6,7 @@ import {
 } from 'react-native-paper';
 import axios from 'axios';
 import DialogCustom from './components/Dialogs/DialogCustom'
+import { removeValue, USER_KEY } from './components/utils/StorageHelper';
 
 
 type Props = {
@@ -23,7 +24,8 @@ function logOut(showDialogLogout: Function) {
     .then(response => {
       axios.defaults.headers.common.Authorization = null;
       console.log('User logout! ', response.status, response.statusText);
-      showDialogLogout()
+      removeValue(USER_KEY);
+      showDialogLogout();
     })
     .catch(error => console.log(error));
     
