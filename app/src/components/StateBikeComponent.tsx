@@ -32,7 +32,7 @@ const StateBikeComponent = () => {
         load() //AsyncStorage
         
         axios
-          .get('estadias-getUser/'+userNameLogin+'/')
+          .get('estadia-getStateBike/'+userNameLogin+'/')
           .then(json => {
                 setData(json.data)
                 console.log('ok estadia ', json.data)
@@ -49,12 +49,12 @@ const StateBikeComponent = () => {
     return (
         <View style={styles.container}>
             <View style={{ alignItems: 'center' }}>
-                <Title>Mi Bicicleta</Title>
+                <Title>Bicicleta de {userNameLogin}</Title>
             </View>
             <Card style={styles.card}>
                 <Card.Cover source={require('../../assets/images/biciUNGS.png')} />
                 <Card.Title
-                    title={buildMessage(data.placeUsed, data.placeUsed)}
+                    title={buildMessage(data.number, data.placeNumber)}
                     subtitle={data.description}
                 right={(props: any) => (
                     <IconButton {...props} icon="bike" onPress={() => {}} />
