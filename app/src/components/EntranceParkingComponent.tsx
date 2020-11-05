@@ -4,35 +4,41 @@
 
 import * as React from 'react';
 import { useState, useEffect } from "react"; 
-import {  StyleSheet, View, Text, Picker, AsyncStorage  } from 'react-native';
+import {  StyleSheet, View, Text, Picker } from 'react-native';
 import { useTheme, Button, } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import { DialogWithCustomColors } from './Dialogs';
 import DialogCustom from './Dialogs/DialogCustom'
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+//import {AsyncStorage} from 'react-native';
 
-const STORAGE_KEY = 'userName'
 
 const initialState = {
     text: '',
     userName:'',
 };
 
-let userNameLogin
-const  load = async () => {
-  try {
-    userNameLogin = await AsyncStorage.getItem(STORAGE_KEY);
-    //alert(userNameLogin);
-
-    if (name !== null) {
-    }
-  } catch (e) {
-    //console.error('Failed to load .')
-  }
-}
   
 const EntranceParkingComponent = () => {
-  load() //AsyncStorage
+    //Hacerlo desde la API a la relacion
+
+    
+    const STORAGE_KEY = 'userName'
+
+    const [userNameLogin, setUserNameLogin]=  useState("");
+    const  load = async () => {
+      try {
+        let userAux= await AsyncStorage.getItem(STORAGE_KEY);
+        setUserNameLogin(userAux)
+        //alert(userNameLogin);
+    
+      } catch (e) {
+        console.error('Failed to load .')
+      }
+    }
+    
+
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
   const {
     text,userName,photoPath,place,isOk,isSuspected,estadia
@@ -60,26 +66,24 @@ const EntranceParkingComponent = () => {
 
   //Alerta
   const [data, setData] = useState([]);
-  //const userNameHardcode= "userName3"
 
   useEffect(() => {
+    load() //AsyncStorage
     axios  
       .get('notificationEgress-getUser/'+userNameLogin+'/')
       .then((response) => response.data)
       .then((json) => setData(json)) //es el print()
       .catch((error) => console.error('Error Entrance', error))
 
-      if(data.userName === "userName"){
-        setVisible(true)
-        _getVisible('dialog5') 
-        console.log("tu bici esta en peligro!")
-      }
-      else{
-        console.log("tu bici esta ok")
-      }
-
-       
-  }, []);
+    if(data.userName === userNameLogin){
+      setVisible(true)
+      _getVisible('dialog5') 
+      console.log("tu bici esta en peligro!")
+    }
+    else{
+      console.log("tu bici esta ok")
+    } 
+  }, [userNameLogin]);
   //.get('notificationEgress-getUser/'+userName+'/')
   const notificarAlerta = () => (data.userName == "userName")?  _toggleDialog('dialog5') : "OK"
   const estacionarBici = () => {

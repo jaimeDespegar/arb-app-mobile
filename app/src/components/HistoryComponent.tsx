@@ -1,40 +1,43 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Text, View, StyleSheet, AsyncStorage} from 'react-native';
+import { ActivityIndicator, FlatList, Text, View, StyleSheet } from 'react-native';
 import { format } from 'date-fns';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+//import {AsyncStorage} from 'react-native';
 
+//const STORAGE_KEY = 'userName'
 const STORAGE_KEY = 'userName'
-
-let userNameLogin
-const  load = async () => {
-  try {
-    userNameLogin = await AsyncStorage.getItem(STORAGE_KEY);
-    alert(userNameLogin);
-  } 
-  catch (e) {
-    //console.error('Failed to load .')
-  }
-}
-
+    
 const HistoryComponent = () => {
-  load() //AsyncStorage
+    //Hacerlo desde la API a la relacion
+    const [userNameLogin, setUserNameLogin]=  useState("");
+    const  load = async () => {
+      console.log("load")
+      try {
+        let userAux= await AsyncStorage.getItem(STORAGE_KEY);
+        setUserNameLogin(userAux)
+    
+      } catch (e) {
+        console.error('Failed to load .')
+      }
+    }
+    
 
   const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
-//.get('estadias-getUser/'+userNameLogin+'/')
-//.get('estadias-getAll')
-  useEffect(() => { 
-    axios
-    .get('estadias-getAll')
-      .then((response) => response.data)
-      .then((json) => {
-        setData(json)
-        setLoading(false)
-      })
-      .catch((error) => console.error('error history component'))
-  }, []);
-  
-  console.log(data)
+  //CARGA DATOS EXISTENTES (estadía)
+  const [data, setData] = useState({});
+  useEffect(() => {
+    load() //AsyncStorage
+      axios
+        .get('estadias-getUser/'+userNameLogin+'/')
+        .then(json => {
+              setData(json.data)
+              console.log('ok estadia ', json.data)
+          })
+        .catch((error) => console.log('error estadia get ',userNameLogin))
+    }, [userNameLogin]);
+    console.log("data History: ")
+    console.log(data)
 
   const separador = () => {
     return(
@@ -47,9 +50,10 @@ const HistoryComponent = () => {
         </View>
     )
   }
-
+  //<Text> {data.placeUsed} | {data.dateCreated} | {data.userName}</Text>
   return (
     <View style={{ flex: 1, padding: 24 }}>
+      <Text> {data.placeUsed} | {data.dateCreated} | {data.userName}</Text>
       {isLoading ? <ActivityIndicator/> : (
         <FlatList
           data={data}

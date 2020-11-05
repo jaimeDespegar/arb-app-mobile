@@ -1,12 +1,13 @@
 //primero hay que hacer lo del Objetivo 4, la parte de administración de usuarios
 
-import * as React from 'react';
-import {  StyleSheet, View, TouchableOpacity, Text, AsyncStorage  } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {  StyleSheet, View, TouchableOpacity, Text  } from 'react-native';
 import { TextInput, Button, Paragraph, Dialog, Portal } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import axios from 'axios';
 import DialogCustom from './Dialogs/DialogCustom'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+//import {AsyncStorage} from 'react-native';
 
 const initialState = {
   flatTextSecureEntry: true,
@@ -18,19 +19,33 @@ const STORAGE_KEY = 'userName'
 const  save = async (name) => {
   try {
     await AsyncStorage.setItem(STORAGE_KEY, name)
+    console.log("guardado", name)
   } catch (e) {
-    //console.error('Failed to save name.')
+    console.error('Failed to save name.')
   }
 }
+  const  load = async () => {
+    try {
+      let userAux= await AsyncStorage.getItem(STORAGE_KEY);
+      //alert(userAux);
+      console.log(userAux)
+  
+    } catch (e) {
+      console.error('Failed to load .')
+    }
+  }
+
 
 function handleRequest(userName: string, password: string, showDialogOk: Function, showDialogError: Function ) {
 
   const data = { 'username': userName, 'password': password } 
-
+  save(userName) //AsyncStorages
   if (axios.defaults.headers.common.Authorization) {
     axios.defaults.headers.common.Authorization = null;
   }
-
+  //useEffect(() => {
+    load() //AsyncStorage
+    //}, []); 
   axios
     .post('auth/login/', data)
     .then(response => {
@@ -50,6 +65,7 @@ function handleRequest(userName: string, password: string, showDialogOk: Functio
 }
 
 const LoginComponent = () => {
+  
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
   const {
     flatTextSecureEntry,
@@ -73,7 +89,8 @@ const LoginComponent = () => {
       setShowLogin(true)
     };
     const hideDialogLogin = () => setShowLogin(false);
-  
+   
+
   return (
         <View style={styles.inputs}>        
           <View style={styles.inputContainerStyle}>
@@ -141,7 +158,7 @@ const LoginComponent = () => {
             <DialogCustom
               visible={showLogin}
               title='Login exitoso'
-              content='Puede navegar correctamente'
+              content='Puede navegar correctamente '
               messageAction='OK'
               close={hideDialogLogin}
             />
