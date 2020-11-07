@@ -106,10 +106,10 @@ const EditRegisterComponent = () => {
 
           <View style={styles.inputContainerStyle}>
             <TextInput
-              label="Nombre"
+              label="Nombre de usuario"
               placeholder="Ingrese su nombre"
               value={name}
-              // error={!name}
+              disabled={true}
               onChangeText={inputValue => inputActionHandler('name', inputValue)}
             />
           </View>

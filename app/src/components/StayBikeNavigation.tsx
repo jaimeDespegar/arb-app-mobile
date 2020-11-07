@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BottomNavigation } from 'react-native-paper';
 import AvailabilityParkingComponent from './AvailabilityParkingComponent';
-import EntranceParkingComponent from './EntranceParkingComponent';
+import StayParkingComponent from './StayParkingComponent';
 import StateBikeComponent from './StateBikeComponent';
 import HistoryComponent from './HistoryComponent';
 
@@ -30,7 +30,7 @@ const StayBikeNavigation = () => {
       title: 'Estado',
       icon: 'inbox',
       color: '#2962ff',
-      badge: true,
+      badge: true, // tilde de seleccionado
     },
     {
       key: 'available',
@@ -51,7 +51,7 @@ const StayBikeNavigation = () => {
       navigationState={{ index, routes }}
       onIndexChange={index => setIndex(index)}
       renderScene={BottomNavigation.SceneMap({
-        myStay: EntranceParkingComponent,
+        myStay: StayParkingComponent,
         stateMyBike: StateBikeComponent,
         available: AvailabilityParkingComponent,
         history: HistoryComponent,

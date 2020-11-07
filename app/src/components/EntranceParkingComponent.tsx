@@ -2,25 +2,14 @@ import * as React from 'react';
 import { useState, useEffect } from "react"; 
 import { StyleSheet, View, Text, Picker } from 'react-native';
 import { Button, } from 'react-native-paper';
-import { DialogWithCustomColors } from './Dialogs';
-import DialogCustom from './Dialogs/DialogCustom'
 import axios from 'axios';
-import { loadValue, USER_KEY } from './utils/StorageHelper'
 
-  
-const EntranceParkingComponent = () => {
-  
-  const [data, setData] = useState([]);  
-  
-  const [userNameLogin, setUserNameLogin] = useState("");
-  const [titleMessage, setTitleMessage] = useState("");
-  const [contentMessage, setContentMessage] = useState("");
 
-  const [showMessage, setShowMessage] = React.useState(false);
-  const showDialog = () => { setShowMessage(true) };
-  const hideDialog = () => setShowMessage(false);
-
-  const parkTheBike = () => {
+const EntranceParkingComponent = (props) => {
+    
+  const userNameLogin = props.userName;
+  
+  const parkTheBike = (success: Function, fail: Function) => {
 
     const values = {
       'userName': userNameLogin,
@@ -30,50 +19,22 @@ const EntranceParkingComponent = () => {
     axios
       .post('parking/entrance/', values)
       .then(response => {
-        setTitleMessage("Estacionamiento Exitoso")
-        setContentMessage("Ahora puede ir a cursar seguro")
-        showDialog();
+        success();
       })
       .catch(error => {
         console.log('Error in entrace park ', error);
-        setTitleMessage("Error al intentar estacionar")
-        setContentMessage("Intente nuevamente mas tarde");
-        showDialog();
-      });
+        fail();
+    });
   }
 
-  const [visible, setVisible] = React.useState(false);
-
-  const _toggleDialog = (name: string) => () =>
-    setVisible({ ...visible, [name]: !visible[name] });
-
-  const _getVisible = (name: string) => !!visible[name];  
-  
   const [selectedValue, setSelectedValue] = useState("1");
 
-  useEffect(() => {
-      
-    loadValue(USER_KEY, setUserNameLogin);
-
-    // axios
-    //   .get('notificationEgress-getUser/' + userNameLogin + '/')
-    //   .then((response) => response.data)
-    //   .then((json) => setData(json))
-    //   .catch((error) => console.error('Error Entrance', error));
-
-    //   if(data.userName === userNameLogin){
-    //     setVisible(true)
-    //     console.log("tu bici esta en peligro!")
-    //   }
-    //   else{
-    //     console.log("tu bici esta ok")
-    //   }
-  }, [userNameLogin]);
   
-    return (
-      <View style={styles.inputs}>
-        
-        <Text style={styles.goodBye}>
+  return (
+    <View style={styles.inputs}>
+      
+      <View>
+        <Text style={styles.title}>
           Seleccione su estacionamiento:
         </Text>
         <Picker
@@ -88,41 +49,27 @@ const EntranceParkingComponent = () => {
           <Picker.Item label="5" value="5" />
           <Picker.Item label="6" value="6" />
         </Picker>
-        <Text style={styles.goodBye}>
+        <Text style={styles.title}>
           Bienvenido a la UNGS, {userNameLogin}!
         </Text>
         
-        <Button mode="contained" onPress={() => parkTheBike()} style={styles.button}>
+        <Button mode="contained" onPress={() => parkTheBike(props.success, props.fail)} style={styles.button}>
           Estacionar Bicicleta
         </Button>
-        <Button mode="outlined" icon="alert" onPress={_toggleDialog('dialog5')}  style={styles.stylesContainer}>
-          Alerta Robo
-        </Button>
-        <DialogWithCustomColors
-          visible={false}
-          close={_toggleDialog('dialog5')}
-          data={data}
-        />
-        <View>
-          <DialogCustom
-            visible={showMessage}
-            title={titleMessage}
-            content={contentMessage}
-            messageAction='OK'
-            close={hideDialog}
-          />
-        </View>
       </View>
-    );
+      
+    </View>
+  );
 };
 
 EntranceParkingComponent.title = 'Entrance Parking';
 
 const styles = StyleSheet.create({
-  goodBye: {
+  title: {
     fontSize: 20,
     textAlign: 'center',
-      margin: 50
+    margin: 50,
+    marginTop:0,
   },
   inputs: {
     flex: 1,
