@@ -11,8 +11,8 @@ export default function Root() {
 
   useEffect(() => {
     // 192.168.1.106   //Javier
-    // 192.168.1.56   //Jaime
-    axios.defaults.baseURL = 'http://192.168.1.106:8000/api/';
+    // 192.168.1.50   //Jaime
+    axios.defaults.baseURL = 'http://192.168.1.50:8000/api/';
     axios.defaults.timeout = 1500;
   }, [])
 

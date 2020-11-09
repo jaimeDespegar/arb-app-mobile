@@ -3,39 +3,44 @@ import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Text, View, StyleSheet } from 'react-native';
 import { format } from 'date-fns';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-//import {AsyncStorage} from 'react-native';
+import { USER_KEY } from './utils/StorageHelper';
 
-//const STORAGE_KEY = 'userName'
-const STORAGE_KEY = 'userName'
     
 const HistoryComponent = () => {
     //Hacerlo desde la API a la relacion
-    const [userNameLogin, setUserNameLogin]=  useState("");
-    const  load = async () => {
-      try {
-        let userAux= await AsyncStorage.getItem(STORAGE_KEY);
-        setUserNameLogin(userAux)
-    
-      } catch (e) {
-        console.error('Failed to load .')
-      }
+  const [userNameLogin, setUserNameLogin]=  useState("");
+  const  load = async () => {
+    try {
+      let userAux= await AsyncStorage.getItem(USER_KEY);
+      setUserNameLogin(userAux)
+  
+    } catch (e) {
+      console.error('Failed to load .')
     }
-    
+  }
 
   const [isLoading, setLoading] = useState(true);
   //CARGA DATOS EXISTENTES (estadía)
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   //.get('notificationEgress-getUser/'+userNameLogin+'/')
   useEffect(() => {
     load() //AsyncStorage
-      axios
-        .get('notificationEgress-getUser/'+userNameLogin+'/')
+      if (userNameLogin) {
+        axios
+        .get('estadia/find?userName='+userNameLogin+'&isActive=false')
         .then(json => {
-              setData(json.data)
-              console.log('ok estadia ', json.data)
-              setLoading(false)
+          console.log('ok estadia ', json.data)
+          setData(json.data)
+          setLoading(false)
           })
-        .catch((error) => console.log('error estadia get ',userNameLogin))
+        .catch((error) => {
+          console.log('error estadia history ',userNameLogin);
+          setLoading(false);
+          setData([])
+        })
+      } else {
+        console.log('usuario no cargado')
+      }
     }, [userNameLogin]);
   
   const separador = () => {
@@ -57,7 +62,7 @@ const HistoryComponent = () => {
           data={data}
           keyExtractor={({ id }, index) => id}
           renderItem={({ item }) => (
-            <Text>{item.place.toString()} | {format(new Date(item.dateCreated), 'dd-MM-yyyy HH:mm:sss')} | {item.userName} </Text>
+            <Text>{item.placeUsed.toString()} | {format(new Date(item.dateCreated), 'dd-MM-yyyy HH:mm:sss')} | {item.userName} </Text>
           )}
           horizontal= {false}
           ItemSeparatorComponent=  {() => separador()}
