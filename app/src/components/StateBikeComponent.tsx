@@ -54,7 +54,7 @@ const StateBikeComponent = () => {
             </View>
         </View> 
         ) :
-        <Text style={{marginTop:30}}> No tiene ninguna estadia activa</Text>
+        <Text style={{marginTop:30, textAlign: 'center'}}> No tiene ninguna estadia activa</Text>
         }
         </>
     );

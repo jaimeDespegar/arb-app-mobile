@@ -53,13 +53,13 @@ const StayParkingComponent = () => {
   const successEgress = () => {
     setMessage(MessageEgressSuccess);
     setShowMessage(true);
-    setEntrance(false);
+    setEntrance(true);
   }
 
   const errorEgress = () => {
     setMessage(MessageEgressError);
     setShowMessage(true);
-    setEntrance(true);
+    setEntrance(false);
   }
 
   useEffect(() => {

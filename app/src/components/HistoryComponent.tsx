@@ -66,7 +66,7 @@ const HistoryComponent = () => {
           )}
           horizontal= {false}
           ItemSeparatorComponent=  {() => separador()}
-          ListEmptyComponent={<Text style={{marginTop:30}}>
+          ListEmptyComponent={<Text style={{marginTop:30 , textAlign: 'center'}}>
                No hay estadías registradas</Text>}
         />
       )}
