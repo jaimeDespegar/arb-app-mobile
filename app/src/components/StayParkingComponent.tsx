@@ -33,7 +33,7 @@ const StayParkingComponent = () => {
         console.log('Error to find stay by user ', error);
       });
     } else {
-      console.warn('El usuario no esta cargado');
+      console.debug('El usuario no esta cargado');
     }
  
   }

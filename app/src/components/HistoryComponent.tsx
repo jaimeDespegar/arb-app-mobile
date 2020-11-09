@@ -15,7 +15,7 @@ const HistoryComponent = () => {
       setUserNameLogin(userAux)
   
     } catch (e) {
-      console.error('Failed to load .')
+      console.debug('Failed to load .')
     }
   }
 

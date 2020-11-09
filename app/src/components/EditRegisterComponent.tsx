@@ -70,7 +70,7 @@ const EditRegisterComponent = () => {
       })
     .catch((error) => console.error('Error edition user: ', error))
     } else {
-      console.warn("El usuario no esta cargado todavia")
+      console.debug("El usuario no esta cargado todavia")
     }
     
   }, [userNameLogin]);
