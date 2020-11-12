@@ -14,12 +14,15 @@ const initialState = {
   flatTextPassword:'',
   bicyclePhoto:'',
   profilePhoto:'',
+  pet:'',
+  street:'',
+  movie:'',
 };
 
 const RegisterComponent = () => {
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
   const {
-    name, flatTextSecureEntry, flatTextPassword, email, confirmEmail, bicyclePhoto, profilePhoto
+    name, flatTextSecureEntry, flatTextPassword, email, confirmEmail, bicyclePhoto, profilePhoto,pet,street,movie
   } = state;
 
   const inputActionHandler = (type: string, payload: string) =>
@@ -43,6 +46,9 @@ const RegisterComponent = () => {
     inputActionHandler('flatTextPassword', '');
     inputActionHandler('bicyclePhoto', '');
     inputActionHandler('profilePhoto', '');
+    inputActionHandler('pet', '');
+    inputActionHandler('street', '');
+    inputActionHandler('movie', '');
     showDialogRegister();
   }
 
@@ -53,7 +59,10 @@ const RegisterComponent = () => {
       "email": email,
       "password": flatTextPassword,
       "profilePhoto": profilePhoto,
-      "username": name
+      "username": name,
+      "pet": pet,
+      "street": street,
+      "movie": movie,
     }
     
     console.log('user to post ', someData)
@@ -136,6 +145,31 @@ const RegisterComponent = () => {
               placeholder="Ingrese su foto de perfil"
               value={profilePhoto}
               onChangeText={inputValue => inputActionHandler('profilePhoto', inputValue)}
+            />
+          </View>
+
+          <View style={styles.inputContainerStyle}>
+            <TextInput
+              label="Nombre de mascota"
+              placeholder="Ingrese el nombre de su mascota"
+              value={pet}
+              onChangeText={inputValue => inputActionHandler('pet', inputValue)}
+            />
+          </View>
+          <View style={styles.inputContainerStyle}>
+            <TextInput
+              label="Nombre de su calle"
+              placeholder="Ingrese el nombre de su calle"
+              value={street}
+              onChangeText={inputValue => inputActionHandler('street', inputValue)}
+            />
+          </View>
+          <View style={styles.inputContainerStyle}>
+            <TextInput
+              label="Nombre de pelicula favorita"
+              placeholder="Ingrese el nombre de su pelicula favorita"
+              value={movie}
+              onChangeText={inputValue => inputActionHandler('movie', inputValue)}
             />
           </View>
 
