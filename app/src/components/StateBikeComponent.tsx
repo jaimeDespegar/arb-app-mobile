@@ -9,6 +9,9 @@ const StateBikeComponent = () => {
 
     const [userNameLogin, setUserNameLogin]=  useState("");
     const [data, setData] = useState({});
+    
+    const [dataDefaultImage, setDataDefaultImage] = useState('../../assets/images/biciUNGS.png');
+    console.log(dataDefaultImage)
 
     useEffect(() => {
         loadValue(USER_KEY, setUserNameLogin);
@@ -28,7 +31,13 @@ const StateBikeComponent = () => {
    
     const buildMessage = (nroParking: number, placeNumber: number) => 
                           "Bicicletero " + nroParking +" en el lugar "+placeNumber; 
-   
+    
+    // FALTA AGREGAR FOTOS DINAMICAMENTE 
+    const actualizar = () =>{
+        //actualImage= '../../assets/images/estadoBicicletero.jpg'
+        //setDataDefaultImage(actualImage)
+      }
+    
     return (
         <>
         { (data.number) ? 
@@ -48,7 +57,7 @@ const StateBikeComponent = () => {
                 />
             </Card>
             <View style={styles.viewButton}>
-                <Button mode="outlined" icon="image" onPress={() => {}} style={styles.button}>
+                <Button mode="outlined" icon="image" onPress={() => actualizar()} style={styles.button}>
                     Actualizar 
                 </Button>
             </View>
