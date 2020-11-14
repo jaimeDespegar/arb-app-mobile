@@ -1,109 +1,39 @@
 import React, { useEffect , useState} from "react";
 import { Paragraph, Button, Portal, Dialog, Colors } from 'react-native-paper';
-import { inputReducer } from '../../../utils';
-import { AsyncStorage } from 'react-native'
+import axios from 'axios';
 
-const STORAGE_KEY = 'userName'
 
-const initialState = {
-  isSuspected: '',
-};
+const notifyResponse = (values, isSuspected: Boolean, functionClose: Function) => {
 
-let userNameLogin
-const  load = async () => {
-  try {
-    userNameLogin = await AsyncStorage.getItem(STORAGE_KEY);
-    //alert(userNameLogin);
+  const userName = values.userName;
 
-    if (name !== null) {
-    }
-  } catch (e) {
-    //console.error('Failed to load .')
+  const data = {
+    userName: userName,
+    isActive: false,
+    isSuspected: isSuspected
   }
+
+  axios
+    .put('notificationEgress-update/'+userName+'/', data)
+    .then(response => response.data)
+    .then(data => {
+      console.log(data)
+      if (isSuspected) {
+
+      } else {
+
+      }
+      functionClose(isSuspected);
+    })
+    .catch(err => {
+      console.error('Error al responder a la notificacion ',err)
+    });
 }
 
-const putFunction_OK = (data) => {
-  console.log("putFunction_OK")
-
-  load() //AsyncStorage
-  
-  //CARGO LOS NUEVOS DATOS DEL INPUT EN UN JSON
-  const someData = {
-    userName: data.userName,
-    photoPath: data.photoPath,
-    place: data.place,
-    isOk: data.isOk,
-    isSuspected: "False",//si presiona no es True
-    estadia : data.estadia
-   }
-  body: JSON.stringify(someData) 
-  
-  const putMethod = {
-    method: 'PUT',
-    headers: {
-     'Content-type': 'application/json; charset=UTF-8' 
-    },
-    body: JSON.stringify(someData) 
-   }
-   const putData = () => {
-    fetch('http://192.168.1.106:8000/api/notificationEgress-updateUser/'+userNameLogin+'/')
-    .then(response => response.json())
-    .then(data => console.log(someData)) 
-   .catch(err => console.log(err))
-   }
-   putData()
-  }
-//fetch('http://192.168.1.108:8000/api/notificationEgress-updateUser/'+data.userName+'/')//buscar userName
-//fetch('http://192.168.1.108:8000/api/notificationEgress-update/13/', putMethod)
-
-const putFunction_Suspected = (data) => {
-console.log("putFunction_Suspected")
-
-//CARGO LOS NUEVOS DATOS DEL INPUT EN UN JSON
-const someData = {
-  userName: data.userName,
-  photoPath: data.photoPath,
-  place: data.place,
-  isOk: data.isOk,
-  isSuspected: "True",//si presiona no es True
-  estadia : data.estadia
- }
-body: JSON.stringify(someData) 
-
-const putMethod = {
-  method: 'PUT',
-  headers: {
-   'Content-type': 'application/json; charset=UTF-8' 
-  },
-  body: JSON.stringify(someData) 
- }
- //const userNameHardcode= data.userName;
- const putData = () => {
-  fetch('http://192.168.1.106:8000/api/notificationEgress-updateUser/'+userNameLogin+'/', putMethod)
-  .then(response => response.json())
-  .then(data => console.log(someData)) 
- .catch(err => console.log(err))
- }
- putData()
-}
-//fetch('http://192.168.1.108:8000/api/notificationEgress-updateUser/'+data.userName+'/', putMethod)//buscar userName
-const DialogWithCustomColors = ({
-  visible,
-  close,
-  data,
-}: {
-  visible: boolean;
-  close: () => void;
-  data: object;
-}) => (
-  
+const DialogWithCustomColors = ({ visible, close, data} : {
+                                  visible: boolean; close: () => void; data: Object}) => (
   <Portal>
-    
-    <Dialog
-      onDismiss={close}
-      style={{ backgroundColor: Colors.purple900 }}
-      visible={visible}
-    >
+    <Dialog onDismiss={close} style={{ backgroundColor: Colors.purple900 }} visible={visible} >
       <Dialog.Title style={{ color: Colors.white }}>¡Alerta Posible Robo!</Dialog.Title>
       <Dialog.Content>
         <Paragraph style={{ color: Colors.white }}>
@@ -111,16 +41,15 @@ const DialogWithCustomColors = ({
         </Paragraph>
       </Dialog.Content>
       <Dialog.Actions>
-      <Button color={Colors.white} onPress={() => putFunction_Suspected(data)}>
+        <Button color={Colors.white} onPress={() => {notifyResponse(data, true, close)}}>
           No, notificar al guardia
         </Button>
-        <Button color={Colors.white} onPress={() => putFunction_OK(data)}>
+        <Button color={Colors.white} onPress={() => {notifyResponse(data, false, close)}}>
           Si, soy yo
         </Button>
       </Dialog.Actions>
     </Dialog>
   </Portal>
 );
-//<Button color={Colors.white} onPress={() => putFunction()}>
-//<Button color={Colors.white} onPress={close}> //funciona
+
 export default DialogWithCustomColors;

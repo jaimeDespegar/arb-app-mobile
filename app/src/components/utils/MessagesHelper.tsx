@@ -22,3 +22,15 @@ export const MessageEgressError = {
     content: 'Intente nuevamente mas tarde',
     action: 'OK'
 }
+
+export const MessageEgressForceOk = {
+    title: '¡Buen regreso!',
+    content: 'Su estadia fue finalizada correctamente',
+    action: 'OK'
+}
+
+export const MessageEgressForceSuspected = {
+    title: '¡Estadia finalizada!',
+    content: 'La estadia ha sido finalizada y se dio aviso al guardia',
+    action: 'OK'
+}

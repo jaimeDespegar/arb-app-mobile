@@ -24,7 +24,7 @@ const StateBikeComponent = () => {
             setData({});
           })
 
-    }, [userNameLogin, data]);
+    }, [userNameLogin]);
    
     const buildMessage = (nroParking: number, placeNumber: number) => 
                           "Bicicletero " + nroParking +" en el lugar "+placeNumber; 
