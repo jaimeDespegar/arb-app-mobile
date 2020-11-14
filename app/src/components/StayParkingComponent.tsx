@@ -2,12 +2,13 @@ import * as React from 'react';
 import { useState, useEffect } from "react"; 
 import { StyleSheet, View } from 'react-native';
 import DialogCustom from './Dialogs/DialogCustom'
+import DialogWithCustomColors from './Dialogs/DialogWithCustomColors'
 import axios from 'axios';
 import { loadValue, USER_KEY } from './utils/StorageHelper';
 import EntranceParkingComponent from './EntranceParkingComponent';
 import EgressParkingComponent from './EgressParkingComponent';
-import { MessageEntranceSuccess, MessageEntranceError, 
-         MessageEgressSuccess, MessageEgressError } from './utils/MessagesHelper';
+import { MessageEntranceSuccess, MessageEntranceError, MessageEgressForceSuspected,
+         MessageEgressSuccess, MessageEgressError, MessageEgressForceOk } from './utils/MessagesHelper';
 
 
 const StayParkingComponent = () => {
@@ -15,10 +16,15 @@ const StayParkingComponent = () => {
   const [entrance, setEntrance] = React.useState(true);
   const [userNameLogin, setUserNameLogin] = useState("");
   const [showMessage, setShowMessage] = React.useState(false);
-
+  const [showMessageAlert, setShowMessageAlert] = React.useState(false);
+  const [visible, setVisible] = React.useState(false);
   const [message, setMessage] = useState({});
-  
+  const [messageAlert, setMessageAlert] = useState({});
+  const [notification, setNotification] = useState(null);
+
   const hideDialog = () => setShowMessage(false);
+  const hideDialogAlert = () => setShowMessageAlert(false);
+
 
   const checkStay = () => {
     
@@ -30,12 +36,45 @@ const StayParkingComponent = () => {
         setEntrance(false);
       })
       .catch(error => {
-        console.log('Error to find stay by user ', error);
+        console.debug('Error to find stay by user ', error);
       });
     } else {
       console.debug('El usuario no esta cargado');
     }
  
+  }
+
+  const checkSuspectedNotifications = (user: string) => {
+    console.log('user param ', userNameLogin)
+    if (!userNameLogin) {
+      loadValue(USER_KEY, setUserNameLogin);
+    }
+    if (userNameLogin) {
+      axios
+      .get('notificationEgress-getUser/'+userNameLogin+'/')
+      .then(response => {
+        setNotification(response.data)
+        setVisible(true);
+      })
+      .catch(error => {
+        console.debug('Error no hay notificaciones. ', error);
+        setNotification(null)
+      });
+    } else {
+      console.debug('El usuario no esta cargado checkSuspectedNotifications');
+    }
+ 
+  }
+
+  const closeDialog = (isSuspected) => {
+    setVisible(false);
+    setEntrance(true);
+    if (isSuspected) {
+      setMessageAlert(MessageEgressForceSuspected)
+    } else {
+      setMessageAlert(MessageEgressForceOk)
+    }
+    setShowMessageAlert(true)
   }
 
   const successEntrance = () => {
@@ -66,6 +105,15 @@ const StayParkingComponent = () => {
     loadValue(USER_KEY, setUserNameLogin);
     checkStay();
   }, [userNameLogin, entrance]);
+
+  useEffect(() => {
+    
+    const interval = setInterval(() => {
+      console.log('¡Chequeo de notificaciones de alerta para el usuario!');
+      checkSuspectedNotifications(userNameLogin);
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
   
   return (
     <>
@@ -96,16 +144,20 @@ const StayParkingComponent = () => {
           messageAction={message.action}
           close={hideDialog}
         />
+        <DialogCustom
+          visible={showMessageAlert}
+          title={messageAlert.title}
+          content={messageAlert.content}
+          messageAction={messageAlert.action}
+          close={hideDialogAlert}
+        />
       </View>
-      {/* <Button mode="outlined" icon="alert" onPress={_toggleDialog('dialog5')}  
-                  style={styles.stylesContainer}>
-          Alerta Robo
-        </Button>
-        <DialogWithCustomColors
-          visible={false}
-          close={_toggleDialog('dialog5')}
-          data={data}
-      /> */}
+
+      <DialogWithCustomColors
+        visible={visible}
+        close={closeDialog}
+        data={notification}
+      />
     </>
   );
 };

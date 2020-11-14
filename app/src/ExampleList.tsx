@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 import { List, Divider, useTheme } from 'react-native-paper';
 import { useSafeArea } from 'react-native-safe-area-context';
@@ -8,7 +8,7 @@ import RegisterComponent from './components/RegisterComponent';
 import RecoveryAccountComponent from './components/RecoveryAccountComponent';
 import StayBikeNavigation from './components/StayBikeNavigation';
 import EditRegisterComponent from './components/EditRegisterComponent';
-
+ 
 
 export const examples: Record<
   string,
@@ -46,7 +46,8 @@ export default function ExampleList({ navigation }: Props) {
 
   const { colors } = useTheme();
   const safeArea = useSafeArea();
- 
+  
+
   return (
     <FlatList
       contentContainerStyle={{
