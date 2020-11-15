@@ -44,15 +44,13 @@ const StayParkingComponent = () => {
  
   }
 
-  const checkSuspectedNotifications = (user: string) => {
-    console.log('user param ', userNameLogin)
-    if (!userNameLogin) {
-      loadValue(USER_KEY, setUserNameLogin);
-    }
+  const checkSuspectedNotifications = () => {
+    
     if (userNameLogin) {
       axios
       .get('notificationEgress-getUser/'+userNameLogin+'/')
       .then(response => {
+        console.log('Notificacion encontrada para el usuario')
         setNotification(response.data)
         setVisible(true);
       })
@@ -104,16 +102,13 @@ const StayParkingComponent = () => {
   useEffect(() => {
     loadValue(USER_KEY, setUserNameLogin);
     checkStay();
-  }, [userNameLogin, entrance]);
-
-  useEffect(() => {
-    
     const interval = setInterval(() => {
       console.log('¡Chequeo de notificaciones de alerta para el usuario!');
-      checkSuspectedNotifications(userNameLogin);
+      checkSuspectedNotifications();
     }, 10000);
     return () => clearInterval(interval);
-  }, []);
+  }, [userNameLogin, entrance]);
+
   
   return (
     <>
