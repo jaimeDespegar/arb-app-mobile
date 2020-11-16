@@ -168,6 +168,9 @@ const RegisterComponent = () => {
               onChangeText={inputValue => inputActionHandler('street', inputValue)}
             />
           </View>
+          {/* <Button mode="outlined" onPress={() => navigation.navigate('Home')} style={styles.button}>
+            Home
+          </Button> */}
           <View style={styles.inputContainerStyle}>
             <TextInput
               label="Nombre de pelicula favorita"
@@ -180,9 +183,7 @@ const RegisterComponent = () => {
           <Button mode="contained" onPress={() => postData()} style={styles.button}>
           Registar
           </Button>
-          <Button mode="outlined" onPress={() => navigation.navigate('Home')} style={styles.button}>
-            Home
-          </Button>
+          
           <View>
             <DialogCustom
               visible={visible}

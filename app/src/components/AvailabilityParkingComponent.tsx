@@ -37,9 +37,9 @@ const AvailabilityParkingComponent = () => {
       <Button mode="contained" onPress={checkAvailability} style={styles.button}>
         Actualizar
       </Button>
-      <Button mode="outlined" onPress={() => navigation.navigate('Home')} style={styles.button}>
+      {/* <Button mode="outlined" onPress={() => navigation.navigate('Home')} style={styles.button}>
             Home
-      </Button>
+      </Button> */}
     </View>
   );
 };

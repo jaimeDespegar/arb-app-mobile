@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useState, useEffect } from "react"; 
 import {  StyleSheet, View, TouchableOpacity, Text  } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { inputReducer } from '../../utils';
@@ -16,7 +17,7 @@ const initialState = {
 };
 
 function handleRequest(userName: string, password: string, showDialogOk: Function, showDialogError: Function ) {
-
+ 
   const data = { 'username': userName, 'password': password } 
   
   if (axios.defaults.headers.common.Authorization) {
@@ -39,6 +40,8 @@ function handleRequest(userName: string, password: string, showDialogOk: Functio
     });
 }
 
+
+
 const LoginComponent = () => {
   const navigation = useNavigation();
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
@@ -47,7 +50,7 @@ const LoginComponent = () => {
     password,
     userName
   } = state;
-
+ 
   const inputActionHandler = (type: string, payload: string) =>
     dispatch({
       type: type,
@@ -59,14 +62,17 @@ const LoginComponent = () => {
     const hideDialog = () => setVisible(false);
     const [showLogin, setShowLogin] = React.useState(false);
     const showDialogLogin = () => {
-      inputActionHandler('userName', '')
+      //inputActionHandler('userName', '')
       inputActionHandler('password', '')
       setShowLogin(true)
     };
     const hideDialogLogin = () => setShowLogin(false);
    
-
+ 
   return (
+        <>
+        { (!axios.defaults.headers.common.Authorization) ? 
+        (
         <View style={styles.inputs}>        
           <View style={styles.inputContainerStyle}>
             <TextInput
@@ -116,7 +122,7 @@ const LoginComponent = () => {
                   style={styles.button}>
             Ingresar
           </Button>
-          <Button mode="outlined" onPress={() => navigation.navigate('Registro')} style={styles.button}>
+          <Button mode="outlined" onPress={() => navigation.navigate('Mi perfil')} style={styles.button}>
             Crear Cuenta
           </Button>
       
@@ -139,6 +145,14 @@ const LoginComponent = () => {
             />
           </View>
         </View>
+        ) :
+        <View>
+        <Text style={styles.title}>
+          ¡Bienvenido a la UNGS, {userName}!
+        </Text>
+        </View>
+        }
+        </>
   );
 };
 

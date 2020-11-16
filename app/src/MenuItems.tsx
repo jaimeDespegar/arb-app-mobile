@@ -85,9 +85,9 @@ const MenuItems = ({ toggleTheme, isDarkTheme }: Props) => {
           </View>
         </TouchableRipple>
       </Drawer.Section>
-      <Button mode="outlined" onPress={() => navigation.navigate('Home')} style={styles.button}>
+      {/* <Button mode="outlined" onPress={() => navigation.navigate('Home')} style={styles.button}>
         Home
-      </Button>
+      </Button> */}
       <Button mode="outlined" onPress={() => BackHandler.exitApp()} style={styles.button}>
         Exit App!!!
       </Button>

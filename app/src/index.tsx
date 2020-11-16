@@ -19,6 +19,10 @@ import RegisterComponent from './components/RegisterComponent';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AvailabilityParkingComponent from './components/AvailabilityParkingComponent';
+import LoginComponent from './components/LoginComponent';
+import HistoryComponent from './components/HistoryComponent';
+import StateBikeComponent from './components/StateBikeComponent';
+import RecoveryAccountComponent from './components/RecoveryAccountComponent';
 
 
 
@@ -156,11 +160,16 @@ export default function PaperExample() {
                 //   <Drawer.Screen name="Estadia" component={EntranceParkingComponent} />
                 // </Drawer.Navigator>
                 <Drawer.Navigator initialRouteName="Home">
-                  <Drawer.Screen name="Home" component={App} />
-                  {/* <Drawer.Screen name="Estadia" component={EntranceParkingComponent} />
-                  <Drawer.Screen name="Editar registro" component={EditRegisterComponent} /> */}
+                  {/* <Drawer.Screen name="Home" component={App} /> */}
+                  <Drawer.Screen name="Home" component={LoginComponent} />
+                  <Drawer.Screen name="Estadia" component={EntranceParkingComponent} />
                   <Drawer.Screen name="Disponibilidad" component={AvailabilityParkingComponent} />
-                  <Drawer.Screen name="Registro" component={RegisterComponent} />
+                  <Drawer.Screen name="Historial" component={HistoryComponent} />
+                  <Drawer.Screen name="Mi bicicleta" component={StateBikeComponent} />
+                  <Drawer.Screen name="Mi perfil" component={RegisterComponent} />
+                  <Drawer.Screen name="Editar perfil" component={EditRegisterComponent} />
+                  <Drawer.Screen name="Recuperar contraseña" component={RecoveryAccountComponent} />
+                  <Drawer.Screen name="App" component={App} />
                   <Drawer.Screen name="Cerrar sesión" component={MenuItems} />
                 </Drawer.Navigator>
               )}
