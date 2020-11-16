@@ -4,7 +4,7 @@ import { ActivityIndicator, FlatList, Text, View, StyleSheet } from 'react-nativ
 import { format } from 'date-fns';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { USER_KEY } from './utils/StorageHelper';
-
+import {StylesWelcome} from './utils/StylesHelper';
     
 const HistoryComponent = () => {
     //Hacerlo desde la API a la relacion
@@ -75,13 +75,5 @@ const HistoryComponent = () => {
 };
 
 HistoryComponent.title = 'History Estadias';
-
-const styles = StyleSheet.create({
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 100,
-  },
-});
 
 export default HistoryComponent;

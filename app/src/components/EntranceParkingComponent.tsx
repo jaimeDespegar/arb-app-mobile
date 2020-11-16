@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { StyleSheet, View, Text, Picker } from 'react-native';
 import { Button, } from 'react-native-paper';
 import axios from 'axios';
-
+import { StylesTitleEntrance, StylesLabelPlaces, StylesSelectsPlaces, StylesButton, StylesInputs} from './utils/StylesHelper';
 
 const EntranceParkingComponent = (props) => {
     
@@ -31,17 +31,17 @@ const EntranceParkingComponent = (props) => {
 
   
   return (
-    <View style={styles.inputs}>
+    <View style={StylesInputs}>
       
       <View>
-        <Text style={styles.title}>
+        <Text style={StylesTitleEntrance}>
           ¡Bienvenido a la UNGS, {userNameLogin}!
         </Text>
-        <Text style={styles.labelPlaces}>
+        <Text style={StylesLabelPlaces}>
             Seleccione su estacionamiento:
         </Text>
         
-        <View style={styles.selectsPlaces}>  
+        <View style={StylesSelectsPlaces}>  
           <Picker
             selectedValue={selectedValue}
             style={{ height: 50, width: 150}}
@@ -56,7 +56,7 @@ const EntranceParkingComponent = (props) => {
           </Picker>
         </View>
         
-        <Button mode="contained" onPress={() => parkTheBike(props.success, props.fail)} style={styles.button}>
+        <Button mode="contained" onPress={() => parkTheBike(props.success, props.fail)} style={StylesButton}>
           Estacionar Bicicleta
         </Button>
       </View>
@@ -66,38 +66,5 @@ const EntranceParkingComponent = (props) => {
 };
 
 EntranceParkingComponent.title = 'Entrance Parking';
-
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 50,
-    marginTop:0,
-  },
-  labelPlaces: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 50,
-    marginTop:5,
-    marginBottom: 15
-  },
-  selectsPlaces: { 
-   
-    alignItems: 'center', // Centered horizontally
-    justifyContent: 'center',
-    marginTop:10,
-    marginBottom: 35
-  },
-  inputs: {
-    flex: 1,
-    padding: 8,
-    justifyContent: 'center'
-  },
-  button: {
-    margin: 4,
-    height: 50,
-    justifyContent: 'center',
-  },
-});
   
 export default EntranceParkingComponent;

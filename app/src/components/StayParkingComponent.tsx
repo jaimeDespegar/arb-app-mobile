@@ -158,23 +158,5 @@ const StayParkingComponent = () => {
 };
 
 StayParkingComponent.title = 'Stay Parking';
-
-const styles = StyleSheet.create({
-  goodBye: {
-    fontSize: 20,
-    textAlign: 'center',
-      margin: 50
-  },
-  inputs: {
-    flex: 1,
-    padding: 8,
-    justifyContent: 'center'
-  },
-  button: {
-    margin: 4,
-    height: 50,
-    justifyContent: 'center',
-  },
-});
   
 export default StayParkingComponent;

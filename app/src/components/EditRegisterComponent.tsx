@@ -6,6 +6,7 @@ import EmailInput from './EmailInput';
 import axios from 'axios';
 import DialogCustom from './Dialogs/DialogCustom';
 import { loadValue, USER_KEY } from './utils/StorageHelper';
+import { StylesInputs, StylesButtonEditRegister, StylesInputContainerStyle} from './utils/StylesHelper';
 
 
 const initialState = {
@@ -102,9 +103,9 @@ const EditRegisterComponent = () => {
      
   return (
     <ScrollView>
-        <View style={styles.inputs}>
+        <View style={StylesInputs}>
 
-          <View style={styles.inputContainerStyle}>
+          <View style={StylesInputContainerStyle}>
             <TextInput
               label="Nombre de usuario"
               placeholder="Ingrese su nombre"
@@ -117,7 +118,7 @@ const EditRegisterComponent = () => {
           <EmailInput label="Email" value={email} onChangeText={e => { inputActionHandler('email', e) }} placeholder="Ingrese su email"/>
           <EmailInput label="Confirmar Email" value={confirmEmail} onChangeText={e => { inputActionHandler('confirmEmail', e) }}  placeholder="Ingrese su email nuevamente"/>
 
-          <View style={styles.inputContainerStyle}>
+          <View style={StylesInputContainerStyle}>
             <TextInput
               label="Contraseña"
               placeholder="Ingrese su contraseña"
@@ -141,7 +142,7 @@ const EditRegisterComponent = () => {
             />
           </View>
 
-          <View style={styles.inputContainerStyle}>
+          <View style={StylesInputContainerStyle}>
             <TextInput
               label="bicyclePhoto"
               placeholder="Ingrese su bicyclePhoto"
@@ -150,7 +151,7 @@ const EditRegisterComponent = () => {
             />
           </View>
 
-          <View style={styles.inputContainerStyle}>
+          <View style={StylesInputContainerStyle}>
             <TextInput
               label="foto de perfil"
               placeholder="Ingrese su foto de perfil"
@@ -159,11 +160,11 @@ const EditRegisterComponent = () => {
             />
           </View>
                     
-          <Button mode="contained" onPress={() => putData()} style={styles.button}>
+          <Button mode="contained" onPress={() => putData()} style={StylesButtonEditRegister}>
             Guardar
           </Button>
 
-          <Button mode="contained" onPress={() => {}} style={styles.button}>
+          <Button mode="contained" onPress={() => {}} style={StylesButtonEditRegister}>
           Cancelar
           </Button>
         
@@ -182,23 +183,5 @@ const EditRegisterComponent = () => {
 };
 
 EditRegisterComponent.title = 'EditRegister';
-
-const styles = StyleSheet.create({
-  inputs: {
-    flex: 1,
-    padding: 8,
-    justifyContent: 'center'
-  },
-  button: {
-    margin: 4,
-    marginTop: 10,
-    height: 50,
-    justifyContent: 'center',
-  },
-  inputContainerStyle: {
-    margin: 4,
-    marginBottom: 0,
-  },
-});
 
 export default EditRegisterComponent;

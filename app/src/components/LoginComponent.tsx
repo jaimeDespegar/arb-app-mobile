@@ -10,6 +10,7 @@ import { saveValue, USER_KEY } from './utils/StorageHelper'
 
 import { useNavigation } from '@react-navigation/native';
 import RegisterComponent from './RegisterComponent'
+import { StylesInputs, StylesButton, StylesInputContainerStyle, StylesTitle, StylesForgotMyPasswordText} from './utils/StylesHelper';
 
 const initialState = {
   flatTextSecureEntry: true,
@@ -73,8 +74,8 @@ const LoginComponent = () => {
         <>
         { (!axios.defaults.headers.common.Authorization) ? 
         (
-        <View style={styles.inputs}>        
-          <View style={styles.inputContainerStyle}>
+        <View style={StylesInputs}>        
+          <View style={StylesInputContainerStyle}>
             <TextInput
               label={'Nombre de usuario'}
               placeholder={'Ingrese su nombre de usuario'}
@@ -89,7 +90,7 @@ const LoginComponent = () => {
               }
             />
           </View>
-          <View style={styles.inputContainerStyle}>
+          <View style={StylesInputContainerStyle}>
             <TextInput
               label="Contraseña"
               placeholder="Ingrese su contraseña"
@@ -112,17 +113,17 @@ const LoginComponent = () => {
               }
             />
             <TouchableOpacity>
-                <Text style={styles.forgotMyPasswordText}>
+                <Text style={StylesForgotMyPasswordText}>
                   ¿Olvidaste la contraseña?
                 </Text>
             </TouchableOpacity>
           </View>
           <Button mode="contained"
                   onPress={() => handleRequest(userName, password, showDialogLogin, showDialog)}
-                  style={styles.button}>
+                  style={StylesButton}>
             Ingresar
           </Button>
-          <Button mode="outlined" onPress={() => navigation.navigate('Mi perfil')} style={styles.button}>
+          <Button mode="outlined" onPress={() => navigation.navigate('Mi perfil')} style={StylesButton}>
             Crear Cuenta
           </Button>
       
@@ -147,7 +148,7 @@ const LoginComponent = () => {
         </View>
         ) :
         <View>
-        <Text style={styles.title}>
+        <Text style={StylesTitle}>
           ¡Bienvenido a la UNGS, {userName}!
         </Text>
         </View>
@@ -157,28 +158,5 @@ const LoginComponent = () => {
 };
 
 LoginComponent.title = 'Login';
-
-const styles = StyleSheet.create({
-  inputs: {
-    flex: 1,
-    padding: 8,
-    justifyContent: 'center'
-  },
-  button: {
-    margin: 4,
-    height: 50,
-    justifyContent: 'center',
-  },
-  inputContainerStyle: {
-    margin: 4,
-    marginBottom: 0,
-  },
-  forgotMyPasswordText: {
-    color: 'rgb(98, 0, 238)', 
-    marginLeft: 1,
-    marginTop: 6, 
-    marginBottom: 12
-  }
-});
 
 export default LoginComponent;

@@ -6,6 +6,8 @@ import axios from 'axios';
 
 import { useNavigation } from '@react-navigation/native';
 
+import { StylesInputs, StylesButton, StylesWelcome} from './utils/StylesHelper';
+
 const AvailabilityParkingComponent = () => {
   const navigation = useNavigation();
 
@@ -25,16 +27,16 @@ const AvailabilityParkingComponent = () => {
   
   const  message_availability= (data.freePlaces >= 1)? "Hay disponibilidad":"No hay mas lugar";
   const stylesContainer = {
-    ...styles.inputs, //clonacion
+    ...StylesInputs, //clonacion//...styles.inputs, //clonacion
     backgroundColor: (data.freePlaces >= 1)? '#82b74b':'red'
   };
 
   return (
     <View style={stylesContainer}>
-      <Text style={styles.welcome}>
+      <Text style={StylesWelcome}>
         {message_availability}
       </Text>
-      <Button mode="contained" onPress={checkAvailability} style={styles.button}>
+      <Button mode="contained" onPress={checkAvailability} style={StylesButton}>
         Actualizar
       </Button>
       {/* <Button mode="outlined" onPress={() => navigation.navigate('Home')} style={styles.button}>
@@ -46,23 +48,5 @@ const AvailabilityParkingComponent = () => {
 
 AvailabilityParkingComponent.title = 'Availability Parking';
 
-
-const styles = StyleSheet.create({
-  inputs: {
-    flex: 1,
-    padding: 8,
-    justifyContent: 'center',
-  },
-  button: {
-    margin: 4,
-    height: 50,
-    justifyContent: 'center',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 100,
-  },
-});
 
 export default AvailabilityParkingComponent;

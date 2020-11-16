@@ -2,6 +2,7 @@ import {  StyleSheet, View, } from 'react-native';
 import { TextInput, HelperText } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import React, { useEffect } from "react";
+import { StylesInputContainerStyle} from './utils/StylesHelper';
 
 const initialState = {};
 
@@ -20,7 +21,7 @@ const EmailInput = (props) => {
     const email = props.value;
     
     return (
-        <View style={styles.inputContainerStyle}>
+        <View style={StylesInputContainerStyle}>
             <TextInput
               label={props.label}
               placeholder={props.placeholder}
@@ -42,12 +43,5 @@ const EmailInput = (props) => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    inputContainerStyle: {
-      margin: 4,
-      marginBottom: 0,
-    },
-});
 
 export default EmailInput;

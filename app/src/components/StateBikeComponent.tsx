@@ -3,6 +3,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import { Card, Button, IconButton, Title } from 'react-native-paper';
 import axios from 'axios';
 import { loadValue, USER_KEY } from './utils/StorageHelper'
+import { StylesContainer, StylesButton, StylesWelcome} from './utils/StylesHelper';
  
 
 const StateBikeComponent = () => {
@@ -42,7 +43,7 @@ const StateBikeComponent = () => {
         <>
         { (data.number) ? 
         (
-        <View style={styles.container}>
+        <View style={StylesContainer}>
             <View style={{ alignItems: 'center' }}>
                 <Title>Bicicleta de {userNameLogin}</Title>
             </View>
@@ -72,13 +73,4 @@ const StateBikeComponent = () => {
 export default StateBikeComponent;
 
 const styles = StyleSheet.create({
-    container:{
-        flex: 1,
-        justifyContent: 'center',
-    },
-    button: {
-      justifyContent: 'center',
-      margin: 4,
-      height: 50,
-    },
 });

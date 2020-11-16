@@ -5,6 +5,7 @@ import { inputReducer } from '../../utils';
 import EmailInput from './EmailInput';
 import axios from 'axios';
 import DialogCustom from './Dialogs/DialogCustom'
+import { StylesInputs, StylesInputContainerStyle, StylesButtonEditRegister} from './utils/StylesHelper';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -97,8 +98,8 @@ const RegisterComponent = () => {
 
   return (
     <ScrollView>
-        <View style={styles.inputs}>
-          <View style={styles.inputContainerStyle}>
+        <View style={StylesInputs}>
+          <View style={StylesInputContainerStyle}>
             <TextInput
               label="Nombre"
               placeholder="Ingrese su nombre"
@@ -110,7 +111,7 @@ const RegisterComponent = () => {
           <EmailInput label="Email" value={email} onChangeText={e => { inputActionHandler('email', e) }} placeholder="Ingrese su email"/>
           <EmailInput label="Confirmar Email" value={confirmEmail} onChangeText={e => { inputActionHandler('confirmEmail', e) }}  placeholder="Ingrese su email nuevamente"/>
 
-          <View style={styles.inputContainerStyle}>
+          <View style={StylesInputContainerStyle}>
             <TextInput
               label="Contraseña"
               placeholder="Ingrese su contraseña"
@@ -134,7 +135,7 @@ const RegisterComponent = () => {
             />
           </View>
           
-          <View style={styles.inputContainerStyle}>
+          <View style={StylesInputContainerStyle}>
             <TextInput
               label="Foto de la bicicleta"
               placeholder="Ingrese una foto de su bicicleta"
@@ -143,7 +144,7 @@ const RegisterComponent = () => {
             />
           </View>
 
-          <View style={styles.inputContainerStyle}>
+          <View style={StylesInputContainerStyle}>
             <TextInput
               label="Foto de perfil"
               placeholder="Ingrese su foto de perfil"
@@ -152,7 +153,7 @@ const RegisterComponent = () => {
             />
           </View>
 
-          <View style={styles.inputContainerStyle}>
+          <View style={StylesInputContainerStyle}>
             <TextInput
               label="Nombre de mascota"
               placeholder="Ingrese el nombre de su mascota"
@@ -160,7 +161,7 @@ const RegisterComponent = () => {
               onChangeText={inputValue => inputActionHandler('pet', inputValue)}
             />
           </View>
-          <View style={styles.inputContainerStyle}>
+          <View style={StylesInputContainerStyle}>
             <TextInput
               label="Nombre de su calle"
               placeholder="Ingrese el nombre de su calle"
@@ -171,7 +172,7 @@ const RegisterComponent = () => {
           {/* <Button mode="outlined" onPress={() => navigation.navigate('Home')} style={styles.button}>
             Home
           </Button> */}
-          <View style={styles.inputContainerStyle}>
+          <View style={StylesInputContainerStyle}>
             <TextInput
               label="Nombre de pelicula favorita"
               placeholder="Ingrese el nombre de su pelicula favorita"
@@ -180,7 +181,7 @@ const RegisterComponent = () => {
             />
           </View>
 
-          <Button mode="contained" onPress={() => postData()} style={styles.button}>
+          <Button mode="contained" onPress={() => postData()} style={StylesButtonEditRegister}>
           Registar
           </Button>
           
@@ -208,23 +209,5 @@ const RegisterComponent = () => {
 };
 
 RegisterComponent.title = 'Register';
-
-const styles = StyleSheet.create({
-  inputs: {
-    flex: 1,
-    padding: 8,
-    justifyContent: 'center'
-  },
-  button: {
-    margin: 4,
-    marginTop: 10,
-    height: 50,
-    justifyContent: 'center',
-  },
-  inputContainerStyle: {
-    margin: 4,
-    marginBottom: 0,
-  },
-});
 
 export default RegisterComponent;

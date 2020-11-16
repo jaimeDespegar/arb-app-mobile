@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
 import axios from 'axios';
-
+import { StylesInputs, StylesButton, StylesTitle} from './utils/StylesHelper';
 
 const EgressParkingComponent = (props) => {
 
@@ -26,15 +26,15 @@ const EgressParkingComponent = (props) => {
   }
 
   return (
-    <View style={styles.inputs}>
+    <View style={StylesInputs}>
       <View>
-        <Text style={styles.title}>
+        <Text style={StylesTitle}>
           ¡{props.userName} tu bicicleta esta estacionada!
         </Text>
       
         <Button mode="contained" 
                 onPress={() => removeBicycle(props.success, props.fail)} 
-                style={styles.button}>
+                style={StylesButton}>
           Retirar Bicicleta
         </Button>
       </View>
@@ -43,25 +43,5 @@ const EgressParkingComponent = (props) => {
 };
 
 EgressParkingComponent.title = 'Egress Parking';
-
-const styles = StyleSheet.create({
-  inputs: {
-    flex: 1,
-    padding: 8,
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 100,
-    marginTop:0 ,
-    marginBottom: 50, 
-  },
-  button: {
-    margin: 4,
-    height: 50,
-    justifyContent: 'center',
-  },
-});
 
 export default EgressParkingComponent;

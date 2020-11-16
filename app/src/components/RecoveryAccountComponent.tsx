@@ -5,6 +5,7 @@ import EmailInput from './EmailInput';
 import { inputReducer } from '../../utils';
 import { loadValue, USER_KEY } from './utils/StorageHelper';
 import axios from 'axios';
+import { StylesInputs, StylesButtonEditRecovery, StylesInputContainerStyle} from './utils/StylesHelper';
 
 const initialState = {
   petJoined:'',
@@ -48,8 +49,8 @@ const RecoveryAccountComponent = () => {
 
   return (
     <ScrollView>
-        <View style={styles.inputs}>
-          <View style={styles.inputContainerStyle}>
+        <View style={StylesInputs}>
+          <View style={StylesInputContainerStyle}>
             <TextInput
               label="Nombre de usuario"
               placeholder="Ingrese su nombre de usuario"
@@ -57,7 +58,7 @@ const RecoveryAccountComponent = () => {
               onChangeText={inputValue => inputActionHandler('userJoined', inputValue)}
             />
           </View>
-          <View style={styles.inputContainerStyle}>
+          <View style={StylesInputContainerStyle}>
             <TextInput
               label="Nombre de mascota"
               placeholder="Ingrese el nombre de su mascota"
@@ -65,7 +66,7 @@ const RecoveryAccountComponent = () => {
               onChangeText={inputValue => inputActionHandler('petJoined', inputValue)}
             />
           </View>
-          <View style={styles.inputContainerStyle}>
+          <View style={StylesInputContainerStyle}>
             <TextInput
               label="Nombre de su calle"
               placeholder="Ingrese el nombre de su calle"
@@ -73,7 +74,7 @@ const RecoveryAccountComponent = () => {
               onChangeText={inputValue => inputActionHandler('streetJoined', inputValue)}
             />
           </View>
-          <View style={styles.inputContainerStyle}>
+          <View style={StylesInputContainerStyle}>
             <TextInput
               label="Nombre de pelicula favorita"
               placeholder="Ingrese el nombre de su pelicula favorita"
@@ -81,9 +82,9 @@ const RecoveryAccountComponent = () => {
               onChangeText={inputValue => inputActionHandler('movieJoined', inputValue)}
             />
           </View>
-          <View style={styles.inputs}>
+          <View style={StylesInputs}>
             
-           <Button mode="contained" onPress={() => recovery()} style={styles.button}>
+           <Button mode="contained" onPress={() => recovery()} style={StylesButtonEditRecovery}>
               Recuperar
             </Button>
         </View>
@@ -93,19 +94,5 @@ const RecoveryAccountComponent = () => {
 };
 //<EmailInput  label="Email" placeholder="Ingrese su email" style={{marginBottom:12}}/>
 RecoveryAccountComponent.title = 'Recovery Account';
-
-const styles = StyleSheet.create({
-  inputs: {
-    flex: 1,
-    padding: 8,
-    justifyContent: 'center'
-  },
-  button: {
-    margin: 4,
-    marginTop: 8,
-    height: 50,
-    justifyContent: 'center',
-  },
-});
 
 export default RecoveryAccountComponent;
