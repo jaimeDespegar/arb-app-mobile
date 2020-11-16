@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import { View, StyleSheet, Platform, BackHandler } from 'react-native';
 import {
   Drawer, Switch, TouchableRipple,
   Text, Colors, useTheme,
@@ -7,7 +7,9 @@ import {
 import axios from 'axios';
 import DialogCustom from './components/Dialogs/DialogCustom'
 import { removeValue, USER_KEY } from './components/utils/StorageHelper';
+import { useNavigation } from '@react-navigation/native';
 
+import { TextInput, Button } from 'react-native-paper';
 
 type Props = {
   toggleTheme: () => void;
@@ -42,6 +44,8 @@ const DrawerItemsData = [
 ];
 
 const MenuItems = ({ toggleTheme, isDarkTheme }: Props) => {
+  const navigation = useNavigation();
+
   const [drawerItemIndex, setDrawerItemIndex] = React.useState<number>(0);
 
   const _setDrawerItem = (index: number) => setDrawerItemIndex(index);
@@ -50,10 +54,10 @@ const MenuItems = ({ toggleTheme, isDarkTheme }: Props) => {
   const [showLogout, setShowLogout] = React.useState(false);
   const showDialogLogout = () => setShowLogout(true);
   const hideDialogLogout = () => setShowLogout(false);
-
+  
   return (
     <View style={[styles.drawerContent, { backgroundColor: colors.surface }]}>
-      <Drawer.Section title="Menu">
+      {/* <Drawer.Section title="Menu">
         {DrawerItemsData.map((props, index) => (
           <Drawer.Item
             {...props}
@@ -73,14 +77,20 @@ const MenuItems = ({ toggleTheme, isDarkTheme }: Props) => {
             </View>
           </View>
         </TouchableRipple>
-      </Drawer.Section>
-      <Drawer.Section title="Mi Cuenta">
+      </Drawer.Section> */}
+      <Drawer.Section title="Gracias, vuelva pronto!">
         <TouchableRipple onPress={() => logOut(showDialogLogout)}>
           <View style={styles.preference}>
-            <Text>Cerrar Session</Text>
+            <Text>Presione aquí para cerrar Session!</Text>
           </View>
         </TouchableRipple>
       </Drawer.Section>
+      <Button mode="outlined" onPress={() => navigation.navigate('Home')} style={styles.button}>
+        Home
+      </Button>
+      <Button mode="outlined" onPress={() => BackHandler.exitApp()} style={styles.button}>
+        Exit App!!!
+      </Button>
       <View>
         <DialogCustom
           visible={showLogout}
@@ -105,6 +115,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 12,
     paddingHorizontal: 16,
+    backgroundColor: 'red',
+  },
+  button: {
+    margin: 20,
+    height: 50,
+    justifyContent: 'center',
   },
 });
 

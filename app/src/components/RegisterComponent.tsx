@@ -6,6 +6,8 @@ import EmailInput from './EmailInput';
 import axios from 'axios';
 import DialogCustom from './Dialogs/DialogCustom'
 
+import { useNavigation } from '@react-navigation/native';
+
 const initialState = {
   name: '',
   flatTextSecureEntry: true,
@@ -20,6 +22,8 @@ const initialState = {
 };
 
 const RegisterComponent = () => {
+  const navigation = useNavigation();
+
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
   const {
     name, flatTextSecureEntry, flatTextPassword, email, confirmEmail, bicyclePhoto, profilePhoto,pet,street,movie
@@ -175,6 +179,9 @@ const RegisterComponent = () => {
 
           <Button mode="contained" onPress={() => postData()} style={styles.button}>
           Registar
+          </Button>
+          <Button mode="outlined" onPress={() => navigation.navigate('Home')} style={styles.button}>
+            Home
           </Button>
           <View>
             <DialogCustom

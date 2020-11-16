@@ -10,9 +10,17 @@ import {
   DefaultTheme,
   Theme,
 } from 'react-native-paper';
+
 import App from './RootNavigator';
 import MenuItems from './MenuItems';
+import EntranceParkingComponent from './components/EntranceParkingComponent';
+import EditRegisterComponent from './components/EditRegisterComponent';
+import RegisterComponent from './components/RegisterComponent';
+
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import AvailabilityParkingComponent from './components/AvailabilityParkingComponent';
+
+
 
 //YellowBox.ignoreWarnings(['Require cycle:']);
 
@@ -36,7 +44,8 @@ const DrawerContent = () => {
   );
 };
 
-const Drawer = createDrawerNavigator<{ Home: undefined }>();
+//const Drawer = createDrawerNavigator<{ Home: undefined }>();
+const Drawer = createDrawerNavigator();
 
 export default function PaperExample() {
   useKeepAwake();
@@ -142,8 +151,17 @@ export default function PaperExample() {
               {Platform.OS === 'web' ? (
                 <App />
               ) : (
-                <Drawer.Navigator drawerContent={() => <DrawerContent />}>
+                // <Drawer.Navigator drawerContent={() => <DrawerContent />}>
+                //   <Drawer.Screen name="Home" component={App} />
+                //   <Drawer.Screen name="Estadia" component={EntranceParkingComponent} />
+                // </Drawer.Navigator>
+                <Drawer.Navigator initialRouteName="Home">
                   <Drawer.Screen name="Home" component={App} />
+                  {/* <Drawer.Screen name="Estadia" component={EntranceParkingComponent} />
+                  <Drawer.Screen name="Editar registro" component={EditRegisterComponent} /> */}
+                  <Drawer.Screen name="Disponibilidad" component={AvailabilityParkingComponent} />
+                  <Drawer.Screen name="Registro" component={RegisterComponent} />
+                  <Drawer.Screen name="Cerrar sesión" component={MenuItems} />
                 </Drawer.Navigator>
               )}
             </NavigationContainer>

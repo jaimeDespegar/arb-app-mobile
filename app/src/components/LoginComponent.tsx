@@ -7,6 +7,8 @@ import axios from 'axios';
 import DialogCustom from './Dialogs/DialogCustom'
 import { saveValue, USER_KEY } from './utils/StorageHelper'
 
+import { useNavigation } from '@react-navigation/native';
+import RegisterComponent from './RegisterComponent'
 
 const initialState = {
   flatTextSecureEntry: true,
@@ -38,7 +40,7 @@ function handleRequest(userName: string, password: string, showDialogOk: Functio
 }
 
 const LoginComponent = () => {
-  
+  const navigation = useNavigation();
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
   const {
     flatTextSecureEntry,
@@ -114,7 +116,7 @@ const LoginComponent = () => {
                   style={styles.button}>
             Ingresar
           </Button>
-          <Button mode="outlined" onPress={() => {}} style={styles.button}>
+          <Button mode="outlined" onPress={() => navigation.navigate('Registro')} style={styles.button}>
             Crear Cuenta
           </Button>
       

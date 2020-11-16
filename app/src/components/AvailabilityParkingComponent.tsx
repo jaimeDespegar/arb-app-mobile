@@ -4,8 +4,10 @@ import { Button } from 'react-native-paper';
 import { useEffect ,useState} from 'react';
 import axios from 'axios';
 
+import { useNavigation } from '@react-navigation/native';
 
 const AvailabilityParkingComponent = () => {
+  const navigation = useNavigation();
 
   const [data, setData] = useState([]);
   
@@ -34,6 +36,9 @@ const AvailabilityParkingComponent = () => {
       </Text>
       <Button mode="contained" onPress={checkAvailability} style={styles.button}>
         Actualizar
+      </Button>
+      <Button mode="outlined" onPress={() => navigation.navigate('Home')} style={styles.button}>
+            Home
       </Button>
     </View>
   );
