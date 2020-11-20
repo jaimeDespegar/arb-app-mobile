@@ -23,6 +23,7 @@ import LoginComponent from './components/LoginComponent';
 import HistoryComponent from './components/HistoryComponent';
 import StateBikeComponent from './components/StateBikeComponent';
 import RecoveryAccountComponent from './components/RecoveryAccountComponent';
+import StayBikeNavigation from './components/StayBikeNavigation';
 
 
 
@@ -162,7 +163,8 @@ export default function PaperExample() {
                 <Drawer.Navigator initialRouteName="Home">
                   {/* <Drawer.Screen name="Home" component={App} /> */}
                   <Drawer.Screen name="Home" component={LoginComponent} />
-                  <Drawer.Screen name="Estadia" component={EntranceParkingComponent} />
+                  {/* <Drawer.Screen name="Estadia" component={EntranceParkingComponent} /> */}
+                  <Drawer.Screen name="Estadia" component={StayBikeNavigation} />
                   <Drawer.Screen name="Disponibilidad" component={AvailabilityParkingComponent} />
                   <Drawer.Screen name="Historial" component={HistoryComponent} />
                   <Drawer.Screen name="Mi bicicleta" component={StateBikeComponent} />
