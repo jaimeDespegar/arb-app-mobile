@@ -20,7 +20,7 @@ const StateBikeComponent = () => {
           .get('estadia-getStateBike/'+userNameLogin+'/')
           .then(json => {
                 setData(json.data)
-                console.log('ok state bike ', json.data)
+                console.debug('OK state bike ', json.data);
             })
           .catch((error) => {
             console.log('error estadia get ', userNameLogin);
@@ -36,7 +36,7 @@ const StateBikeComponent = () => {
     const actualizar = () =>{
         //actualImage= '../../assets/images/estadoBicicletero.jpg'
         //setDataDefaultImage(actualImage)
-      }
+    }
     
     return (
         <>
@@ -51,9 +51,9 @@ const StateBikeComponent = () => {
                 <Card.Title
                     title={buildMessage(data.number, data.placeNumber)}
                     subtitle={data.description}
-                right={(props: any) => (
-                    <IconButton {...props} icon="bike" onPress={() => {}} />
-                )}
+                    right={(props: any) => (
+                        <IconButton {...props} icon="bike" onPress={() => {}} />
+                    )}
                 />
             </Card>
             <View style={styles.viewButton}>

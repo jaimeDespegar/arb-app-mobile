@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {  StyleSheet, View, Text } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, List } from 'react-native-paper';
 import { useEffect ,useState} from 'react';
 import axios from 'axios';
 
@@ -12,29 +12,54 @@ const AvailabilityParkingComponent = () => {
   const checkAvailability = () => {
     axios
       .get('bicycleParking-availability/')
-      .then((response) => response.data)
-      .then((json) => setData(json))
+      .then((response) => {
+        setData(response.data);
+      })
       .catch((error) => console.error(error))
   }
   
-  useEffect(() => {//192.168.1.108//javier
+  useEffect(() => {
     checkAvailability();
   }, []);
   
-  const  message_availability= (data.freePlaces >= 1)? "Hay disponibilidad":"No hay mas lugar";
   const stylesContainer = {
-    ...styles.inputs, //clonacion
-    backgroundColor: (data.freePlaces >= 1)? '#82b74b':'red'
+    ...styles.inputs,
   };
+
+  const getColor = (parking) => (parking.freePlaces >= 1)? '#82b74b':'red';
+  const buildTitleItem = (parking) => {
+    return parking.freePlaces < 1 ? 'Sin disponibilidad' : 
+    (parking.freePlaces === 1 ? "Hay " +parking.freePlaces +" lugar libre": "Hay " + parking.freePlaces +" lugares libres")
+  }
 
   return (
     <View style={stylesContainer}>
-      <Text style={styles.welcome}>
-        {message_availability}
-      </Text>
+      <List.Section title="Disponibilidad de Bicicleteros" style={{paddingLeft: 5, paddingRight: 3}}>
+        {
+          (data.length) ? (
+            data.map((parking) => (
+              <List.Accordion
+                title={"Bicicltero N°"+parking.number}
+                description={parking.description}
+                style={{backgroundColor: getColor(parking), height: 65, width: '100%'}}
+                left={props => <List.Icon {...props} icon="bike" />}>
+                <List.Item title={buildTitleItem(parking)} 
+                           style={{backgroundColor: getColor(parking) }} />
+              </List.Accordion>
+            ))
+          ) : (
+            <View style={{alignItems: 'center'}}>
+              <Text>No hay Bicicleteros registrados</Text>
+            </View>
+          )
+        }
+      </List.Section>
+
+
       <Button mode="contained" onPress={checkAvailability} style={styles.button}>
         Actualizar
       </Button>
+      
     </View>
   );
 };
@@ -55,9 +80,9 @@ const styles = StyleSheet.create({
   },
   welcome: {
     fontSize: 20,
+    fontWeight: 'bold',
     textAlign: 'center',
-    margin: 100,
-  },
+  }
 });
 
 export default AvailabilityParkingComponent;
