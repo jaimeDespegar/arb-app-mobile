@@ -174,7 +174,7 @@ const RegisterComponent = () => {
           </View>
 
           <Button mode="contained" onPress={() => postData()} style={styles.button}>
-          Registar
+          Registrar
           </Button>
           <View>
             <DialogCustom

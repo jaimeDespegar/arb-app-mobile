@@ -164,7 +164,7 @@ const HistoryComponent = () => {
               <List.Item title="Llegada" 
                          description={'Estacionó a las ' + parseDate(item.arrival.dateCreated, 'HH:mm:ss')}/>
               <List.Item title="Salida" 
-                         description={'Se retiró a las '+parseDate(item.departure.dateCreated, 'HH:mm:ss')}/>
+                         description={'Se retiró a las ' + parseDate(item.departure.dateCreated, 'HH:mm:ss')}/>
             </List.Accordion>
           ))}
 

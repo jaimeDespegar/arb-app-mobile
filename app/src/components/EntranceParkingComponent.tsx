@@ -1,23 +1,49 @@
 import * as React from 'react';
 import { useState, useEffect } from "react"; 
 import { StyleSheet, View, Text, Picker } from 'react-native';
-import { Button, } from 'react-native-paper';
+import { Button, Surface, TouchableRipple } from 'react-native-paper';
 import axios from 'axios';
-
+import Modal from 'react-native-modal';
 
 const EntranceParkingComponent = (props) => {
     
   const userNameLogin = props.userName;
-  
-  const parkTheBike = (success: Function, fail: Function) => {
+  const [parkings, setParkings] = useState([])
+  const [places, setPlaces] = useState([])
+  const [availableSelectPlace, setAvailableSelectPlace] = React.useState(true);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [parkingSelected, setParkingSelected] = useState(1);
+  const [placeSelected, setPlaceSelected] = useState(0);
 
-    const values = {
-      'userName': userNameLogin,
-      'place': selectedValue
-    }
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  }
+
+  const loadBicyclesParkings = () => {
 
     axios
-      .post('parking/entrance/', values)
+      .get('bicycleParkingAndPlaces/')
+      .then(response => {
+        setParkings(response.data);
+        console.log("parkings ", response.data)
+      })
+      .catch(error => {
+        console.log('Error load parkings in entrance ', error);
+        setParkings([]);
+    });
+  }
+
+  const parkTheBike = (success: Function, fail: Function) => {
+
+    const data = {
+      'userName': userNameLogin,
+      'parkingNumber': parkingSelected, 
+      'place': placeSelected 
+    }
+ 
+    axios
+      .post('parking/entrance/', data)
       .then(response => {
         success();
       })
@@ -27,40 +53,87 @@ const EntranceParkingComponent = (props) => {
     });
   }
 
-  const [selectedValue, setSelectedValue] = useState("1");
+  const selectParking = (parkingNumber) => {
+    const parking = parkings.find(p => p.number === parkingNumber) || {};
+    setParkingSelected(parkingNumber);
+    setPlaces(parking.places || []);
+    setAvailableSelectPlace(false);
+  }
 
-  
+  useEffect(() => {
+    loadBicyclesParkings();
+  },[]);
+
   return (
     <View style={styles.inputs}>
-      
       <View>
         <Text style={styles.title}>
           ¡Bienvenido a la UNGS, {userNameLogin}!
         </Text>
-        <Text style={styles.labelPlaces}>
+        <View>
+          <Text style={styles.labelPlaces}>
             Seleccione su estacionamiento:
-        </Text>
-        
-        <View style={styles.selectsPlaces}>  
-          <Picker
-            selectedValue={selectedValue}
-            style={{ height: 50, width: 150}}
-            onValueChange={(itemValue, itemIndex) => {setSelectedValue(itemValue); console.log(itemValue)}}
-          >
-            <Picker.Item label="1" value="1" />
-            <Picker.Item label="2" value="2" />
-            <Picker.Item label="3" value="3" />
-            <Picker.Item label="4" value="4" />
-            <Picker.Item label="5" value="5" />
-            <Picker.Item label="6" value="6" />
-          </Picker>
+          </Text>
+          
+          <View style={styles.selectsPlaces}>
+            {
+              (parkings.length) ? 
+                <Picker
+                  selectedValue={parkingSelected} style={{ height: 60, width: 250}}
+                  onValueChange={(parkingNumber) => selectParking(parkingNumber)}
+                >
+                  {(parkings.map((parking) => (
+                    <Picker.Item label={parking.description} value={parking.number} />
+                  )))}
+                </Picker>
+              : 
+                (<Text>Sin bicicleteros para seleccionar</Text>)
+            }
+          </View>
         </View>
-        
+
+       <View>
+       <Text style={{textAlign: 'center'}}>{'Lugar seleccionado: ' + (placeSelected===0?'Sin seleccionar':placeSelected)}</Text>
+        <Button disabled={availableSelectPlace} style={{...styles.button, marginTop: 30}} onPress={toggleModal}>
+          Toque aqui para seleccionar su lugar
+        </Button>
+        </View>
+
+        <View style={{flex: 1}}>
+          <Modal isVisible={isModalVisible}>
+            <View style={{flex: 1, height: '60%',  alignItems: 'center', flexDirection: 'row'}}>
+              {
+                (places.length) ? 
+                  (places.map((place)=>(
+                    <Surface style={{...styles.surface, backgroundColor: place.occupied ? 'green':'gray'}}>
+                      <TouchableRipple
+                        onPress={()=>{
+                          if(place.occupied) {
+                            toggleModal();
+                            setPlaceSelected(place.placeNumber)
+                          } else {
+                            console.warn('No se registro una bicicleta en el lugar');
+                          }
+                        }}
+                        rippleColor="rgba(0, 255, 0, .32)"
+                      >
+                        <Text>{place.placeNumber}</Text>
+                      </TouchableRipple>
+                    </Surface>
+                  ))) 
+                :
+                  (<Text>No hay lugares</Text>)
+              }
+            </View>
+            <Button style={{...styles.button, marginTop: 0}} onPress={toggleModal}>
+              Elegir otro bicicletero
+            </Button>
+          </Modal>
+        </View>
         <Button mode="contained" onPress={() => parkTheBike(props.success, props.fail)} style={styles.button}>
           Estacionar Bicicleta
         </Button>
       </View>
-      
     </View>
   );
 };
@@ -82,7 +155,6 @@ const styles = StyleSheet.create({
     marginBottom: 15
   },
   selectsPlaces: { 
-   
     alignItems: 'center', // Centered horizontally
     justifyContent: 'center',
     marginTop:10,
@@ -98,6 +170,22 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
   },
+  surface: {
+    padding: 0,
+    height: 80,
+    width: 80,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 4,
+    borderRadius: 10,
+    marginRight: 2
+  },
+  containerStyle: {
+    backgroundColor: 'white', 
+    height: '70%',
+    width: '90%',
+    padding: 20,
+  }
 });
   
 export default EntranceParkingComponent;
