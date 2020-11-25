@@ -5,6 +5,7 @@ import { Button, Surface, TouchableRipple } from 'react-native-paper';
 import axios from 'axios';
 import Modal from 'react-native-modal';
 
+
 const EntranceParkingComponent = (props) => {
     
   const userNameLogin = props.userName;
@@ -13,8 +14,8 @@ const EntranceParkingComponent = (props) => {
   const [availableSelectPlace, setAvailableSelectPlace] = React.useState(true);
   const [isModalVisible, setModalVisible] = useState(false);
   const [parkingSelected, setParkingSelected] = useState(1);
-  const [placeSelected, setPlaceSelected] = useState(0);
-
+  const [placeSelected, setPlaceSelected] = useState({});
+  const TOLERANCE_SECONDS = 60;
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -26,12 +27,25 @@ const EntranceParkingComponent = (props) => {
       .get('bicycleParkingAndPlaces/')
       .then(response => {
         setParkings(response.data);
-        console.log("parkings ", response.data)
       })
       .catch(error => {
-        console.log('Error load parkings in entrance ', error);
+        console.warn('Error load parkings in entrance ', error);
         setParkings([]);
     });
+  }
+
+  const checkParking = (props) => {
+
+    const now = new Date().toLocaleString("es-AR", {timeZone: "America/Argentina/Buenos_Aires"});
+    const datePlace = new Date(placeSelected.dateAssociatedStay).toLocaleString("es-AR", {timeZone: "America/Argentina/Buenos_Aires"});
+    const diffInSeconds = (new Date(now).getTime() - new Date(datePlace).getTime()) / 1000;
+
+    if (diffInSeconds >= TOLERANCE_SECONDS) {
+      createParkingPending(props.successPending, props.failPending);
+    } else {
+      parkTheBike(props.success, props.fail);
+    }
+
   }
 
   const parkTheBike = (success: Function, fail: Function) => {
@@ -39,7 +53,7 @@ const EntranceParkingComponent = (props) => {
     const data = {
       'userName': userNameLogin,
       'parkingNumber': parkingSelected, 
-      'place': placeSelected 
+      'place': placeSelected.placeNumber 
     }
  
     axios
@@ -50,7 +64,27 @@ const EntranceParkingComponent = (props) => {
       .catch(error => {
         console.log('Error in entrace park ', error);
         fail();
-    });
+      });
+  }
+
+  const createParkingPending = (success: Function, fail: Function) => {
+
+    const data = {
+      'userName': userNameLogin,
+      'parkingNumber': parkingSelected, 
+      'place': placeSelected.placeNumber 
+    }
+ 
+    axios
+      .post('estadia/pendings/create/', data)
+      .then(response => {
+        console.info('response pending create ', response.data)
+        success(response.data);
+      })
+      .catch(error => {
+        console.log('Error in pending stay ', error);
+        fail();
+      });
   }
 
   const selectParking = (parkingNumber) => {
@@ -83,7 +117,7 @@ const EntranceParkingComponent = (props) => {
                   onValueChange={(parkingNumber) => selectParking(parkingNumber)}
                 >
                   {(parkings.map((parking) => (
-                    <Picker.Item label={parking.description} value={parking.number} />
+                    <Picker.Item key={parking.number} label={parking.description} value={parking.number} />
                   )))}
                 </Picker>
               : 
@@ -93,7 +127,7 @@ const EntranceParkingComponent = (props) => {
         </View>
 
        <View>
-       <Text style={{textAlign: 'center'}}>{'Lugar seleccionado: ' + (placeSelected===0?'Sin seleccionar':placeSelected)}</Text>
+        <Text style={{textAlign: 'center'}}>{'Lugar seleccionado: ' + (placeSelected.placeNumber===0?'Sin seleccionar':placeSelected.placeNumber)}</Text>
         <Button disabled={availableSelectPlace} style={{...styles.button, marginTop: 30}} onPress={toggleModal}>
           Toque aqui para seleccionar su lugar
         </Button>
@@ -105,12 +139,13 @@ const EntranceParkingComponent = (props) => {
               {
                 (places.length) ? 
                   (places.map((place)=>(
-                    <Surface style={{...styles.surface, backgroundColor: place.occupied ? 'green':'gray'}}>
+                    <Surface key={parkingSelected+'_'+place.placeNumber} 
+                             style={{...styles.surface, backgroundColor: place.occupied ? 'green':'gray'}}>
                       <TouchableRipple
                         onPress={()=>{
                           if(place.occupied) {
                             toggleModal();
-                            setPlaceSelected(place.placeNumber)
+                            setPlaceSelected(place);
                           } else {
                             console.warn('No se registro una bicicleta en el lugar');
                           }
@@ -130,7 +165,7 @@ const EntranceParkingComponent = (props) => {
             </Button>
           </Modal>
         </View>
-        <Button mode="contained" onPress={() => parkTheBike(props.success, props.fail)} style={styles.button}>
+        <Button mode="contained" onPress={() => checkParking(props)} style={styles.button}>
           Estacionar Bicicleta
         </Button>
       </View>
