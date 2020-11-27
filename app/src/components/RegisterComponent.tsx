@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {  StyleSheet, View, ScrollView } from 'react-native';
+import {  StyleSheet, View, ScrollView, Alert } from 'react-native';
 import { TextInput, Button, Paragraph, Dialog, Portal } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import EmailInput from './EmailInput';
@@ -87,6 +87,14 @@ const RegisterComponent = () => {
       }) 
       .catch(err => {
         console.log(err)
+        if(err.response.status === 501){
+          console.log('El usuario ya existe!');
+          Alert.alert('¡El usuario ya existe!')
+        }
+        if(err.response.status === 503){
+          console.log('El email ya existe!');
+          Alert.alert('¡El email ya existe!')
+        }
         showDialog()
       })
   }

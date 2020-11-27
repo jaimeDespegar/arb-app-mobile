@@ -68,9 +68,11 @@ const EditRegisterComponent = () => {
         inputActionHandler('bicyclePhoto', json.bicyclePhoto);
         inputActionHandler('profilePhoto', json.profilePhoto);
       })
-    .catch((error) => console.error('Error edition user: ', error))
+    .catch((error) => console.error('Error edition user: ', error)
+    )
     } else {
       console.debug("El usuario no esta cargado todavia")
+      
     }
     
   }, [userNameLogin]);
@@ -96,6 +98,10 @@ const EditRegisterComponent = () => {
         console.log('ERROR put ', err)
         setTitleDialog('Error en la edicion')
         setContentDialog('Verifique los datos ingresados')
+        if(err.response.status === 503){
+          console.log('El email ya existe!');
+          Alert.alert('¡El email ya existe!')
+        }
       })
       showDialogEdition()
   }
