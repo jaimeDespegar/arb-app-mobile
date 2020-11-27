@@ -1,4 +1,4 @@
-import React, { useEffect , useState} from "react";
+import React from "react";
 import { Paragraph, Button, Portal, Dialog, Colors } from 'react-native-paper';
 import axios from 'axios';
 
@@ -17,12 +17,6 @@ const notifyResponse = (values, isSuspected: Boolean, functionClose: Function) =
     .put('notificationEgress-update/'+userName+'/', data)
     .then(response => response.data)
     .then(data => {
-      console.log(data)
-      if (isSuspected) {
-
-      } else {
-
-      }
       functionClose(isSuspected);
     })
     .catch(err => {

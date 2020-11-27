@@ -34,3 +34,15 @@ export const MessageEgressForceSuspected = {
     content: 'La estadia ha sido finalizada y se dio aviso al guardia',
     action: 'OK'
 }
+
+export const MessagePendingOk = {
+    title: '¡Estadía pendiente generada!',
+    content: 'Su estadía fue enviada a aprobación, por que se excedio el tiempo permitido de estacionamiento, debe esperar a que un guardia la revise.',
+    action: 'OK'
+}
+
+export const MessagePendingError = {
+    title: '¡Estadía Fallida!',
+    content: 'La estadía no ha sido reconocida, intente más tarde',
+    action: 'OK'
+}

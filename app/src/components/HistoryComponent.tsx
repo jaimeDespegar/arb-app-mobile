@@ -122,7 +122,7 @@ const HistoryComponent = () => {
         <Button mode="outlined" 
                 onPress={() => {findStays(fromDate, toDate)}} 
                 style={styles.button}>
-          Buscar Estadias
+          Buscar Estadías
         </Button>
       </View>
       <View>
@@ -158,6 +158,7 @@ const HistoryComponent = () => {
           ) : 
           data.map((item) => (
             <List.Accordion
+              key={item.dateCreated}
               title={"Estadia en el lugar " + item.placeUsed.toString()}
               description={'Generada el ' + parseDate(item.dateCreated, 'dd-MM-yyyy')}
               left={props => <List.Icon {...props} icon="image-album" />}>
