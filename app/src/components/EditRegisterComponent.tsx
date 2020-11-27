@@ -1,5 +1,5 @@
 import React, { useEffect , useState} from "react";
-import {  StyleSheet, View, ScrollView } from 'react-native';
+import {  StyleSheet, View, ScrollView, Alert } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import EmailInput from './EmailInput';
@@ -99,7 +99,22 @@ const EditRegisterComponent = () => {
       })
       showDialogEdition()
   }
-     
+
+  const createTwoButtonAlert = () =>
+    Alert.alert(
+      "Confirmar edición",
+      "¿Estás seguro?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => putData() }
+      ],
+      { cancelable: false }
+    );
+
   return (
     <ScrollView>
         <View style={styles.inputs}>
@@ -159,7 +174,7 @@ const EditRegisterComponent = () => {
             />
           </View>
                     
-          <Button mode="contained" onPress={() => putData()} style={styles.button}>
+          <Button mode="contained" onPress={() => createTwoButtonAlert()} style={styles.button}>
             Guardar
           </Button>
 

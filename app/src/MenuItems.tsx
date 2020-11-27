@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
+import { View, StyleSheet, Platform, Alert } from 'react-native';
 import {
   Drawer, Switch, TouchableRipple,
   Text, Colors, useTheme,
@@ -51,6 +51,22 @@ const MenuItems = ({ toggleTheme, isDarkTheme }: Props) => {
   const showDialogLogout = () => setShowLogout(true);
   const hideDialogLogout = () => setShowLogout(false);
 
+
+  const createTwoButtonAlert = () =>
+    Alert.alert(
+      "Confirmar cierre de sesión",
+      "¿Estás seguro?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => logOut(showDialogLogout) }
+      ],
+      { cancelable: false }
+    );
+
   return (
     <View style={[styles.drawerContent, { backgroundColor: colors.surface }]}>
       <Drawer.Section title="Menu">
@@ -75,7 +91,7 @@ const MenuItems = ({ toggleTheme, isDarkTheme }: Props) => {
         </TouchableRipple>
       </Drawer.Section>
       <Drawer.Section title="Mi Cuenta">
-        <TouchableRipple onPress={() => logOut(showDialogLogout)}>
+        <TouchableRipple onPress={() => createTwoButtonAlert()}>
           <View style={styles.preference}>
             <Text>Cerrar Session</Text>
           </View>

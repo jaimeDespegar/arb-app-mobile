@@ -24,6 +24,10 @@
     "ios": {
       "supportsTablet": true
     },
+    "android": {
+      "package": "com.pps.arb",
+      "versionCode": 1
+    },
     "description": "callstack/react-native-paper @ Nov 8, 2018"
   }
 }
