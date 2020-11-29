@@ -1,6 +1,9 @@
+import Constants from 'expo-constants';
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
 import * as React from 'react';
-import { useState, useEffect } from "react"; 
-import { StyleSheet, View } from 'react-native';
+import { useState, useEffect, useRef } from "react"; 
+import { StyleSheet, View, Platform} from 'react-native';
 import { Text, Portal, Dialog, Paragraph, Button, Colors } from 'react-native-paper';
 import DialogCustom from './Dialogs/DialogCustom'
 import DialogWithCustomColors from './Dialogs/DialogWithCustomColors'
@@ -13,9 +16,97 @@ import { MessageEntranceSuccess, MessageEntranceError, MessageEgressForceSuspect
          MessagePendingOk, MessagePendingError
         } from './utils/MessagesHelper';
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 const StayParkingComponent = () => {
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notificationpush, setNotificationpush] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+
+    // This listener is fired whenever a notification is received while the app is foregrounded
+    notificationListener.current = Notifications.addNotificationReceivedListener(notificationpush => {
+      setNotificationpush(notificationpush);
+    });
+
+    // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener);
+      Notifications.removeNotificationSubscription(responseListener);
+    };
+  }, []);
   
+  // Can use this function below, OR use Expo's Push Notification Tool-> https://expo.io/notifications
+async function sendPushNotification(expoPushToken,tittlePush,bodyPush) {
+  const message = {
+    to: expoPushToken,
+    sound: 'default',
+    title: tittlePush,
+    body: bodyPush,
+    data: { data: 'goes here' },
+  };
+
+  await fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Accept-encoding': 'gzip, deflate',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(message),
+  });
+}
+
+  async function registerForPushNotificationsAsync() {
+    let token;
+    if (Constants.isDevice) {
+      const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+      }
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+      console.log(token);
+    } else {
+      alert('Must use physical device for Push Notifications');
+    }
+  
+    if (Platform.OS === 'android') {
+      Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      });
+    }
+  
+    return token;
+  }
+
+
+
+
+
+
   const [entrance, setEntrance] = React.useState(true);
   const [pending, setPending] = React.useState(false);
   const [userNameLogin, setUserNameLogin] = useState("");
@@ -64,6 +155,7 @@ const StayParkingComponent = () => {
       .then(response => {
         setNotification(response.data)
         setVisible(true);
+        sendPushNotification(expoPushToken,"Egreso sospechoso","¡Egreso sospechoso!");//PUSH NOTIFICATION
       })
       .catch(error => {
         console.debug('Error no hay notificaciones sospechosas ', error);
@@ -97,6 +189,7 @@ const StayParkingComponent = () => {
         if (response.data.length) {
           setNotification(response.data[0]);
           setVisiblePending(true);
+          sendPushNotification(expoPushToken,"Estadía pendiente","¡Estadía pendiente!");//PUSH NOTIFICATION
         } else {
           console.info('No hay datos pendientes')
         }
@@ -170,8 +263,8 @@ const StayParkingComponent = () => {
     loadValue(USER_KEY, setUserNameLogin);
     checkStay();
     const interval = setInterval(() => {
-      checkSuspectedNotifications();
-      checkPendingsStay();
+      checkSuspectedNotifications();// crear notification push
+      checkPendingsStay();// crear notification push
     }, 12000);
     return () => clearInterval(interval);
   }, [userNameLogin, entrance]);

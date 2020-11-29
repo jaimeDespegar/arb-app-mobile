@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "480290193798",
+    "firebase_url": "https://arb-app-mobile.firebaseio.com",
+    "project_id": "arb-app-mobile",
+    "storage_bucket": "arb-app-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480290193798:android:3891640922d5f687c02c07",
+        "android_client_info": {
+          "package_name": "com.pps.arb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "480290193798-25jkkv5mc9qtp78nq4ab08e5138g354s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pps.arb",
+            "certificate_hash": "aadf84e2c84667e8a557c12d6d47a3ab95b4add1"
+          }
+        },
+        {
+          "client_id": "480290193798-0gar7hj93tim5lm3utisjcqf48t1dorm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5-8SRgDtLCCdUzP4Xsq0-l5MgzjORRPc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "480290193798-0gar7hj93tim5lm3utisjcqf48t1dorm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
