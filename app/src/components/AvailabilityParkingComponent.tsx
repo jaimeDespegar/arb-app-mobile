@@ -39,6 +39,7 @@ const AvailabilityParkingComponent = () => {
           (data.length) ? (
             data.map((parking) => (
               <List.Accordion
+                key={parking.number}
                 title={"Bicicltero N°"+parking.number}
                 description={parking.description}
                 style={{backgroundColor: getColor(parking), height: 65, width: '100%'}}

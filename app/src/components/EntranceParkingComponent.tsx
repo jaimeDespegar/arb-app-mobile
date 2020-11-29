@@ -78,7 +78,6 @@ const EntranceParkingComponent = (props) => {
     axios
       .post('estadia/pendings/create/', data)
       .then(response => {
-        console.info('response pending create ', response.data)
         success(response.data);
       })
       .catch(error => {

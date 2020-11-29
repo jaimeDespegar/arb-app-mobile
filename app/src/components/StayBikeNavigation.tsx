@@ -17,7 +17,22 @@ type RoutesState = Array<{
 
 
 const StayBikeNavigation = () => {
+
+  const renderSceneItems = {
+    myStay: StayParkingComponent,
+    stateMyBike: StateBikeComponent,
+    available: AvailabilityParkingComponent,
+    history: HistoryComponent,
+  }
+
   const [index, setIndex] = React.useState<number>(0);
+  const [renderItems, setRenderItems] = React.useState(renderSceneItems);
+  
+  const indexChange = (index) => {
+    setIndex(index);
+    setRenderItems(renderSceneItems);
+  }
+
   const [routes] = React.useState<RoutesState>([
     { 
       key: 'myStay', 
@@ -49,13 +64,8 @@ const StayBikeNavigation = () => {
   return (
     <BottomNavigation
       navigationState={{ index, routes }}
-      onIndexChange={index => setIndex(index)}
-      renderScene={BottomNavigation.SceneMap({
-        myStay: StayParkingComponent,
-        stateMyBike: StateBikeComponent,
-        available: AvailabilityParkingComponent,
-        history: HistoryComponent,
-      })}
+      onIndexChange={index => indexChange(index)}
+      renderScene={BottomNavigation.SceneMap(renderItems)}
       sceneAnimationEnabled={false}
     />
   );

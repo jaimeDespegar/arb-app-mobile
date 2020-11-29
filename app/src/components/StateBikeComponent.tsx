@@ -11,22 +11,18 @@ const StateBikeComponent = () => {
     const [data, setData] = useState({});
     
     const [dataDefaultImage, setDataDefaultImage] = useState('../../assets/images/biciUNGS.png');
-    console.log(dataDefaultImage)
-
+    
     useEffect(() => {
         loadValue(USER_KEY, setUserNameLogin);
-        
         axios
           .get('estadia-getStateBike/'+userNameLogin+'/')
           .then(json => {
-                setData(json.data)
-                console.debug('OK state bike ', json.data);
-            })
+            setData(json.data);
+          })
           .catch((error) => {
             console.log('error estadia get ', userNameLogin);
             setData({});
           })
-
     }, [userNameLogin]);
    
     const buildMessage = (nroParking: number, placeNumber: number) => 
