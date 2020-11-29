@@ -9,7 +9,7 @@ import RecoveryAccountComponent from './components/RecoveryAccountComponent';
 import StayBikeNavigation from './components/StayBikeNavigation';
 import EditRegisterComponent from './components/EditRegisterComponent';
 import ForgotPasswordComponent from './components/ForgotPasswordComponent';
-
+import PushNotificationComponent from './components/PushNotificationComponent';
  
 
 export const examples: Record<
@@ -22,6 +22,7 @@ export const examples: Record<
   stayBikeNavigation: StayBikeNavigation,
   editRegisterComponent : EditRegisterComponent,
   forgotPasswordComponent : ForgotPasswordComponent,
+  pushNotificationComponent : PushNotificationComponent,
 };
 
 type Props = {
