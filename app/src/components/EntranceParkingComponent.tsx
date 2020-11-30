@@ -15,12 +15,12 @@ const EntranceParkingComponent = (props) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [parkingSelected, setParkingSelected] = useState(1);
   const [placeSelected, setPlaceSelected] = useState({});
-  const TOLERANCE_SECONDS = 60;
+  const [toleranceSeconds , setToleranceSeconds] = useState(60);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   }
-
+  
   const loadBicyclesParkings = () => {
 
     axios
@@ -34,18 +34,32 @@ const EntranceParkingComponent = (props) => {
     });
   }
 
-  const checkParking = (props) => {
+  const loadConfiguration = () => {
+    axios
+      .get('configuration/secondsPending/')
+      .then(response => {
+        if (response.data && response.data.configurationValue) {
+          setToleranceSeconds(response.data.configurationValue);
+        } else {
+          setToleranceSeconds(60); // default
+        }
+      })
+      .catch(error => {
+        console.log('Error load parkings in entrance ', error);
+        setParkings([]);
+    });
+  }
 
+  const checkParking = (props) => {
     const now = new Date().toLocaleString("es-AR", {timeZone: "America/Argentina/Buenos_Aires"});
     const datePlace = new Date(placeSelected.dateAssociatedStay).toLocaleString("es-AR", {timeZone: "America/Argentina/Buenos_Aires"});
     const diffInSeconds = (new Date(now).getTime() - new Date(datePlace).getTime()) / 1000;
 
-    if (diffInSeconds >= TOLERANCE_SECONDS) {
+    if (diffInSeconds >= toleranceSeconds) {
       createParkingPending(props.successPending, props.failPending);
     } else {
       parkTheBike(props.success, props.fail);
     }
-
   }
 
   const parkTheBike = (success: Function, fail: Function) => {
@@ -95,6 +109,7 @@ const EntranceParkingComponent = (props) => {
 
   useEffect(() => {
     loadBicyclesParkings();
+    loadConfiguration();
   },[]);
 
   return (
@@ -170,7 +185,7 @@ const EntranceParkingComponent = (props) => {
       </View>
     </View>
   );
-};
+};  
 
 EntranceParkingComponent.title = 'Entrance Parking';
 

@@ -195,7 +195,7 @@ async function sendPushNotification(expoPushToken,tittlePush,bodyPush) {
         }
       })
       .catch(error => {
-        console.error('Error buscando la respuesta de la estadia pendiente ', error);
+        console.log('Error buscando la respuesta de la estadia pendiente ', error);
         setNotification({})
       });
     } else {
