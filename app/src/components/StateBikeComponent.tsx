@@ -3,13 +3,15 @@ import { StyleSheet, View, Text } from 'react-native';
 import { Card, Button, IconButton, Title } from 'react-native-paper';
 import axios from 'axios';
 import { loadValue, USER_KEY } from './utils/StorageHelper'
- 
+import { getLabel } from './utils/LanguageHelper';
+
 
 const StateBikeComponent = () => {
 
     const [userNameLogin, setUserNameLogin]=  useState("");
     const [data, setData] = useState({});
-    
+    const [labels, setLabels] = useState({});
+
     const [dataDefaultImage, setDataDefaultImage] = useState('../../assets/images/biciUNGS.png');
     
     useEffect(() => {
@@ -23,10 +25,17 @@ const StateBikeComponent = () => {
             console.log('error estadia get ', userNameLogin);
             setData({});
           })
-    }, [userNameLogin]);
+
+        async function findLabels() {
+            const data = await getLabel();
+            setLabels(data.stateBike || {});
+        }
+        findLabels();
+    }, [userNameLogin, labels]);
    
     const buildMessage = (nroParking: number, placeNumber: number) => 
-                          "Bicicletero " + nroParking +" en el lugar "+placeNumber; 
+                          labels.parkingText.replace('{0}', nroParking)
+                                            .replace('{1}', placeNumber);
     
     // FALTA AGREGAR FOTOS DINAMICAMENTE 
     const actualizar = () =>{
@@ -40,7 +49,7 @@ const StateBikeComponent = () => {
         (
         <View style={styles.container}>
             <View style={{ alignItems: 'center' }}>
-                <Title>Bicicleta de {userNameLogin}</Title>
+                <Title>{labels.bicycleFrom + userNameLogin}</Title>
             </View>
             <Card style={styles.card}>
                 <Card.Cover source={require('../../assets/images/biciUNGS.png')} />
@@ -54,12 +63,12 @@ const StateBikeComponent = () => {
             </Card>
             <View style={styles.viewButton}>
                 <Button mode="outlined" icon="image" onPress={() => actualizar()} style={styles.button}>
-                    Actualizar 
+                    {labels.buttonRefresh}
                 </Button>
             </View>
-        </View> 
+        </View>
         ) :
-        <Text style={{marginTop:30, textAlign: 'center'}}> No tiene ninguna estadia activa</Text>
+            <Text style={{marginTop:30, textAlign: 'center'}}>{labels.thereAreNotActiveStays}</Text>
         }
         </>
     );

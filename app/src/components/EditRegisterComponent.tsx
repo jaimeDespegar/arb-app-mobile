@@ -185,7 +185,7 @@ const EditRegisterComponent = () => {
           <View style={styles.inputContainerStyle}>
             <TextInput
               label={labels.profileLabel}
-              placeholder={labels.profilePassword}
+              placeholder={labels.profilePlaceholder}
               value={profilePhoto}
               onChangeText={inputValue => inputActionHandler('profilePhoto', inputValue)}
             />

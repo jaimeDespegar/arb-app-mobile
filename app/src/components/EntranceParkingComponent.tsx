@@ -117,7 +117,7 @@ const EntranceParkingComponent = (props) => {
     <View style={styles.inputs}>
       <View>
         <Text style={styles.title}>
-          {labels.welcomeUSer.replace('{0}', userNameLogin)}
+          {(labels.welcomeUser||'').replace('{0}', userNameLogin)}
         </Text>
         <View>
           <Text style={styles.labelPlaces}>

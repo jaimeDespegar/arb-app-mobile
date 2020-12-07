@@ -102,7 +102,7 @@ const RegisterComponent = () => {
   useEffect(() => {
     async function findLabels() {
       const data = await getLabel();
-      setLabels(data.availabilityParking || {});
+      setLabels(data.register || {});
     }
     findLabels();
   }, [labels]);

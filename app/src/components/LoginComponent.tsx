@@ -67,7 +67,7 @@ const LoginComponent = () => {
   useEffect(() => {
     async function findLabels() {
       const data = await getLabel();
-      setLabels(data.availabilityParking || {});
+      setLabels(data.login || {});
     }
     findLabels();
   }, [labels]);

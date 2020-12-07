@@ -87,7 +87,7 @@ const HistoryComponent = () => {
     findStays('', '');
     async function findLabels() {
       const data = await getLabel();
-      setLabels(data.availabilityParking || {});
+      setLabels(data.history || {});
     }
     findLabels();
   }, [userNameLogin, labels]);

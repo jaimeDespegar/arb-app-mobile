@@ -78,6 +78,15 @@
         "loginContent": "Puede navegar correctamente",
         "messageOk": "OK"
     },
+    "logout": {
+        "alertTitle": "Confirmar cierre de sesión",
+        "alertDescription": "¿Estás seguro?",
+        "alertCancel": "Cancel",
+        "successLogoutTitle": "Logout exitoso",
+        "successLogoutDetail": "Cierre de sesion correcto",
+        "messageOk": "OK",
+        "closeSession": "Cerrar Session"
+    },
     "register": {
         "nameText": "Nombre",
         "namePlaceholder": "Ingrese su nombre",
@@ -106,5 +115,69 @@
         "messageOk": "OK",
         "userExists": "¡El usuario ya existe!",
         "mailExists": "¡El email ya existe!"
+    },
+    "stateBike": {
+        "parkingText": "Bicicletero {0} en el lugar {1}",
+        "bicycleFrom": "Bicicleta de ",
+        "buttonRefresh": "Actualizar",
+        "thereAreNotActiveStays": "No tiene ninguna estadía activa"
+    },
+    "stayBikeNavigation": {
+        "myStay": "Mi Estadia",
+        "stateMyBike": "Estado",
+        "available": "Disponibilidad",
+        "history": "Historial"
+    },
+    "stayParking": {
+        "suspectCaseTitle": "Egreso sospechoso",
+        "suspectCaseBody": "¡Egreso sospechoso!",
+        "pendingStayTitle": "Estadía pendiente",
+        "pendingStayBody": "¡Estadía pendiente!",
+        "titleStatusBike": "Su estadía esta pendiente de aprobación",
+        "parkingBike": "Bicicletero {0} lugar {1}",
+        "statusStay": "¡Su estadía ha sido procesada!",
+        "approvedStay": "Estadia Aprobada'",
+        "rejectedStay": "La estadía solicitada ha sido rechazada",
+        "messageOk": "OK",        
+        "messageEntranceSuccess": {
+            "title": "Estacionamiento Exitoso",
+            "content": "Ahora puede ir a cursar seguro",
+            "action": "OK"
+        },
+        "messageEntranceError": {
+            "title": "Estacionamiento Fallido",
+            "content": "Intente nuevamente mas tarde",
+            "action": "OK"
+        },
+        "messageEgressSuccess": {
+            "title": "Retiro Exitoso",
+            "content": "Su bicicleta fue retirada correctamente",
+            "action": "OK"
+        },
+        "messageEgressError": {
+            "title": "Retiro Fallido",
+            "content": "Intente nuevamente mas tarde",
+            "action": "OK"
+        },
+        "messageEgressForceOk": {
+            "title": "¡Buen regreso!",
+            "content": "Su estadia fue finalizada correctamente",
+            "action": "OK"
+        },
+        "messageEgressForceSuspected": {
+            "title": "¡Estadia finalizada!",
+            "content": "La estadia ha sido finalizada y se dio aviso al guardia",
+            "action": "OK"
+        },
+        "messagePendingOk": {
+            "title": "¡Estadía pendiente generada!",
+            "content": "Su estadía fue enviada a aprobación, por que se excedio el tiempo permitido de estacionamiento, debe esperar a que un guardia la revise.",
+            "action": "OK"
+        },
+        "messagePendingError": {
+            "title": "¡Estadía Fallida!",
+            "content": "La estadía no ha sido reconocida, intente más tarde",
+            "action": "OK"
+        }   
     }
 }
