@@ -87,6 +87,17 @@
         "messageOk": "OK",
         "closeSession": "Cerrar Session"
     },
+    "forgotPassword": {
+        "mail": "Email",
+        "mailPlaceholder": "Ingrese su email",
+        "messageInvalidMail": "Ingrese un email valido",
+        "buttonRecovery": "Recuperar",
+        "errorChangePasswordTitle": "Error en recuperar contraseña",
+        "errorChangePasswordContent": "Verifique los datos ingresados e intente nuevamente",
+        "successChangePasswordTitle": "Recupero de contraseña",
+        "successChangePasswordContent": "¡Email enviado!",
+        "messageOk": "OK"
+    },
     "register": {
         "nameText": "Nombre",
         "namePlaceholder": "Ingrese su nombre",

@@ -11,10 +11,6 @@ import EntranceParkingComponent from './EntranceParkingComponent';
 import EgressParkingComponent from './EgressParkingComponent';
 import axios from 'axios';
 import { loadValue, USER_KEY } from './utils/StorageHelper';
-import { MessageEntranceSuccess, MessageEntranceError, MessageEgressForceSuspected,
-         MessageEgressSuccess, MessageEgressError, MessageEgressForceOk ,
-         MessagePendingOk, MessagePendingError
-        } from './utils/MessagesHelper';
 import { getLabel } from './utils/LanguageHelper';
 
 Notifications.setNotificationHandler({
@@ -273,8 +269,6 @@ const StayParkingComponent = () => {
       setLabels(data.stayParking || {});
       setLabelsEntrance(data.entranceParking || {});
       setLabelsEgress(data.egressParking || {});
-      console.log("entrance ", data.entranceParking);
-      console.log("egress ", data.egressParking);
     }
     findLabels();
   }, [labels]);

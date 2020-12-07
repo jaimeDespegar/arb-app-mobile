@@ -121,10 +121,12 @@ const RegisterComponent = () => {
           
           <EmailInput label={labels.mail} value={email} 
                       onChangeText={e => { inputActionHandler('email', e) }} 
-                      placeholder={labels.mailPlaceholder}/>
+                      placeholder={labels.mailPlaceholder}
+                      messageInvalidMail={labels.messageInvalidMail}/>
           <EmailInput label={labels.confirmMail} value={confirmEmail} 
                       onChangeText={e => { inputActionHandler('confirmEmail', e) }}
-                      placeholder={labels.confirmMailPlaceholder}/>
+                      placeholder={labels.confirmMailPlaceholder}
+                      messageInvalidMail={labels.messageInvalidMail}/>
 
           <View style={styles.inputContainerStyle}>
             <TextInput

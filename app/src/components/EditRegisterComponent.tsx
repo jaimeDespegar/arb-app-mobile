@@ -144,10 +144,12 @@ const EditRegisterComponent = () => {
 
           <EmailInput label={labels.mailLabel} value={email} 
                       onChangeText={e => { inputActionHandler('email', e) }} 
-                      placeholder={labels.mailPlaceholder}/>
+                      placeholder={labels.mailPlaceholder}
+                      messageInvalidMail={labels.messageInvalidMail}/>
           <EmailInput label={labels.confirmMailLabel} value={confirmEmail} 
                       onChangeText={e => { inputActionHandler('confirmEmail', e) }}  
-                      placeholder={labels.confirmMailPlaceholder}/>
+                      placeholder={labels.confirmMailPlaceholder}
+                      messageInvalidMail={labels.messageInvalidMail}/>
 
           <View style={styles.inputContainerStyle}>
             <TextInput

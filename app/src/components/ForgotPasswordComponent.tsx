@@ -1,10 +1,12 @@
-import * as React from 'react';
-import {  StyleSheet, View, ScrollView, Alert } from 'react-native';
-import { TextInput, Button, Paragraph, Dialog, Portal } from 'react-native-paper';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, ScrollView } from 'react-native';
+import { Button } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import EmailInput from './EmailInput';
 import axios from 'axios';
 import DialogCustom from './Dialogs/DialogCustom'
+import { getLabel } from './utils/LanguageHelper';
+
 
 const initialState = {
   email: '',
@@ -25,7 +27,7 @@ const ForgotPasswordComponent = () => {
   const [visible, setVisible] = React.useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);  
-
+  const [labels, setLabels] = useState({});
   const [visibleForgot, setVisibleForgot] = React.useState(false);
   const showDialogForgot = () => setVisibleForgot(true);
   const hideDialogRegister = () => setVisibleForgot(false);  
@@ -41,14 +43,11 @@ const ForgotPasswordComponent = () => {
       "email": email,
     }
     
-    console.log('user to post ', someData)
-
     axios
       .post('password_reset/', someData)
       .then(response => response.data)
       .then(data => {
         axios.defaults.headers.common.Authorization = `Token ${data.token}`;
-        console.log('Registro OK: ', data)
         successRegister()
       }) 
       .catch(err => {
@@ -57,30 +56,39 @@ const ForgotPasswordComponent = () => {
       })
   }
 
+  useEffect(() => {
+    async function findLabels() {
+      const data = await getLabel();
+      setLabels(data.forgotPassword || {});
+    }
+    findLabels();
+  }, [labels]);
+
   return (
     <ScrollView>
         <View style={styles.inputs}>
-
-          <EmailInput label="Email" value={email} onChangeText={e => { inputActionHandler('email', e) }} placeholder="Ingrese su email"/> 
-          
+          <EmailInput label={labels.mail} value={email} 
+                      onChangeText={e => { inputActionHandler('email', e) }} 
+                      placeholder={labels.mailPlaceholder}
+                      messageInvalidMail={labels.messageInvalidMail}/> 
           <Button mode="contained" onPress={() => postData()} style={styles.button}>
-            Recuperar
+            {labels.buttonRecovery}
           </Button>
           <View>
             <DialogCustom
               visible={visible}
-              title='Error en recuperar contraseña'
-              content='Verifique los datos ingresados e intente nuevamente'
-              messageAction='Ok'
+              title={labels.errorChangePasswordTitle}
+              content={labels.errorChangePasswordContent}
+              messageAction={labels.messageOk}
               close={hideDialog}
             />
           </View>
           <View>
               <DialogCustom
                 visible={visibleForgot}
-                title='Recupero de contraseña'
-                content='¡ Email enviado !'
-                messageAction='Ok'
+                title={labels.successChangePasswordTitle}
+                content={labels.successChangePasswordContent}
+                messageAction={labels.messageOk}
                 close={hideDialogRegister}
               />
             </View>
