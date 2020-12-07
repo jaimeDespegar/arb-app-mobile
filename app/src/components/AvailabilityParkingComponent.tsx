@@ -3,11 +3,13 @@ import {  StyleSheet, View, Text } from 'react-native';
 import { Button, List } from 'react-native-paper';
 import { useEffect ,useState} from 'react';
 import axios from 'axios';
+import { getLabel } from './utils/LanguageHelper';
 
 
 const AvailabilityParkingComponent = () => {
 
   const [data, setData] = useState([]);
+  const [labels, setLabels] = useState({});
   
   const checkAvailability = () => {
     axios
@@ -18,9 +20,14 @@ const AvailabilityParkingComponent = () => {
       .catch((error) => console.error(error))
   }
   
-  useEffect(() => {
+  useEffect(() => {     
+    async function test() {
+      const data = await getLabel();
+      setLabels(data.availabilityParking || {});
+    }
     checkAvailability();
-  }, []);
+    test();
+  }, [labels]);
   
   const stylesContainer = {
     ...styles.inputs,
@@ -28,19 +35,19 @@ const AvailabilityParkingComponent = () => {
 
   const getColor = (parking) => (parking.freePlaces >= 1)? '#82b74b':'red';
   const buildTitleItem = (parking) => {
-    return parking.freePlaces < 1 ? 'Sin disponibilidad' : 
-    (parking.freePlaces === 1 ? "Hay " +parking.freePlaces +" lugar libre": "Hay " + parking.freePlaces +" lugares libres")
+    return parking.freePlaces < 1 ? labels.withOutAvailability: 
+    (parking.freePlaces === 1 ? labels.oneFreePlace : labels.freePlaces.replace('{0}', parking.freePlaces))
   }
 
   return (
     <View style={stylesContainer}>
-      <List.Section title="Disponibilidad de Bicicleteros" style={{paddingLeft: 5, paddingRight: 3}}>
+      <List.Section title={labels.title} style={{paddingLeft: 5, paddingRight: 3}}>
         {
           (data.length) ? (
             data.map((parking) => (
               <List.Accordion
                 key={parking.number}
-                title={"Bicicltero N°"+parking.number}
+                title={labels.titleItemParking + parking.number}
                 description={parking.description}
                 style={{backgroundColor: getColor(parking), height: 65, width: '100%'}}
                 left={props => <List.Icon {...props} icon="bike" />}>
@@ -50,7 +57,7 @@ const AvailabilityParkingComponent = () => {
             ))
           ) : (
             <View style={{alignItems: 'center'}}>
-              <Text>No hay Bicicleteros registrados</Text>
+              <Text>{labels.noResults}</Text>
             </View>
           )
         }
@@ -58,7 +65,7 @@ const AvailabilityParkingComponent = () => {
 
 
       <Button mode="contained" onPress={checkAvailability} style={styles.button}>
-        Actualizar
+        {labels.buttonRefresh}
       </Button>
       
     </View>
@@ -66,7 +73,6 @@ const AvailabilityParkingComponent = () => {
 };
 
 AvailabilityParkingComponent.title = 'Availability Parking';
-
 
 const styles = StyleSheet.create({
   inputs: {

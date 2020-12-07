@@ -13,6 +13,14 @@ export const loadValue = async (key: string, setValue: Function) => {
   }
 }
 
+export const getValue = async (key: string) => {
+  try {
+    return await AsyncStorage.getItem(key);
+  } catch (e) {
+    console.error('Failed get key ', key);
+  }
+}
+
 export const saveValue = async (key: string, value: string) => {
   try {
     await AsyncStorage.setItem(key, value)

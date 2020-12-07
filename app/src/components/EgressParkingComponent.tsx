@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
 import axios from 'axios';
 
-
 const EgressParkingComponent = (props) => {
-
+  
   const removeBicycle = (success: Function, fail: Function) => {
     
     const values = {
@@ -16,7 +15,6 @@ const EgressParkingComponent = (props) => {
     axios
       .post('parking/egress/', values)
       .then(response => {
-        console.log("Ok Egress, response ", response.data)
         success();
       })
       .catch(error => {
@@ -29,13 +27,13 @@ const EgressParkingComponent = (props) => {
     <View style={styles.inputs}>
       <View>
         <Text style={styles.title}>
-          ¡{props.userName} tu bicicleta esta estacionada!
+          {props.labels.bicycleParked.replace('{0}', props.userName)}
         </Text>
       
         <Button mode="contained" 
                 onPress={() => removeBicycle(props.success, props.fail)} 
                 style={styles.button}>
-          Retirar Bicicleta
+          {props.labels.buttonRemoveBicycle}
         </Button>
       </View>
     </View>

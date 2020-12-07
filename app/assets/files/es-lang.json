@@ -1,0 +1,39 @@
+{
+    "availabilityParking": {
+        "title": "Disponibilidad de Bicicleteros",
+        "buttonRefresh": "Actualizar",
+        "noResults": "No hay Bicicleteros registrados",
+        "withOutAvailability": "Sin disponibilidad",
+        "titleItemParking": "Bicicletero N°",
+        "oneFreePlace": "Hay 1 lugar libre",
+        "freePlaces": "Hay {0} lugares libres"
+    },
+    "editRegister": {
+        "nameLabel": "Nombre de usuario",
+        "namePlaceholder": "Ingrese su nombre",
+        "mailLabel": "Email",
+        "mailPlaceholder": "Ingrese su email",
+        "confirmMailLabel": "Confirmar Email",
+        "confirmMailPlaceholder": "Ingrese su email nuevamente",
+        "messageInvalidMail": "Ingrese un email valido",
+        "passwordLabel": "Contraseña",
+        "passwordPlaceholder": "Ingrese su contraseña",
+        "successUpdateTitle": "Edicion exitosa",
+        "successUpdateContent": "Sus datos fueron actualizados correctamente",
+        "errorUpdateTitle": "Error en la edicion",
+        "errorUpdateContent": "Verifique los datos ingresados",
+        "emailExists": "¡El email ya existe!",
+        "alertTitle": "Confirmar edición",
+        "alertContent": "¿Estás seguro?",
+        "bicycleLabel": "Foto de la bicicleta",
+        "bicyclePlaceholder": "Ingrese una foto de su bicicleta",
+        "profileLabel": "Foto de perfil",
+        "profilePlaceholder": "Ingrese su foto de perfil",
+        "buttonSave": "Guardar",
+        "buttonCancel": "Cancelar"
+    }, 
+    "egressParking": {
+        "bicycleParked": "¡{0} tu bicicleta esta estacionada!",
+        "buttonRemoveBicycle": "Retirar Bicicleta"
+    }
+}

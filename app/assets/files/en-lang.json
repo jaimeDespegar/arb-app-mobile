@@ -1,0 +1,12 @@
+{
+    "availabilityParking": {
+        "title": "Bicycle Parking Availability",
+        "buttonRefresh": "Refresh",
+        "noResults": "There are no registered bicycles parkings",
+        "withOutAvailability": "Unavailable",
+        "titleItemParking": "Bicycle Parking N°",
+        "oneFreePlace": "Hay 1 lugar libre",
+        "freePlaces": "Hay {0} lugares libres"
+    }
+    
+}
