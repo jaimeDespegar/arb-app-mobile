@@ -16,6 +16,7 @@ const EntranceParkingComponent = (props) => {
   const [parkingSelected, setParkingSelected] = useState(1);
   const [placeSelected, setPlaceSelected] = useState({});
   const [toleranceSeconds , setToleranceSeconds] = useState(60);
+  const labels = props.labels;
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -116,11 +117,11 @@ const EntranceParkingComponent = (props) => {
     <View style={styles.inputs}>
       <View>
         <Text style={styles.title}>
-          ¡Bienvenido a la UNGS, {userNameLogin}!
+          {labels.welcomeUSer.replace('{0}', userNameLogin)}
         </Text>
         <View>
           <Text style={styles.labelPlaces}>
-            Seleccione su estacionamiento:
+            {labels.selectParking}
           </Text>
           
           <View style={styles.selectsPlaces}>
@@ -135,15 +136,15 @@ const EntranceParkingComponent = (props) => {
                   )))}
                 </Picker>
               : 
-                (<Text>Sin bicicleteros para seleccionar</Text>)
+                  (<Text>{labels.withOutParkingForSelect}</Text>)
             }
           </View>
         </View>
 
        <View>
-        <Text style={{textAlign: 'center'}}>{'Lugar seleccionado: ' + (placeSelected.placeNumber===0?'Sin seleccionar':placeSelected.placeNumber)}</Text>
+        <Text style={{textAlign: 'center'}}>{labels.selectPlace +': ' + (placeSelected.placeNumber===0?labels.withOutSelect: placeSelected.placeNumber)}</Text>
         <Button disabled={availableSelectPlace} style={{...styles.button, marginTop: 30}} onPress={toggleModal}>
-          Toque aqui para seleccionar su lugar
+          {labels.touchForSelectPlace}
         </Button>
         </View>
 
@@ -161,7 +162,7 @@ const EntranceParkingComponent = (props) => {
                             toggleModal();
                             setPlaceSelected(place);
                           } else {
-                            console.warn('No se registro una bicicleta en el lugar');
+                            console.warn(labels.placeNotRegistered);
                           }
                         }}
                         rippleColor="rgba(0, 255, 0, .32)"
@@ -171,16 +172,16 @@ const EntranceParkingComponent = (props) => {
                     </Surface>
                   ))) 
                 :
-                  (<Text>No hay lugares</Text>)
+                  (<Text>{labels.thereAreNotPlaces}</Text>)
               }
             </View>
             <Button style={{...styles.button, marginTop: 0}} onPress={toggleModal}>
-              Elegir otro bicicletero
+              {labels.selectOtherParking}
             </Button>
           </Modal>
         </View>
         <Button mode="contained" onPress={() => checkParking(props)} style={styles.button}>
-          Estacionar Bicicleta
+          {labels.buttonParkingBicycle}
         </Button>
       </View>
     </View>

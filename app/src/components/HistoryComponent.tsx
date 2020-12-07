@@ -6,6 +6,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { USER_KEY, loadValue } from './utils/StorageHelper';
 import { TextInput, Button, List } from 'react-native-paper';
 import { inputReducer } from '../../utils';
+import { getLabel } from './utils/LanguageHelper';
 
 
 const initialState = {
@@ -21,6 +22,7 @@ const HistoryComponent = () => {
   const [showFromDate, setShowFromDate] = useState(false);
   const [showToDate, setShowToDate] = useState(false);
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
+  const [labels, setLabels] = useState({});
 
   const inputActionHandler = (type: string, payload: string) =>
     dispatch({
@@ -39,14 +41,12 @@ const HistoryComponent = () => {
     const currentDate = selectedDate || fromDate;
     setShowFromDate(false);
     inputActionHandler('fromDate', currentDate);
-    console.log('from date ', currentDate)
   };
 
   const onChangeToDate = (event, selectedDate) => {
     const currentDate = selectedDate || toDate;
     setShowToDate(false);
     inputActionHandler('toDate', currentDate);
-    console.log('to date ', currentDate)
   };
 
   const showModeFromDate = () => {
@@ -71,7 +71,6 @@ const HistoryComponent = () => {
       axios
       .get(urlToGetStays)
       .then(json => {
-        console.log('ok estadia ', json.data)
         setData(json.data)
       })
       .catch((error) => {
@@ -86,14 +85,19 @@ const HistoryComponent = () => {
   useEffect(() => {
     loadValue(USER_KEY, setUserNameLogin);
     findStays('', '');
-  }, [userNameLogin]);
+    async function findLabels() {
+      const data = await getLabel();
+      setLabels(data.availabilityParking || {});
+    }
+    findLabels();
+  }, [userNameLogin, labels]);
   
   return (
     <View style={{ flex: 1, padding: 24 }}>
       <View>
         <TextInput
-          label="Desde"
-          placeholder="Seleccione la fecha desde"
+          label={labels.fromDate}
+          placeholder={labels.fromDatePlaceholder}
           value={format(fromDate, '00:00:00 dd-MM-yyyy')}
           onChangeText={(value) => inputActionHandler('fromDate',value)}
           disabled={true}
@@ -106,8 +110,8 @@ const HistoryComponent = () => {
           }
         />
         <TextInput
-          label={"Hasta"}
-          placeholder={"Seleccione la fecha hasta"}
+          label={labels.toDate}
+          placeholder={labels.toDatePlaceholder}
           value={format(toDate, '23:59:59 dd-MM-yyyy')}
           onChangeText={(value) => inputActionHandler('toDate',value)}
           disabled={true}
@@ -122,7 +126,7 @@ const HistoryComponent = () => {
         <Button mode="outlined" 
                 onPress={() => {findStays(fromDate, toDate)}} 
                 style={styles.button}>
-          Buscar Estadías
+          {labels.buttonSearchStays}
         </Button>
       </View>
       <View>
@@ -150,22 +154,22 @@ const HistoryComponent = () => {
         )}
       </View>
       <View>
-        <List.Section title="Mis Estadías">
+        <List.Section title={labels.myStays}>
           {
           (!data.length) ? 
           (
-            <Text style={{marginTop:30 , textAlign: 'center'}}> No hay estadías registradas</Text>
+          <Text style={{marginTop:30 , textAlign: 'center'}}>{labels.thereAreNotRegisteredStays}</Text>
           ) : 
           data.map((item) => (
             <List.Accordion
               key={item.dateCreated}
-              title={"Estadia en el lugar " + item.placeUsed.toString()}
-              description={'Generada el ' + parseDate(item.dateCreated, 'dd-MM-yyyy')}
+              title={labels.stayInPlace.replace('{0}', item.placeUsed.toString())}
+              description={labels.generatedOn + parseDate(item.dateCreated, 'dd-MM-yyyy')}
               left={props => <List.Icon {...props} icon="image-album" />}>
-              <List.Item title="Llegada" 
-                         description={'Estacionó a las ' + parseDate(item.arrival.dateCreated, 'HH:mm:ss')}/>
-              <List.Item title="Salida" 
-                         description={'Se retiró a las ' + parseDate(item.departure.dateCreated, 'HH:mm:ss')}/>
+              <List.Item title={labels.arrival} 
+                         description={labels.entranceTo + parseDate(item.arrival.dateCreated, 'HH:mm:ss')}/>
+              <List.Item title={labels.departure} 
+                         description={labels.egressTo + parseDate(item.departure.dateCreated, 'HH:mm:ss')}/>
             </List.Accordion>
           ))}
 
