@@ -5,12 +5,12 @@ import { useSafeArea } from 'react-native-safe-area-context';
 import { StackNavigationProp } from '@react-navigation/stack';
 import LoginComponent from './components/LoginComponent';
 import RegisterComponent from './components/RegisterComponent';
-import RecoveryAccountComponent from './components/RecoveryAccountComponent';
+import LanguageComponent from './components/LanguageComponent';
 import StayBikeNavigation from './components/StayBikeNavigation';
 import EditRegisterComponent from './components/EditRegisterComponent';
 import ForgotPasswordComponent from './components/ForgotPasswordComponent';
 import PushNotificationComponent from './components/PushNotificationComponent';
- 
+
 
 export const examples: Record<
   string,
@@ -18,7 +18,7 @@ export const examples: Record<
 > = {
   loginComponent: LoginComponent,
   registerComponent: RegisterComponent,
-  recoveryAccountComponent: RecoveryAccountComponent,
+  languageComponent: LanguageComponent,
   stayBikeNavigation: StayBikeNavigation,
   editRegisterComponent : EditRegisterComponent,
   forgotPasswordComponent : ForgotPasswordComponent,

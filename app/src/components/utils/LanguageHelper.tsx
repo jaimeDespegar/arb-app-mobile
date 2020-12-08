@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import { getValue } from './StorageHelper';
+import { getValue, LANG_KEY } from './StorageHelper';
 
 import en_lang from './../../../assets/files/en-lang.json';
 import es_lang from './../../../assets/files/es-lang.json';
@@ -13,7 +13,7 @@ const labelsByLanguages = {
 };
 
 export const getLabel = async () => {
-	const language = await getValue('language');
+	const language = await getValue(LANG_KEY);
 	console.log('language stored ', language);
 	return labelsByLanguages[language || 'es'];
 }
