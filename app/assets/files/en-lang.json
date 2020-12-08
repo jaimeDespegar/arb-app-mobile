@@ -5,8 +5,189 @@
         "noResults": "There are no registered bicycles parkings",
         "withOutAvailability": "Unavailable",
         "titleItemParking": "Bicycle Parking N°",
-        "oneFreePlace": "Hay 1 lugar libre",
-        "freePlaces": "Hay {0} lugares libres"
+        "oneFreePlace": "There is one free place",
+        "freePlaces": "There are {0} free places"
+    },
+    "editRegister": {
+        "nameLabel": "Username",
+        "namePlaceholder": "Please enter your name",
+        "mailLabel": "Email",
+        "mailPlaceholder": "Enter your email",
+        "confirmMailLabel": "Confirm Email",
+        "confirmMailPlaceholder": "Please enter your email again",
+        "messageInvalidMail": "Please enter a valid email",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "successUpdateTitle": "Successful edition",
+        "successUpdateContent": "Your data was updated successfully",
+        "errorUpdateTitle": "Error in the edition",
+        "errorUpdateContent": "Verify the data entered",
+        "emailExists": "The email already exists!",
+        "alertTitle": "Confirm edit",
+        "alertContent": "Are you sure?",
+        "bicycleLabel": "Photo of the bicycle",
+        "bicyclePlaceholder": "Please enter a photo of your bicycle",
+        "profileLabel": "Profile picture",
+        "profilePlaceholder": "Enter your profile picture",
+        "buttonSave": "Save",
+        "buttonCancel": "Cancel"
+    },
+    "egressParking": {
+        "bicycleParked": "{0} your bicycle is parked!",
+        "buttonRemoveBicycle": "Remove Bicycle"
+    },
+    "entranceParking": {
+        "welcomeUser": "Welcome to UNGS, {0}!",
+        "selectParking": "Select your parking:",
+        "withOutParkingForSelect": "No bicycles parkings to select",
+        "touchForSelectPlace": "Touch here to select your place",
+        "withOutSelect": "Unselected",
+        "selectPlace": "Selected place",
+        "placeNotRegistered": "A bicycle was not registered at the place",
+        "thereAreNotPlaces": "There are no places",
+        "selectOtherParking": "Choose another bicycle parking",
+        "buttonParkingBicycle": "Park the bicycle"
+    },
+    "history": {
+        "fromDate": "From",
+        "fromDatePlaceholder": "Select date from",
+        "toDate": "Until",
+        "toDatePlaceholder": "Select the date until",
+        "buttonSearchStays": "Search Stays",
+        "myStays": "My Stays",
+        "stayInPlace": "Stay at place {0}",
+        "generatedOn": "Generated on",
+        "arrival": "arrival",
+        "departure": "exit",
+        "entranceTo": "Parked at",
+        "egressTo": "Withdrew at",
+        "thereAreNotRegisteredStays": "There are no registered stays"
+    },
+    "login": {
+        "userLabel": "Username",
+        "userPlaceholder": "Please enter your username",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "forgotPassword": "Forgot your password?",
+        "buttonEnter": "Enter",
+        "buttonCreateAccount": "Create Account",
+        "errorLoginTitle": "Failed to start session",
+        "errorLoginContent": "Check the data entered and try again",
+        "successLogin": "Login successful",
+        "loginContent": "You can navigate correctly",
+        "messageOk": "OK"
+    },
+    "logout": {
+        "alertTitle": "Confirm logout",
+        "alertDescription": "Are you sure?",
+        "alertCancel": "Cancel",
+        "successLogoutTitle": "Successful logout",
+        "successLogoutDetail": "Successful logout",
+        "messageOk": "OK",
+        "closeSession": "Close Session"
+    },
+    "forgotPassword": {
+        "mail": "Email",
+        "mailPlaceholder": "Enter your email",
+        "messageInvalidMail": "Please enter a valid email",
+        "buttonRecovery": "Recover",
+        "errorChangePasswordTitle": "Error retrieving password",
+        "errorChangePasswordContent": "Please check the data entered and try again",
+        "successChangePasswordTitle": "Password recovery",
+        "successChangePasswordContent": "Email sent!",
+        "messageOk": "OK"
+    },
+    "register": {
+        "nameText": "Name",
+        "namePlaceholder": "Please enter your name",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "mail": "Email",
+        "mailPlaceholder": "Enter your email",
+        "confirmMail": "Confirm Email",
+        "confirmMailPlaceholder": "Please enter your email again",
+        "messageInvalidMail": "Please enter a valid email",
+        "photoBicycle": "Photo of the bicycle",
+        "bicyclePlaceholder": "Please enter a photo of your bicycle",
+        "profile": "Profile picture",
+        "profilePlaceholder": "Enter your profile picture",
+        "petName": "Pet name",
+        "petNamePlaceholder": "Enter the name of your pet",
+        "streetName": "Name of your street",
+        "streetNamePlaceholder": "Enter the name of your street",
+        "movieName": "Favorite movie name",
+        "moviePlaceholder": "Enter the name of your favorite movie",
+        "buttonRegister": "Register",
+        "errorRegister": "Registration failed",
+        "errorRegisterContent": "Check the data entered and try again",
+        "successRegister": "Successful registration",
+        "welcome": "Welcome!",
+        "messageOk": "OK",
+        "userExists": "User already exists!",
+        "mailExists": "The email already exists!"
+    },
+    "stateBike": {
+        "parkingText": "Bicycle Parking {0} in place {1}",
+        "bicycleFrom": "Bicycle of",
+        "buttonRefresh": "Refresh",
+        "thereAreNotActiveStays": "You have no active stay"
+    },
+    "stayBikeNavigation": {
+        "myStay": "My Stay",
+        "stateMyBike": "State",
+        "available": "Availability",
+        "history": "History"
+    },
+    "stayParking": {
+        "suspectCaseTitle": "Suspect egress",
+        "suspectCaseBody": "Suspicious egress!",
+        "pendingStayTitle": "Pending stay",
+        "pendingStayBody": "Pending stay!",
+        "titleStatusBike": "Your stay is pending approval",
+        "parkingBike": "Bicycle parking {0} place {1}",
+        "statusStay": "Your stay has been processed!",
+        "approvedStay": "Approved Stay ",
+        "rejectedStay": "The requested stay has been rejected",
+        "messageOk": "OK",        
+        "messageEntranceSuccess": {
+            "title": "Successful Parking",
+            "content": "Now you can go to secure course",
+            "action": "OK"
+        },
+        "messageEntranceError": {
+            "title": "Parking Failed",
+            "content": "Please try again later",
+            "action": "OK"
+        },
+        "messageEgressSuccess": {
+            "title": "Successful Withdrawal",
+            "content": "Your bike was successfully removed",
+            "action": "OK"
+        },
+        "messageEgressError": {
+            "title": "Failed Withdrawal",
+            "content": "Please try again later",
+            "action": "OK"
+        },
+        "messageEgressForceOk": {
+            "title": "Good return!",
+            "content": "Your stay was ended successfully",
+            "action": "OK"
+        },
+        "messageEgressForceSuspected": {
+            "title": "Stay finished!",
+            "content": "The stay has been finalized and the guard was notified",
+            "action": "OK"
+        },
+        "messagePendingOk": {
+            "title": "Pending stay generated!",
+            "content": "Your stay was sent for approval, because the allowed parking time was exceeded, you must wait for a guard to review it.",
+            "action": "OK"
+        },
+        "messagePendingError": {
+            "title": "Failed stay!",
+            "content": "The stay has not been recognized, try later",
+            "action": "OK"
+        }   
     }
-    
 }
