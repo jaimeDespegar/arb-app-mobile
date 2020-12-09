@@ -56,11 +56,11 @@
         "buttonSearchStays": "Pesquisa Stays",
         "myStays": "My Stays",
         "stayInPlace": "Fique no lugar {0}",
-        "generatedOn": "Gerado em",
+        "generatedOn": "Gerado em ",
         "arrival": "Chegada",
         "departure": "Partida",
-        "entranceTo": "Estacionado em",
-        "egressTo": "Retirado em",
+        "entranceTo": "Estacionado em ",
+        "egressTo": "Retirado em ",
         "thereAreNotRegisteredStays": "Não há estadias cadastradas"
     },
     "login": {
@@ -128,7 +128,7 @@
     },
     "stateBike": {
         "parkingText": "Suporte para bicicletas {0} no lugar {1}",
-        "bicycleFrom": "Bicicleta de",
+        "bicycleFrom": "Bicicleta de ",
         "buttonRefresh": "Atualizar",
         "thereAreNotActiveStays": "Você não tem estadia ativa"
     },
