@@ -11,10 +11,7 @@ import EntranceParkingComponent from './EntranceParkingComponent';
 import EgressParkingComponent from './EgressParkingComponent';
 import axios from 'axios';
 import { loadValue, USER_KEY } from './utils/StorageHelper';
-import { MessageEntranceSuccess, MessageEntranceError, MessageEgressForceSuspected,
-         MessageEgressSuccess, MessageEgressError, MessageEgressForceOk ,
-         MessagePendingOk, MessagePendingError
-        } from './utils/MessagesHelper';
+import { getLabel } from './utils/LanguageHelper';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -29,7 +26,9 @@ const StayParkingComponent = () => {
   const [notificationpush, setNotificationpush] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
-
+  const [labels, setLabels] = useState({});
+  const [labelsEntrance, setLabelsEntrance] = useState({});
+  const [labelsEgress, setLabelsEgress] = useState({});
 
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
@@ -51,7 +50,7 @@ const StayParkingComponent = () => {
   }, []);
   
   // Can use this function below, OR use Expo's Push Notification Tool-> https://expo.io/notifications
-async function sendPushNotification(expoPushToken,tittlePush,bodyPush) {
+  async function sendPushNotification(expoPushToken,tittlePush,bodyPush) {
   const message = {
     to: expoPushToken,
     sound: 'default',
@@ -68,8 +67,8 @@ async function sendPushNotification(expoPushToken,tittlePush,bodyPush) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(message),
-  });
-}
+    });
+  }
 
   async function registerForPushNotificationsAsync() {
     let token;
@@ -101,11 +100,6 @@ async function sendPushNotification(expoPushToken,tittlePush,bodyPush) {
   
     return token;
   }
-
-
-
-
-
 
   const [entrance, setEntrance] = React.useState(true);
   const [pending, setPending] = React.useState(false);
@@ -155,7 +149,7 @@ async function sendPushNotification(expoPushToken,tittlePush,bodyPush) {
       .then(response => {
         setNotification(response.data)
         setVisible(true);
-        sendPushNotification(expoPushToken,"Egreso sospechoso","¡Egreso sospechoso!");//PUSH NOTIFICATION
+        sendPushNotification(expoPushToken, labels.suspectCaseTitle, labels.suspectCaseBody);
       })
       .catch(error => {
         console.debug('Error no hay notificaciones sospechosas ', error);
@@ -189,7 +183,7 @@ async function sendPushNotification(expoPushToken,tittlePush,bodyPush) {
         if (response.data.length) {
           setNotification(response.data[0]);
           setVisiblePending(true);
-          sendPushNotification(expoPushToken,"Estadía pendiente","¡Estadía pendiente!");//PUSH NOTIFICATION
+          sendPushNotification(expoPushToken, labels.pendingStayTitle, labels.pendingStayBody);
         } else {
           console.info('No hay datos pendientes')
         }
@@ -207,9 +201,9 @@ async function sendPushNotification(expoPushToken,tittlePush,bodyPush) {
     setVisible(false);
     setEntrance(true);
     if (isSuspected) {
-      setMessageAlert(MessageEgressForceSuspected)
+      setMessageAlert(labels.messageEgressForceSuspected)
     } else {
-      setMessageAlert(MessageEgressForceOk)
+      setMessageAlert(labels.messageEgressForceOk)
     }
     setShowMessageAlert(true)
   }
@@ -221,19 +215,19 @@ async function sendPushNotification(expoPushToken,tittlePush,bodyPush) {
   }
 
   const successEntrance = () => {
-    setMessage(MessageEntranceSuccess);
+    setMessage(labels.messageEntranceSuccess);
     setShowMessage(true);
     setEntrance(false);
   }
 
   const errorEntrance = () => {
-    setMessage(MessageEntranceError);
+    setMessage(labels.messageEntranceError);
     setShowMessage(true);
     setEntrance(true);
   }
 
   const successPending = (data) => {
-    setMessage(MessagePendingOk);
+    setMessage(labels.messagePendingOk);
     setDataPending(data);
     setShowMessage(true);
     setEntrance(false);
@@ -241,20 +235,20 @@ async function sendPushNotification(expoPushToken,tittlePush,bodyPush) {
   }
 
   const errorPending = () => {
-    setMessage(MessagePendingError);
+    setMessage(labels.messagePendingError);
     setShowMessage(true);
     setEntrance(true);
     setPending(false);
   }
 
   const successEgress = () => {
-    setMessage(MessageEgressSuccess);
+    setMessage(labels.messageEgressSuccess);
     setShowMessage(true);
     setEntrance(true);
   }
 
   const errorEgress = () => {
-    setMessage(MessageEgressError);
+    setMessage(labels.messageEgressError);
     setShowMessage(true);
     setEntrance(false);
   }
@@ -269,6 +263,15 @@ async function sendPushNotification(expoPushToken,tittlePush,bodyPush) {
     return () => clearInterval(interval);
   }, [userNameLogin, entrance]);
 
+  useEffect(() => {
+    async function findLabels() {
+      const data = await getLabel();
+      setLabels(data.stayParking || {});
+      setLabelsEntrance(data.entranceParking || {});
+      setLabelsEgress(data.egressParking || {});
+    }
+    findLabels();
+  }, [labels]);
   
   return (
     <>
@@ -276,8 +279,8 @@ async function sendPushNotification(expoPushToken,tittlePush,bodyPush) {
       (pending) ?
         (
           <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
-            <Text style={{fontSize: 17}}>Su estadía esta pendiente de aprobación</Text>
-            <Text style={{fontSize: 16}}>Bicicletero {dataPending.parking} lugar {dataPending.place}</Text>
+            <Text style={{fontSize: 17}}>{labels.titleStatusBike}</Text>
+            <Text style={{fontSize: 16}}>{labels.parkingBike.replace('{0}', dataPending.parking).replace('{1}', dataPending.place)}</Text>
           </View>
         ) 
       : 
@@ -289,6 +292,7 @@ async function sendPushNotification(expoPushToken,tittlePush,bodyPush) {
               successPending={successPending}
               failPending={errorPending}
               userName={userNameLogin}
+              labels={labelsEntrance}
             />
           )
           : 
@@ -298,6 +302,7 @@ async function sendPushNotification(expoPushToken,tittlePush,bodyPush) {
               fail={errorEgress} 
               userName={userNameLogin} 
               place={0}
+              labels={labelsEgress}
             />
         ))
       }
@@ -326,14 +331,16 @@ async function sendPushNotification(expoPushToken,tittlePush,bodyPush) {
       />
       <Portal>
         <Dialog onDismiss={closeDialogPending} style={{ backgroundColor: Colors.purple900 }} visible={visiblePending} >
-          <Dialog.Title style={{ color: Colors.white }}>¡Su estadía ha sido procesada!</Dialog.Title>
+        <Dialog.Title style={{ color: Colors.white }}>{labels.statusStay}</Dialog.Title>
           <Dialog.Content>
             <Paragraph style={{ color: Colors.white }}>
-              {notification.isAuthorize ? 'Estadia Aprobada' : 'La estadía solicitada ha sido rechazada'}
+              {notification.isAuthorize ? labels.approvedStay : labels.rejectedStay}
             </Paragraph>
           </Dialog.Content>
           <Dialog.Actions>
-            <Button color={Colors.white} onPress={()=>{postResponseUser();closeDialogPending()}}> OK </Button>
+            <Button color={Colors.white} onPress={()=>{postResponseUser();closeDialogPending()}}> 
+              {labels.messageOk} 
+            </Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>

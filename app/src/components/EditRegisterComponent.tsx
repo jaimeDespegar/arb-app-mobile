@@ -6,6 +6,7 @@ import EmailInput from './EmailInput';
 import axios from 'axios';
 import DialogCustom from './Dialogs/DialogCustom';
 import { loadValue, USER_KEY } from './utils/StorageHelper';
+import { getLabel } from './utils/LanguageHelper';
 
 
 const initialState = {
@@ -22,7 +23,7 @@ const initialState = {
 const EditRegisterComponent = () => {
 
   const [userNameLogin, setUserNameLogin] = useState("");
-  
+  const [labels, setLabels] = useState({});
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
 
   const {
@@ -50,13 +51,21 @@ const EditRegisterComponent = () => {
 
   const hideDialogEdition = () => setShowEditionOk(false);
   
-  const [titleDialog, setTitleDialog] = useState('')
-  const [contentDialog, setContentDialog] = useState('')
+  const [titleDialog, setTitleDialog] = useState('');
+  const [contentDialog, setContentDialog] = useState('');
 
   useEffect(() => {
     
     loadValue(USER_KEY, setUserNameLogin);
-
+    async function findLabels() {
+      const data = await getLabel();
+      setLabels(data.editRegister || {});
+    }
+    loadDataUser();
+    findLabels();
+  }, [userNameLogin, labels]);
+  
+  const loadDataUser = () => {
     if (userNameLogin) {
       axios
       .get('bikeOwner-getUser/' + userNameLogin + '/')
@@ -71,12 +80,10 @@ const EditRegisterComponent = () => {
     .catch((error) => console.error('Error edition user: ', error)
     )
     } else {
-      console.debug("El usuario no esta cargado todavia")
-      
+      console.debug("El usuario no esta cargado todavia");      
     }
-    
-  }, [userNameLogin]);
-  
+  }
+
   const userEdited = {
     name: name,
     email: email,
@@ -91,16 +98,16 @@ const EditRegisterComponent = () => {
       .put('bikeOwner/update/'+ userNameLogin +'/', userEdited)
       .then(response => response.data)
       .then(data => {
-        setTitleDialog('Edicion exitosa')
-        setContentDialog('Sus datos fueron actualizados correctamente')
+        setTitleDialog(labels.successUpdateTitle)
+        setContentDialog(labels.successUpdateContent)
       }) 
       .catch(err => {
-        console.log('ERROR put ', err)
-        setTitleDialog('Error en la edicion')
-        setContentDialog('Verifique los datos ingresados')
+        console.log('ERROR Edicion User ', err)
+        setTitleDialog(labels.errorUpdateTitle)
+        setContentDialog(labels.errorUpdateContent)
         if(err.response.status === 503){
-          console.log('El email ya existe!');
-          Alert.alert('¡El email ya existe!')
+          console.debug('El email ya existe');
+          Alert.alert(labels.emailExists)
         }
       })
       showDialogEdition()
@@ -108,11 +115,11 @@ const EditRegisterComponent = () => {
 
   const createTwoButtonAlert = () =>
     Alert.alert(
-      "Confirmar edición",
-      "¿Estás seguro?",
+      labels.alertTitle,
+      labels.alertContent,
       [
         {
-          text: "Cancel",
+          text: labels.buttonCancel,
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel"
         },
@@ -127,21 +134,27 @@ const EditRegisterComponent = () => {
 
           <View style={styles.inputContainerStyle}>
             <TextInput
-              label="Nombre de usuario"
-              placeholder="Ingrese su nombre"
+              label={labels.nameLabel}
+              placeholder={labels.namePlaceholder}
               value={name}
               disabled={true}
               onChangeText={inputValue => inputActionHandler('name', inputValue)}
             />
           </View>
 
-          <EmailInput label="Email" value={email} onChangeText={e => { inputActionHandler('email', e) }} placeholder="Ingrese su email"/>
-          <EmailInput label="Confirmar Email" value={confirmEmail} onChangeText={e => { inputActionHandler('confirmEmail', e) }}  placeholder="Ingrese su email nuevamente"/>
+          <EmailInput label={labels.mailLabel} value={email} 
+                      onChangeText={e => { inputActionHandler('email', e) }} 
+                      placeholder={labels.mailPlaceholder}
+                      messageInvalidMail={labels.messageInvalidMail}/>
+          <EmailInput label={labels.confirmMailLabel} value={confirmEmail} 
+                      onChangeText={e => { inputActionHandler('confirmEmail', e) }}  
+                      placeholder={labels.confirmMailPlaceholder}
+                      messageInvalidMail={labels.messageInvalidMail}/>
 
           <View style={styles.inputContainerStyle}>
             <TextInput
-              label="Contraseña"
-              placeholder="Ingrese su contraseña"
+              label={labels.passwordLabel}
+              placeholder={labels.passwordPlaceholder}
               value={flatTextPassword}
               onChangeText={(flatTextPassword) =>
                 inputActionHandler('flatTextPassword', flatTextPassword)
@@ -164,8 +177,8 @@ const EditRegisterComponent = () => {
 
           <View style={styles.inputContainerStyle}>
             <TextInput
-              label="bicyclePhoto"
-              placeholder="Ingrese su bicyclePhoto"
+              label={labels.bicycleLabel}
+              placeholder={labels.bicyclePlaceholder}
               value={bicyclePhoto}
               onChangeText={inputValue => inputActionHandler('bicyclePhoto', inputValue)}
             />
@@ -173,19 +186,19 @@ const EditRegisterComponent = () => {
 
           <View style={styles.inputContainerStyle}>
             <TextInput
-              label="foto de perfil"
-              placeholder="Ingrese su foto de perfil"
+              label={labels.profileLabel}
+              placeholder={labels.profilePlaceholder}
               value={profilePhoto}
               onChangeText={inputValue => inputActionHandler('profilePhoto', inputValue)}
             />
           </View>
                     
           <Button mode="contained" onPress={() => createTwoButtonAlert()} style={styles.button}>
-            Guardar
+            {labels.buttonSave}
           </Button>
 
           <Button mode="contained" onPress={() => {}} style={styles.button}>
-          Cancelar
+            {labels.buttonCancel}
           </Button>
         
           <View>
