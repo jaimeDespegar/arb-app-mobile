@@ -79,7 +79,7 @@ const RegisterComponent = () => {
       axios.defaults.headers.common.Authorization = null;
     }
     axios
-      .post('auth/register/', params)
+      .post('auth/register/')
       .then(response => response.data)
       .then(data => {
         axios.defaults.headers.common.Authorization = `Token ${data.token}`;

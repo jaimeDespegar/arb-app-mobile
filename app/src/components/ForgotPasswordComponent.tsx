@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
-import { Button } from 'react-native-paper';
+import * as React from 'react';
+import {  StyleSheet, View, ScrollView, Alert } from 'react-native';
+import { TextInput, Button, Paragraph, Dialog, Portal } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import EmailInput from './EmailInput';
 import axios from 'axios';
@@ -43,11 +43,14 @@ const ForgotPasswordComponent = () => {
       "email": email,
     }
     
+    console.log('user to post ', someData)
+
     axios
       .post('password_reset/', someData)
       .then(response => response.data)
       .then(data => {
         axios.defaults.headers.common.Authorization = `Token ${data.token}`;
+        console.log('Registro OK: ', data)
         successRegister()
       }) 
       .catch(err => {
