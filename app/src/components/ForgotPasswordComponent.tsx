@@ -42,9 +42,18 @@ const ForgotPasswordComponent = () => {
     }
     
     console.log('user to post ', someData)
+    const params = {
+      method: 'POST',
+      headers: {
+       'Content-type': 'application/json' // Indicates the content 
+      },
+      body: someData, // We send data in JSON format
+      credentials: 'include'
+    }
+
 
     axios
-      .post('password_reset/', someData)
+      .post('reset/password_reset/', someData)
       .then(response => response.data)
       .then(data => {
         axios.defaults.headers.common.Authorization = `Token ${data.token}`;
