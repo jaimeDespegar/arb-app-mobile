@@ -5,7 +5,7 @@ import { inputReducer } from '../../utils';
 import EmailInput from './EmailInput';
 import axios from 'axios';
 import DialogCustom from './Dialogs/DialogCustom';
-import { loadValue, USER_KEY } from './utils/StorageHelper';
+import { getValue, loadValue, USER_KEY } from './utils/StorageHelper';
 import { getLabel } from './utils/LanguageHelper';
 
 
@@ -56,13 +56,17 @@ const EditRegisterComponent = () => {
 
   useEffect(() => {
     
-    loadValue(USER_KEY, setUserNameLogin);
+    async function loadUserName() {
+      const user = await getValue(USER_KEY);
+      setUserNameLogin(user);
+    }
     async function findLabels() {
       const data = await getLabel();
       setLabels(data.editRegister || {});
     }
-    loadDataUser();
     findLabels();
+    loadUserName();
+    loadDataUser();
   }, [userNameLogin, labels]);
   
   const loadDataUser = () => {

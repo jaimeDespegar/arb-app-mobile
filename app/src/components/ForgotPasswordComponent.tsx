@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import {  StyleSheet, View, ScrollView, Alert } from 'react-native';
 import { TextInput, Button, Paragraph, Dialog, Portal } from 'react-native-paper';
 import { inputReducer } from '../../utils';
@@ -27,7 +27,7 @@ const ForgotPasswordComponent = () => {
   const [visible, setVisible] = React.useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);  
-  const [labels, setLabels] = useState({});
+  const [labels, setLabels] = React.useState({});
   const [visibleForgot, setVisibleForgot] = React.useState(false);
   const showDialogForgot = () => setVisibleForgot(true);
   const hideDialogRegister = () => setVisibleForgot(false);  

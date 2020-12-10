@@ -56,11 +56,11 @@
         "buttonSearchStays": "Search Stays",
         "myStays": "My Stays",
         "stayInPlace": "Stay at place {0}",
-        "generatedOn": "Generated on",
+        "generatedOn": "Generated on ",
         "arrival": "arrival",
         "departure": "exit",
-        "entranceTo": "Parked at",
-        "egressTo": "Withdrew at",
+        "entranceTo": "Parked at ",
+        "egressTo": "Withdrew at ",
         "thereAreNotRegisteredStays": "There are no registered stays"
     },
     "login": {
@@ -128,7 +128,7 @@
     },
     "stateBike": {
         "parkingText": "Bicycle Parking {0} in place {1}",
-        "bicycleFrom": "Bicycle of",
+        "bicycleFrom": "Bicycle of ",
         "buttonRefresh": "Refresh",
         "thereAreNotActiveStays": "You have no active stay"
     },

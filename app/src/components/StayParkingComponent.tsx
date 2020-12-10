@@ -254,8 +254,15 @@ const StayParkingComponent = () => {
   }
 
   useEffect(() => {
-    loadValue(USER_KEY, setUserNameLogin);
-    checkStay();
+    async function loadUserName() {
+      await loadValue(USER_KEY, setUserNameLogin);
+    }
+    loadUserName();
+    if (userNameLogin) {
+      checkStay();
+    } else {
+      console.debug('El usuario no esta cargado en stay parking');
+    }
     const interval = setInterval(() => {
       checkSuspectedNotifications();// crear notification push
       checkPendingsStay();// crear notification push
@@ -263,6 +270,7 @@ const StayParkingComponent = () => {
     return () => clearInterval(interval);
   }, [userNameLogin, entrance]);
 
+  
   useEffect(() => {
     async function findLabels() {
       const data = await getLabel();

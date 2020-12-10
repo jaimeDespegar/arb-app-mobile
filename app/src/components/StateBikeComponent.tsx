@@ -52,7 +52,7 @@ const StateBikeComponent = () => {
                 <Title>{labels.bicycleFrom + userNameLogin}</Title>
             </View>
             <Card style={styles.card}>
-                <Card.Cover source={require('../../assets/images/biciUNGS.png')} />
+                <Card.Cover source={{uri: data.photo}} />
                 <Card.Title
                     title={buildMessage(data.number, data.placeNumber)}
                     subtitle={data.description}
