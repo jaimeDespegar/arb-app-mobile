@@ -8,6 +8,8 @@ import DialogCustom from './Dialogs/DialogCustom'
 import { saveValue, USER_KEY } from './utils/StorageHelper'
 import { getLabel } from './utils/LanguageHelper';
 
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 const initialState = {
   flatTextSecureEntry: true,
   userName: ''
@@ -121,6 +123,11 @@ const LoginComponent = () => {
                   onPress={() => handleRequest(userName, password, showDialogLogin, showDialog)}
                   style={styles.button}>
             {labels.buttonEnter}
+            <Icon
+                  name="home"
+                  color="#000"
+                  size={15}
+            />
           </Button>
           <Button mode="outlined" onPress={() => {}} style={styles.button}>
             {labels.buttonCreateAccount}
