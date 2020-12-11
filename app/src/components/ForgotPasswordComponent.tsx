@@ -6,7 +6,7 @@ import EmailInput from './EmailInput';
 import axios from 'axios';
 import DialogCustom from './Dialogs/DialogCustom'
 import { getLabel } from './utils/LanguageHelper';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const initialState = {
   email: '',
@@ -76,6 +76,11 @@ const ForgotPasswordComponent = () => {
                       messageInvalidMail={labels.messageInvalidMail}/> 
           <Button mode="contained" onPress={() => postData()} style={styles.button}>
             {labels.buttonRecovery}
+            <Icon
+                  name="envelope"
+                  color="#000"
+                  size={30}
+            />
           </Button>
           <View>
             <DialogCustom

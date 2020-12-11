@@ -11,6 +11,7 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.13.2",
     "@react-native-community/async-storage": "~1.12.0",
+    "@react-native-community/cameraroll": "^4.0.1",
     "@react-native-community/datetimepicker": "^3.0.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/drawer": "^5.8.2",
@@ -36,7 +37,8 @@
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",
     "react-native-vector-icons": "^6.7.0",
-    "react-native-web": "~0.13.7"
+    "react-native-web": "~0.13.7",
+    "rn-fetch-blob": "^0.12.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

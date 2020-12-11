@@ -6,6 +6,7 @@ import EmailInput from './EmailInput';
 import axios from 'axios';
 import DialogCustom from './Dialogs/DialogCustom'
 import { getLabel } from './utils/LanguageHelper';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 const initialState = {
@@ -87,11 +88,11 @@ const RegisterComponent = () => {
       }) 
       .catch(err => {
         console.log(err)
-        if(err.response.status === 501){
+        if(err.response.status === 404){
           console.log('El usuario ya existe!');
           Alert.alert(labels.userExists)
         }
-        if(err.response.status === 503){
+        if(err.response.status === 404){
           console.log('El email ya existe!');
           Alert.alert(labels.mailExists)
         }
@@ -197,6 +198,11 @@ const RegisterComponent = () => {
 
           <Button mode="contained" onPress={() => postData()} style={styles.button}>
             {labels.buttonRegister}
+            <Icon
+                  name="address-card"
+                  color="#000"
+                  size={30}
+            />
           </Button>
           <View>
             <DialogCustom

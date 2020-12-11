@@ -7,7 +7,7 @@ import { USER_KEY, loadValue } from './utils/StorageHelper';
 import { TextInput, Button, List } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import { getLabel } from './utils/LanguageHelper';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const initialState = {
   fromDate: new Date(),
@@ -127,6 +127,11 @@ const HistoryComponent = () => {
                 onPress={() => {findStays(fromDate, toDate)}} 
                 style={styles.button}>
           {labels.buttonSearchStays}
+          <Icon
+                  name="search"
+                  color="#000"
+                  size={30}
+            />
         </Button>
       </View>
       <View>

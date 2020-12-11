@@ -2,7 +2,7 @@ import React, { useState} from "react";
 import { StyleSheet, View, Picker } from 'react-native';
 import { Button, Snackbar } from 'react-native-paper';
 import { saveValue, LANG_KEY } from './utils/StorageHelper';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const LanguageComponent = () => {
 
@@ -50,6 +50,11 @@ const LanguageComponent = () => {
         </Picker>
         <Button mode="contained" onPress={() => save()} style={styles.button}>
           {labelButton}
+          <Icon
+                  name="language"
+                  color="#000"
+                  size={30}
+            />
         </Button>
       </View>
       <View>

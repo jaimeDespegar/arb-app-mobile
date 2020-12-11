@@ -7,7 +7,6 @@ import axios from 'axios';
 import DialogCustom from './Dialogs/DialogCustom'
 import { saveValue, USER_KEY } from './utils/StorageHelper'
 import { getLabel } from './utils/LanguageHelper';
-
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const initialState = {
@@ -124,13 +123,18 @@ const LoginComponent = () => {
                   style={styles.button}>
             {labels.buttonEnter}
             <Icon
-                  name="home"
+                  name="key"
                   color="#000"
-                  size={15}
+                  size={30}
             />
           </Button>
           <Button mode="outlined" onPress={() => {}} style={styles.button}>
             {labels.buttonCreateAccount}
+            <Icon
+                  name="address-card"
+                  color="#000"
+                  size={30}
+            />
           </Button>
       
           <View>

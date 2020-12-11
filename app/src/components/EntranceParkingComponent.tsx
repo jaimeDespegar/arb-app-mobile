@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, Picker } from 'react-native';
 import { Button, Surface, TouchableRipple } from 'react-native-paper';
 import axios from 'axios';
 import Modal from 'react-native-modal';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const EntranceParkingComponent = (props) => {
     
@@ -177,11 +177,21 @@ const EntranceParkingComponent = (props) => {
             </View>
             <Button style={{...styles.button, marginTop: 0}} onPress={toggleModal}>
               {labels.selectOtherParking}
+              <Icon
+                  name="lock-open"
+                  color="#000"
+                  size={30}
+            />
             </Button>
           </Modal>
         </View>
         <Button mode="contained" onPress={() => checkParking(props)} style={styles.button}>
           {labels.buttonParkingBicycle}
+          <Icon
+                  name="lock"
+                  color="#000"
+                  size={30}
+            />
         </Button>
       </View>
     </View>

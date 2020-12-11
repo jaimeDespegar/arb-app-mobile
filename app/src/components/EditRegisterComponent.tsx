@@ -7,7 +7,7 @@ import axios from 'axios';
 import DialogCustom from './Dialogs/DialogCustom';
 import { getValue, loadValue, USER_KEY } from './utils/StorageHelper';
 import { getLabel } from './utils/LanguageHelper';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const initialState = {
   name: '',
@@ -199,10 +199,20 @@ const EditRegisterComponent = () => {
                     
           <Button mode="contained" onPress={() => createTwoButtonAlert()} style={styles.button}>
             {labels.buttonSave}
+            <Icon
+                  name="address-card"
+                  color="#000"
+                  size={30}
+            />
           </Button>
 
           <Button mode="contained" onPress={() => {}} style={styles.button}>
             {labels.buttonCancel}
+            <Icon
+                  name="ban"
+                  color="#000"
+                  size={30}
+            />
           </Button>
         
           <View>

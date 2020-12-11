@@ -4,7 +4,7 @@ import { Button, List } from 'react-native-paper';
 import { useEffect ,useState} from 'react';
 import axios from 'axios';
 import { getLabel } from './utils/LanguageHelper';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const AvailabilityParkingComponent = () => {
 
@@ -66,6 +66,11 @@ const AvailabilityParkingComponent = () => {
 
       <Button mode="contained" onPress={checkAvailability} style={styles.button}>
         {labels.buttonRefresh}
+        <Icon
+                  name="wrench"
+                  color="#000"
+                  size={30}
+            />
       </Button>
       
     </View>
