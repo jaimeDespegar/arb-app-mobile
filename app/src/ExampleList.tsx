@@ -10,7 +10,7 @@ import StayBikeNavigation from './components/StayBikeNavigation';
 import EditRegisterComponent from './components/EditRegisterComponent';
 import ForgotPasswordComponent from './components/ForgotPasswordComponent';
 import PushNotificationComponent from './components/PushNotificationComponent';
-import SaveImageComponent from './components/SaveImageComponent';
+import GetImageComponent from './components/GetImageComponent';
 
 
 
@@ -25,7 +25,7 @@ export const examples: Record<
   editRegisterComponent : EditRegisterComponent,
   forgotPasswordComponent : ForgotPasswordComponent,
   pushNotificationComponent : PushNotificationComponent,
-  saveImageComponent : SaveImageComponent,
+  getImageComponent : GetImageComponent,
 };
 
 type Props = {
