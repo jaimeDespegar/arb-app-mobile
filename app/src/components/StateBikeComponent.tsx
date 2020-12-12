@@ -22,7 +22,7 @@ const StateBikeComponent = () => {
             setData(json.data);
           })
           .catch((error) => {
-            console.log('error estadia get ', userNameLogin);
+            console.log('error estadia get ', userNameLogin, error);
             setData({});
           })
 

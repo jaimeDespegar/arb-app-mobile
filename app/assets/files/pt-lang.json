@@ -146,7 +146,7 @@
         "titleStatusBike": "Sua estadia está pendente de aprovação",
         "parkingBike": "Porta-bicicletas {0} lugar {1}",
         "statusStay": "Sua estadia foi processada!",
-        "approvedStay": "Approved Stay '",
+        "approvedStay": "Approved Stay ",
         "rejectedStay": "A estadia solicitada foi rejeitada",
         "messageOk": "OK",     
         "messageEntranceSuccess": {

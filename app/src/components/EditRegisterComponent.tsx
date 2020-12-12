@@ -75,7 +75,7 @@ const EditRegisterComponent = () => {
       .get('bikeOwner-getUser/' + userNameLogin + '/')
       .then((response) => response.data)
       .then((json) => {
-        inputActionHandler('name', json.userName);
+        inputActionHandler('name', json.username);
         inputActionHandler('email', json.email);
         inputActionHandler('confirmEmail', json.email);
         inputActionHandler('bicyclePhoto', json.bicyclePhoto);

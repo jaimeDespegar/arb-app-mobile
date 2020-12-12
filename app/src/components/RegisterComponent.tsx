@@ -7,7 +7,7 @@ import axios from 'axios';
 import DialogCustom from './Dialogs/DialogCustom'
 import { getLabel } from './utils/LanguageHelper';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import { saveValue, USER_KEY } from './utils/StorageHelper';
 
 const initialState = {
   name: '',
@@ -80,11 +80,12 @@ const RegisterComponent = () => {
       axios.defaults.headers.common.Authorization = null;
     }
     axios
-      .post('auth/register/')
+      .post('auth/register/', someData)
       .then(response => response.data)
       .then(data => {
         axios.defaults.headers.common.Authorization = `Token ${data.token}`;
-        successRegister()
+        saveValue(USER_KEY, name);
+        successRegister();
       }) 
       .catch(err => {
         console.log(err)

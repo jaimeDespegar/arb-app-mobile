@@ -142,7 +142,7 @@ const EntranceParkingComponent = (props) => {
         </View>
 
        <View>
-        <Text style={{textAlign: 'center'}}>{labels.selectPlace +': ' + (placeSelected.placeNumber===0?labels.withOutSelect: placeSelected.placeNumber)}</Text>
+        <Text style={{textAlign: 'center'}}>{labels.selectPlace +': ' + (!placeSelected.placeNumber?labels.withOutSelect: placeSelected.placeNumber)}</Text>
         <Button disabled={availableSelectPlace} style={{...styles.button, marginTop: 30}} onPress={toggleModal}>
           {labels.touchForSelectPlace}
         </Button>
