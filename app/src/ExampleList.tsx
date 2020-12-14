@@ -11,6 +11,8 @@ import EditRegisterComponent from './components/EditRegisterComponent';
 import ForgotPasswordComponent from './components/ForgotPasswordComponent';
 import PushNotificationComponent from './components/PushNotificationComponent';
 import GetImageComponent from './components/GetImageComponent';
+import SaveImageComponent from './components/SaveImageComponent';
+
 
 
 
@@ -26,6 +28,7 @@ export const examples: Record<
   forgotPasswordComponent : ForgotPasswordComponent,
   pushNotificationComponent : PushNotificationComponent,
   getImageComponent : GetImageComponent,
+  saveImageComponent : SaveImageComponent
 };
 
 type Props = {
