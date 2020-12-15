@@ -1,0 +1,193 @@
+{
+    "availabilityParking": {
+        "title": "Disponibilidad de Bicicleteros",
+        "buttonRefresh": "Actualizar",
+        "noResults": "No hay Bicicleteros registrados",
+        "withOutAvailability": "Sin disponibilidad",
+        "titleItemParking": "Bicicletero N°",
+        "oneFreePlace": "Hay 1 lugar libre",
+        "freePlaces": "Hay {0} lugares libres"
+    },
+    "editRegister": {
+        "nameLabel": "Nombre de usuario",
+        "namePlaceholder": "Ingrese su nombre",
+        "mailLabel": "Email",
+        "mailPlaceholder": "Ingrese su email",
+        "confirmMailLabel": "Confirmar Email",
+        "confirmMailPlaceholder": "Ingrese su email nuevamente",
+        "messageInvalidMail": "Ingrese un email valido",
+        "passwordLabel": "Contraseña",
+        "passwordPlaceholder": "Ingrese su contraseña",
+        "successUpdateTitle": "Edicion exitosa",
+        "successUpdateContent": "Sus datos fueron actualizados correctamente",
+        "errorUpdateTitle": "Error en la edicion",
+        "errorUpdateContent": "Verifique los datos ingresados",
+        "emailExists": "¡El email ya existe!",
+        "alertTitle": "Confirmar edición",
+        "alertContent": "¿Estás seguro?",
+        "bicycleLabel": "Foto de la bicicleta",
+        "bicyclePlaceholder": "Ingrese una foto de su bicicleta",
+        "profileLabel": "Foto de perfil",
+        "profilePlaceholder": "Ingrese su foto de perfil",
+        "buttonSave": "Guardar",
+        "buttonCancel": "Cancelar"
+    }, 
+    "egressParking": {
+        "bicycleParked": "¡{0} tu bicicleta esta estacionada!",
+        "buttonRemoveBicycle": "Retirar Bicicleta"
+    },
+    "entranceParking": {
+        "welcomeUser": "¡Bienvenido a la UNGS, {0}!",
+        "selectParking": "Seleccione su estacionamiento:",
+        "withOutParkingForSelect": "Sin bicicleteros para seleccionar",
+        "touchForSelectPlace": "Toque aqui para seleccionar su lugar",
+        "withOutSelect": "Sin seleccionar",
+        "selectPlace": "Lugar seleccionado",
+        "placeNotRegistered": "No se registro una bicicleta en el lugar",
+        "thereAreNotPlaces": "No hay lugares",
+        "selectOtherParking": "Elegir otro bicicletero",
+        "buttonParkingBicycle": "Estacionar Bicicleta"
+    },
+    "history": {
+        "fromDate": "Desde",
+        "fromDatePlaceholder": "Seleccione la fecha desde",
+        "toDate": "Hasta",
+        "toDatePlaceholder": "Seleccione la fecha hasta",
+        "buttonSearchStays": "Buscar Estadías",
+        "myStays": "Mis Estadías",
+        "stayInPlace": "Estadía en el lugar {0}",
+        "generatedOn": "Generada el ",
+        "arrival": "Llegada",
+        "departure": "Salida",
+        "entranceTo":"Estacionó a las ",
+        "egressTo": "Se retiró a las ",
+        "thereAreNotRegisteredStays": "No hay estadías registradas"
+    },
+    "login": {
+        "userLabel": "Nombre de usuario",
+        "userPlaceholder": "Ingrese su nombre de usuario",
+        "passwordLabel": "Contraseña",
+        "passwordPlaceholder": "Ingrese su contraseña",
+        "forgotPassword": "¿Olvidaste la contraseña?",
+        "buttonEnter": "Ingresar",
+        "buttonCreateAccount": "Crear Cuenta",
+        "errorLoginTitle": "Error al iniciar sesion",
+        "errorLoginContent": "Verifique los datos ingresados e intente nuevamente",
+        "successLogin": "Login exitoso",
+        "loginContent": "Puede navegar correctamente",
+        "messageOk": "OK"
+    },
+    "logout": {
+        "alertTitle": "Confirmar cierre de sesión",
+        "alertDescription": "¿Estás seguro?",
+        "alertCancel": "Cancel",
+        "successLogoutTitle": "Logout exitoso",
+        "successLogoutDetail": "Cierre de sesion correcto",
+        "messageOk": "OK",
+        "closeSession": "Cerrar Session"
+    },
+    "forgotPassword": {
+        "mail": "Email",
+        "mailPlaceholder": "Ingrese su email",
+        "messageInvalidMail": "Ingrese un email valido",
+        "buttonRecovery": "Recuperar",
+        "errorChangePasswordTitle": "Error en recuperar contraseña",
+        "errorChangePasswordContent": "Verifique los datos ingresados e intente nuevamente",
+        "successChangePasswordTitle": "Recupero de contraseña",
+        "successChangePasswordContent": "¡Email enviado!",
+        "messageOk": "OK"
+    },
+    "register": {
+        "nameText": "Nombre",
+        "namePlaceholder": "Ingrese su nombre",
+        "passwordLabel": "Contraseña",
+        "passwordPlaceholder": "Ingrese su contraseña",
+        "mail": "Email",
+        "mailPlaceholder": "Ingrese su email",
+        "confirmMail": "Confirmar Email",
+        "confirmMailPlaceholder": "Ingrese su email nuevamente",
+        "messageInvalidMail": "Ingrese un email valido",
+        "photoBicycle": "Foto de la bicicleta",
+        "bicyclePlaceholder": "Ingrese una foto de su bicicleta",
+        "profile": "Foto de perfil",
+        "profilePlaceholder": "Ingrese su foto de perfil",
+        "petName": "Nombre de mascota",
+        "petNamePlaceholder": "Ingrese el nombre de su mascota",
+        "streetName": "Nombre de su calle",
+        "streetNamePlaceholder": "Ingrese el nombre de su calle",
+        "movieName": "Nombre de pelicula favorita",
+        "moviePlaceholder": "Ingrese el nombre de su pelicula favorita",
+        "buttonRegister": "Registrar",
+        "errorRegister": "Error al Registrarse",
+        "errorRegisterContent": "Verifique los datos ingresados e intente nuevamente",
+        "successRegister": "Registro exitoso",
+        "welcome": "¡Bienvenido!",
+        "messageOk": "OK",
+        "userExists": "¡El usuario ya existe!",
+        "mailExists": "¡El email ya existe!"
+    },
+    "stateBike": {
+        "parkingText": "Bicicletero {0} en el lugar {1}",
+        "bicycleFrom": "Bicicleta de ",
+        "buttonRefresh": "Actualizar",
+        "thereAreNotActiveStays": "No tiene ninguna estadía activa"
+    },
+    "stayBikeNavigation": {
+        "myStay": "Mi Estadia",
+        "stateMyBike": "Estado",
+        "available": "Disponibilidad",
+        "history": "Historial"
+    },
+    "stayParking": {
+        "suspectCaseTitle": "Egreso sospechoso",
+        "suspectCaseBody": "¡Egreso sospechoso!",
+        "pendingStayTitle": "Estadía pendiente",
+        "pendingStayBody": "¡Estadía pendiente!",
+        "titleStatusBike": "Su estadía esta pendiente de aprobación",
+        "parkingBike": "Bicicletero {0} lugar {1}",
+        "statusStay": "¡Su estadía ha sido procesada!",
+        "approvedStay": "Estadia Aprobada",
+        "rejectedStay": "La estadía solicitada ha sido rechazada",
+        "messageOk": "OK",        
+        "messageEntranceSuccess": {
+            "title": "Estacionamiento Exitoso",
+            "content": "Ahora puede ir a cursar seguro",
+            "action": "OK"
+        },
+        "messageEntranceError": {
+            "title": "Estacionamiento Fallido",
+            "content": "Intente nuevamente mas tarde",
+            "action": "OK"
+        },
+        "messageEgressSuccess": {
+            "title": "Retiro Exitoso",
+            "content": "Su bicicleta fue retirada correctamente",
+            "action": "OK"
+        },
+        "messageEgressError": {
+            "title": "Retiro Fallido",
+            "content": "Intente nuevamente mas tarde",
+            "action": "OK"
+        },
+        "messageEgressForceOk": {
+            "title": "¡Buen regreso!",
+            "content": "Su estadia fue finalizada correctamente",
+            "action": "OK"
+        },
+        "messageEgressForceSuspected": {
+            "title": "¡Estadia finalizada!",
+            "content": "La estadia ha sido finalizada y se dio aviso al guardia",
+            "action": "OK"
+        },
+        "messagePendingOk": {
+            "title": "¡Estadía pendiente generada!",
+            "content": "Su estadía fue enviada a aprobación, por que se excedio el tiempo permitido de estacionamiento, debe esperar a que un guardia la revise.",
+            "action": "OK"
+        },
+        "messagePendingError": {
+            "title": "¡Estadía Fallida!",
+            "content": "La estadía no ha sido reconocida, intente más tarde",
+            "action": "OK"
+        }   
+    }
+}

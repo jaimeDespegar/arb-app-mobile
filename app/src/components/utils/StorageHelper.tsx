@@ -2,6 +2,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const USER_KEY = 'userName';
+export const LANG_KEY = 'language';
 
 export const loadValue = async (key: string, setValue: Function) => {
   try {
@@ -10,6 +11,14 @@ export const loadValue = async (key: string, setValue: Function) => {
     console.log(key + ' loaded ', userAux)
   } catch (e) {
     console.error('Failed to load key ', key)
+  }
+}
+
+export const getValue = async (key: string) => {
+  try {
+    return await AsyncStorage.getItem(key);
+  } catch (e) {
+    console.error('Failed get key ', key);
   }
 }
 

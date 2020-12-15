@@ -1,20 +1,11 @@
 import {  StyleSheet, View, } from 'react-native';
 import { TextInput, HelperText } from 'react-native-paper';
-import { inputReducer } from '../../utils';
-import React, { useEffect } from "react";
+import React from "react";
 import { StylesInputContainerStyle} from './utils/StylesHelper';
 
-const initialState = {};
 
 const EmailInput = (props) => {
-    const [state, dispatch] = React.useReducer(inputReducer, initialState);
     
-    // const inputActionHandler = (type: string, payload: string) =>
-    //     dispatch({
-    //         type: type,
-    //         payload: payload,
-    // });
-
     const formatEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     const isEmailValid = (name: string) => formatEmail.test(name);
     
@@ -38,7 +29,7 @@ const EmailInput = (props) => {
             />
             {(email && !isEmailValid(email)) ?
             <HelperText type="error" visible={email && !isEmailValid(email)}>
-              Ingrese un email valido
+              {props.messageInvalidMail}
             </HelperText>:<></>}
         </View>
     );

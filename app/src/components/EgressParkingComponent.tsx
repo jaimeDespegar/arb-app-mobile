@@ -16,7 +16,6 @@ const EgressParkingComponent = (props) => {
     axios
       .post('parking/egress/', values)
       .then(response => {
-        console.log("Ok Egress, response ", response.data)
         success();
       })
       .catch(error => {
@@ -29,13 +28,13 @@ const EgressParkingComponent = (props) => {
     <View style={StylesInputs}>
       <View>
         <Text style={StylesTitle}>
-          ¡{props.userName} tu bicicleta esta estacionada!
+          {props.labels.bicycleParked.replace('{0}', props.userName)}
         </Text>
       
         <Button mode="contained" 
                 onPress={() => removeBicycle(props.success, props.fail)} 
                 style={StylesButton}>
-          Retirar Bicicleta
+          {props.labels.buttonRemoveBicycle}
         </Button>
       </View>
     </View>

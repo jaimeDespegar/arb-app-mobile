@@ -1,12 +1,14 @@
-import * as React from 'react';
-import {  StyleSheet, View, ScrollView } from 'react-native';
-import { TextInput, Button, Paragraph, Dialog, Portal } from 'react-native-paper';
+import React, { useState, useEffect } from 'react';
+import {  StyleSheet, View, ScrollView, Alert } from 'react-native';
+import { TextInput, Button } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import EmailInput from './EmailInput';
 import axios from 'axios';
 import DialogCustom from './Dialogs/DialogCustom'
+import { getLabel } from './utils/LanguageHelper';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { saveValue, USER_KEY } from './utils/StorageHelper';
 import { StylesInputs, StylesInputContainerStyle, StylesButtonEditRegister} from './utils/StylesHelper';
-
 import { useNavigation } from '@react-navigation/native';
 
 const initialState = {
@@ -27,7 +29,8 @@ const RegisterComponent = () => {
 
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
   const {
-    name, flatTextSecureEntry, flatTextPassword, email, confirmEmail, bicyclePhoto, profilePhoto,pet,street,movie
+    name, flatTextSecureEntry, flatTextPassword, email, confirmEmail, 
+    bicyclePhoto, profilePhoto, pet, street, movie
   } = state;
 
   const inputActionHandler = (type: string, payload: string) =>
@@ -39,7 +42,7 @@ const RegisterComponent = () => {
   const [visible, setVisible] = React.useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);  
-
+  const [labels, setLabels] = useState({});
   const [visibleRegister, setVisibleRegister] = React.useState(false);
   const showDialogRegister = () => setVisibleRegister(true);
   const hideDialogRegister = () => setVisibleRegister(false);  
@@ -70,8 +73,6 @@ const RegisterComponent = () => {
       "movie": movie,
     }
     
-    console.log('user to post ', someData)
-
     const params = {
       method: 'POST',
       headers: {
@@ -83,38 +84,60 @@ const RegisterComponent = () => {
       axios.defaults.headers.common.Authorization = null;
     }
     axios
-      .post('auth/register/', params)
+      .post('auth/register/', someData)
       .then(response => response.data)
       .then(data => {
         axios.defaults.headers.common.Authorization = `Token ${data.token}`;
-        console.log('Registro OK: ', data)
-        successRegister()
+        saveValue(USER_KEY, name);
+        successRegister();
       }) 
       .catch(err => {
         console.log(err)
+        if(err.response.status === 404){
+          console.log('El usuario ya existe!');
+          Alert.alert(labels.userExists)
+        }
+        if(err.response.status === 404){
+          console.log('El email ya existe!');
+          Alert.alert(labels.mailExists)
+        }
         showDialog()
       })
   }
+
+  useEffect(() => {
+    async function findLabels() {
+      const data = await getLabel();
+      setLabels(data.register || {});
+    }
+    findLabels();
+  }, [labels]);
 
   return (
     <ScrollView>
         <View style={StylesInputs}>
           <View style={StylesInputContainerStyle}>
             <TextInput
-              label="Nombre"
-              placeholder="Ingrese su nombre"
+              label={labels.nameText}
+              placeholder={labels.namePlaceholder}
               value={name}
               onChangeText={name => inputActionHandler('name', name)}
             />
           </View>
           
-          <EmailInput label="Email" value={email} onChangeText={e => { inputActionHandler('email', e) }} placeholder="Ingrese su email"/>
-          <EmailInput label="Confirmar Email" value={confirmEmail} onChangeText={e => { inputActionHandler('confirmEmail', e) }}  placeholder="Ingrese su email nuevamente"/>
+          <EmailInput label={labels.mail} value={email} 
+                      onChangeText={e => { inputActionHandler('email', e) }} 
+                      placeholder={labels.mailPlaceholder}
+                      messageInvalidMail={labels.messageInvalidMail}/>
+          <EmailInput label={labels.confirmMail} value={confirmEmail} 
+                      onChangeText={e => { inputActionHandler('confirmEmail', e) }}
+                      placeholder={labels.confirmMailPlaceholder}
+                      messageInvalidMail={labels.messageInvalidMail}/>
 
           <View style={StylesInputContainerStyle}>
             <TextInput
-              label="Contraseña"
-              placeholder="Ingrese su contraseña"
+              label={labels.passwordLabel}
+              placeholder={labels.passwordPlaceholder}
               value={flatTextPassword}
               onChangeText={(flatTextPassword) =>
                 inputActionHandler('flatTextPassword', flatTextPassword)
@@ -137,8 +160,8 @@ const RegisterComponent = () => {
           
           <View style={StylesInputContainerStyle}>
             <TextInput
-              label="Foto de la bicicleta"
-              placeholder="Ingrese una foto de su bicicleta"
+              label={labels.photoBicycle}
+              placeholder={labels.bicyclePlaceholder}
               value={bicyclePhoto}
               onChangeText={inputValue => inputActionHandler('bicyclePhoto', inputValue)}
             />
@@ -146,8 +169,8 @@ const RegisterComponent = () => {
 
           <View style={StylesInputContainerStyle}>
             <TextInput
-              label="Foto de perfil"
-              placeholder="Ingrese su foto de perfil"
+              label={labels.profile}
+              placeholder={labels.profilePlaceholder}
               value={profilePhoto}
               onChangeText={inputValue => inputActionHandler('profilePhoto', inputValue)}
             />
@@ -155,51 +178,52 @@ const RegisterComponent = () => {
 
           <View style={StylesInputContainerStyle}>
             <TextInput
-              label="Nombre de mascota"
-              placeholder="Ingrese el nombre de su mascota"
+              label={labels.petName}
+              placeholder={labels.petNamePlaceholder}
               value={pet}
               onChangeText={inputValue => inputActionHandler('pet', inputValue)}
             />
           </View>
           <View style={StylesInputContainerStyle}>
             <TextInput
-              label="Nombre de su calle"
-              placeholder="Ingrese el nombre de su calle"
+              label={labels.streetName}
+              placeholder={labels.streetNamePlaceholder}
               value={street}
               onChangeText={inputValue => inputActionHandler('street', inputValue)}
             />
           </View>
-          {/* <Button mode="outlined" onPress={() => navigation.navigate('Home')} style={styles.button}>
-            Home
-          </Button> */}
           <View style={StylesInputContainerStyle}>
             <TextInput
-              label="Nombre de pelicula favorita"
-              placeholder="Ingrese el nombre de su pelicula favorita"
+              label={labels.movieName}
+              placeholder={labels.moviePlaceholder}
               value={movie}
               onChangeText={inputValue => inputActionHandler('movie', inputValue)}
             />
           </View>
 
           <Button mode="contained" onPress={() => postData()} style={StylesButtonEditRegister}>
-          Registar
+            {labels.buttonRegister}
+            <Icon
+                  name="address-card"
+                  color="#000"
+                  size={30}
+            />
           </Button>
-          
           <View>
             <DialogCustom
               visible={visible}
-              title='Error al Registrarse'
-              content='Verifique los datos ingresados e intente nuevamente'
-              messageAction='Ok'
+              title={labels.errorRegister}
+              content={labels.errorRegisterContent}
+              messageAction={labels.messageOk}
               close={hideDialog}
             />
           </View>
           <View>
               <DialogCustom
                 visible={visibleRegister}
-                title='Registro exitoso'
-                content='¡Bienvenido!'
-                messageAction='Ok'
+                title={labels.successRegister}
+                content={labels.welcome}
+                messageAction={labels.messageOk}
                 close={hideDialogRegister}
               />
             </View>

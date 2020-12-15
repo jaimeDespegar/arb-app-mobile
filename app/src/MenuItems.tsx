@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { View, StyleSheet, Platform, BackHandler } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Platform, Alert, BackHandler } from 'react-native';
 import {
   Drawer, Switch, TouchableRipple,
   Text, Colors, useTheme,
@@ -7,8 +7,8 @@ import {
 import axios from 'axios';
 import DialogCustom from './components/Dialogs/DialogCustom'
 import { removeValue, USER_KEY } from './components/utils/StorageHelper';
+import { getLabel } from './components/utils/LanguageHelper';
 import { useNavigation } from '@react-navigation/native';
-
 import { TextInput, Button } from 'react-native-paper';
 
 type Props = {
@@ -30,11 +30,9 @@ function logOut(showDialogLogout: Function) {
       showDialogLogout();
     })
     .catch(error => console.log(error));
-    
   } else {
     console.log('El usuario ya esta deslogueado.')
   }
-
 }
 
 const DrawerItemsData = [
@@ -47,14 +45,36 @@ const MenuItems = ({ toggleTheme, isDarkTheme }: Props) => {
   const navigation = useNavigation();
 
   const [drawerItemIndex, setDrawerItemIndex] = React.useState<number>(0);
-
   const _setDrawerItem = (index: number) => setDrawerItemIndex(index);
-
   const { colors } = useTheme();
   const [showLogout, setShowLogout] = React.useState(false);
   const showDialogLogout = () => setShowLogout(true);
   const hideDialogLogout = () => setShowLogout(false);
-  
+  const [labels, setLabels] = useState({});
+
+  const createTwoButtonAlert = () =>
+    Alert.alert(
+      labels.alertTitle,
+      labels.alertDescription,
+      [
+        {
+          text: labels.alertCancel,
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => logOut(showDialogLogout) }
+      ],
+      { cancelable: false }
+    );
+
+  useEffect(() => {
+    async function findLabels() {
+      const data = await getLabel();
+      setLabels(data.logout || {});
+    }
+    findLabels();
+  }, [labels]);
+
   return (
     <View style={[styles.drawerContent, { backgroundColor: colors.surface }]}>
       {/* <Drawer.Section title="Menu">
@@ -77,11 +97,11 @@ const MenuItems = ({ toggleTheme, isDarkTheme }: Props) => {
             </View>
           </View>
         </TouchableRipple>
-      </Drawer.Section> */}
-      <Drawer.Section title="Gracias, vuelva pronto!">
-        <TouchableRipple onPress={() => logOut(showDialogLogout)}>
+      </Drawer.Section>
+      <Drawer.Section title="Mi Cuenta">
+        <TouchableRipple onPress={() => createTwoButtonAlert()}>
           <View style={styles.preference}>
-            <Text>Presione aquí para cerrar Session!</Text>
+            <Text>{labels.closeSession}</Text>
           </View>
         </TouchableRipple>
       </Drawer.Section>
@@ -94,9 +114,9 @@ const MenuItems = ({ toggleTheme, isDarkTheme }: Props) => {
       <View>
         <DialogCustom
           visible={showLogout}
-          title='Logout exitoso'
-          content='Cierre de sesion correcto'
-          messageAction='OK'
+          title={labels.successLogoutTitle}
+          content={labels.successLogoutDetail}
+          messageAction={labels.messageOk}
           close={hideDialogLogout}
         />
       </View>

@@ -24,6 +24,11 @@
     "ios": {
       "supportsTablet": true
     },
+    "android": {
+      "googleServicesFile": "./google-services.json",
+      "package": "com.pps.arb",
+      "versionCode": 1
+    },
     "description": "callstack/react-native-paper @ Nov 8, 2018"
   }
 }
