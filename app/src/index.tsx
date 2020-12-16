@@ -22,9 +22,10 @@ import AvailabilityParkingComponent from './components/AvailabilityParkingCompon
 import LoginComponent from './components/LoginComponent';
 import HistoryComponent from './components/HistoryComponent';
 import StateBikeComponent from './components/StateBikeComponent';
-import RecoveryAccountComponent from './components/RecoveryAccountComponent';
+import ForgotPasswordComponent from './components/ForgotPasswordComponent';
 import StayBikeNavigation from './components/StayBikeNavigation';
-
+import LanguageComponent from './components/LanguageComponent';
+import axios from 'axios';
 
 
 //YellowBox.ignoreWarnings(['Require cycle:']);
@@ -81,6 +82,11 @@ export default function PaperExample() {
       restoreState();
     }
   }, [isReady]);
+
+  React.useEffect(() => {
+    axios.defaults.baseURL = 'https://arb-api-ungs.herokuapp.com/api/';
+    axios.defaults.timeout = 1500;
+  }, []);
 
   React.useEffect(() => {
     const restorePrefs = async () => {
@@ -170,9 +176,10 @@ export default function PaperExample() {
                   <Drawer.Screen name="Mi bicicleta" component={StateBikeComponent} />
                   <Drawer.Screen name="Mi perfil" component={RegisterComponent} />
                   <Drawer.Screen name="Editar perfil" component={EditRegisterComponent} />
-                  <Drawer.Screen name="Recuperar contraseña" component={RecoveryAccountComponent} />
-                  <Drawer.Screen name="App" component={App} />
-                  <Drawer.Screen name="Cerrar sesión" component={MenuItems} />
+                  <Drawer.Screen name="Recuperar contraseña" component={ForgotPasswordComponent} />
+                  <Drawer.Screen name="Lenguaje" component={LanguageComponent} />
+                  <Drawer.Screen name="App" component={App} /> 
+                  <Drawer.Screen name="Salir" component={MenuItems}  />
                 </Drawer.Navigator>
               )}
             </NavigationContainer>

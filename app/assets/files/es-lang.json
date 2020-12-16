@@ -64,6 +64,7 @@
         "thereAreNotRegisteredStays": "No hay estadías registradas"
     },
     "login": {
+        "welcomeUser": "¡Bienvenido a la UNGS!",
         "userLabel": "Nombre de usuario",
         "userPlaceholder": "Ingrese su nombre de usuario",
         "passwordLabel": "Contraseña",

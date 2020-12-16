@@ -67,7 +67,7 @@ const AvailabilityParkingComponent = () => {
       </List.Section>
 
 
-      <Button mode="contained" onPress={checkAvailability} style={styles.button}>
+      <Button mode="contained" onPress={checkAvailability} style={StylesButton}>
         {labels.buttonRefresh}
         <Icon
                   name="wrench"

@@ -64,6 +64,7 @@
         "thereAreNotRegisteredStays": "There are no registered stays"
     },
     "login": {
+        "welcomeUser": "Welcome to UNGS!",
         "userLabel": "Username",
         "userPlaceholder": "Please enter your username",
         "passwordLabel": "Password",

@@ -1,21 +1,40 @@
 
 import React, { useState, useEffect } from 'react';
-import {  StyleSheet, View, TouchableOpacity, Text  } from 'react-native';
+import {  View, TouchableOpacity, Text , Alert } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { inputReducer } from '../../utils';
 import axios from 'axios';
 import DialogCustom from './Dialogs/DialogCustom'
-import { saveValue, USER_KEY } from './utils/StorageHelper'
+import { saveValue, removeValue, USER_KEY } from './utils/StorageHelper'
 import { getLabel } from './utils/LanguageHelper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
-import RegisterComponent from './RegisterComponent'
 import { StylesInputs, StylesButton, StylesInputContainerStyle, StylesTitle, StylesForgotMyPasswordText} from './utils/StylesHelper';
+
 
 const initialState = {
   flatTextSecureEntry: true,
   userName: ''
 };
+
+function logOut(showDialogLogout: Function) {
+
+  if (axios.defaults.headers.common.Authorization) {
+    axios
+    .get('auth/logout/')
+    .then(response => {
+      axios.defaults.headers.common.Authorization = null;
+      console.log('User logout! ', response.status, response.statusText);
+      removeValue(USER_KEY);
+      showDialogLogout();
+      console.info('Usuario deslogueado');
+    })
+    .catch(error => console.log(error));
+  } else {
+    axios.defaults.headers.common.Authorization = null;
+    console.warn('El usuario ya esta deslogueado.')
+  }
+}
 
 function handleRequest(userName: string, password: string, showDialogOk: Function, showDialogError: Function ) {
 
@@ -35,21 +54,41 @@ function handleRequest(userName: string, password: string, showDialogOk: Functio
       showDialogOk()
     })
     .catch(error => {
-      console.log('Sign In Fail',error);
+      console.log('Sign In Fail ', error.status, error.message, error);
       showDialogError()
     });
 }
+
+
 
 const LoginComponent = () => {
   const navigation = useNavigation();
   const [state, dispatch] = React.useReducer(inputReducer, initialState);
   const [labels, setLabels] = useState({});
+  const [showLogout, setShowLogout] = React.useState(false);
+  const showDialogLogout = () => setShowLogout(true);
+  const hideDialogLogout = () => setShowLogout(false);
 
   const {
     flatTextSecureEntry,
     password,
     userName
   } = state;
+
+  const createTwoButtonAlert = () =>
+    Alert.alert(
+      labels.alertTitle,
+      labels.alertDescription,
+      [
+        {
+          text: labels.alertCancel,
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => logOut(showDialogLogout) }
+      ],
+      { cancelable: false }
+    );
 
   const inputActionHandler = (type: string, payload: string) =>
     dispatch({
@@ -71,9 +110,10 @@ const LoginComponent = () => {
   useEffect(() => {
     async function findLabels() {
       const data = await getLabel();
-      setLabels(data.login || {});
+      const values = {...data.login, ...data.logout};
+      setLabels(values);
     }
-    findLabels();
+    labels && !labels.userLabel && findLabels();
   }, [labels]);
     
   return (
@@ -163,10 +203,22 @@ const LoginComponent = () => {
           </View>
         </View>
         ) :
-        <View>
-        <Text style={StylesTitle}>
-          ¡Bienvenido a la UNGS, {userName}!
-        </Text>
+        <View style={StylesInputs}>
+          <Text style={StylesTitle}>
+            {labels.welcomeUser}
+          </Text>
+          <Button onPress={() => createTwoButtonAlert()} style={StylesButton}>
+            {labels.closeSession}
+          </Button>
+          <View>
+        <DialogCustom
+          visible={showLogout}
+          title={labels.successLogoutTitle}
+          content={labels.successLogoutDetail}
+          messageAction={labels.messageOk}
+          close={hideDialogLogout}
+        />
+      </View>
         </View>
         }
         </>
